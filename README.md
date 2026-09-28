@@ -1,2 +1,1 @@
 # Talentino.github.io
-Talentino
