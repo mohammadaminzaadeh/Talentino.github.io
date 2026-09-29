@@ -1478,7 +1478,7 @@
                     class="btn btn-ghost"
                     onclick="previousQuestion()"
                   >
-                    ← قبلی
+                   →  قبلی
                   </button>
 
                   <button
@@ -1487,7 +1487,7 @@
                     class="btn btn-primary"
                     onclick="nextQuestion()"
                   >
-                    بعدی →
+                    بعدی ←
                   </button>
                 </div>
 
@@ -2830,7 +2830,7 @@
         el("prevQuestionBtn").disabled = index === 0;
 
         el("nextQuestionBtn").textContent =
-          index === QUESTIONS.length - 1 ? "پایان و تحلیل ✓" : "بعدی →";
+          index === QUESTIONS.length - 1 ? "پایان و تحلیل ✓" : "بعدی ←";
       }
 
       function selectAnswer(value) {
