@@ -3,24 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0D0D0D" />
+    <meta name="theme-color" content="#0B1020" />
 
     <title>Talentino | سامانه تعاملی کشف و پرورش استعداد</title>
 
-    <link rel="icon" href="./images/logo-talentino-2.png" type="image/png">
-    <link rel="icon" href="./images/logo-talentino-2.png" sizes="32x32">
-    <link rel="icon" href="./images/logo-talentino-2.png" sizes="16x16">
-    <link rel="apple-touch-icon" href="./images/logo-talentino-2.png" sizes="180x180">
-    <link rel="mask-icon" href="./images/logo-talentino-2.png" color="#000000">
+    <link rel="icon" href="./images/logo-talentino-2.png" type="image/png" />
+    <link rel="icon" href="./images/logo-talentino-2.png" sizes="32x32" />
+    <link rel="icon" href="./images/logo-talentino-2.png" sizes="16x16" />
+    <link rel="apple-touch-icon" href="./images/logo-talentino-2.png" sizes="180x180" />
+    <link rel="mask-icon" href="./images/logo-talentino-2.png" color="#000000" />
 
     <meta
       name="description"
       content="Talentino یک سامانه تعاملی برای ساخت پروفایل چندبعدی علایق، پیشنهاد مسیر یادگیری، چالش و پیگیری پیشرفت دانش‌آموزان است."
     />
+    <meta name="author" content="Mohammad Amin Zaadeh" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Talentino | سامانه تعاملی کشف استعداد" />
+    <meta
+      property="og:description"
+      content="پروفایل چندبعدی علایق، مسیر یادگیری شخصی‌سازی‌شده و چالش‌های عملی برای دانش‌آموزان."
+    />
+    <meta property="og:image" content="./images/logo-talentino-1.png" />
+    <meta property="og:locale" content="fa_IR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Talentino | سامانه تعاملی کشف استعداد" />
+    <meta
+      name="twitter:description"
+      content="پروفایل چندبعدی علایق، مسیر یادگیری شخصی‌سازی‌شده و چالش‌های عملی."
+    />
+    <meta name="twitter:image" content="./images/logo-talentino-1.png" />
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalApplication",
+        "name": "Talentino",
+        "inLanguage": "fa-IR",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "description": "سامانه تعاملی کشف و پرورش استعداد برای دانش‌آموزان؛ شامل ارزیابی چندبعدی علایق، مسیر یادگیری و چالش‌های عملی.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IRR" }
+      }
+    </script>
 
     <style>
       /* =========================================================
-       TALENTINO v3 — Black & Gold
+       TALENTINO — Interactive Talent Discovery System
        Single-file: HTML + CSS + JavaScript + LocalStorage
     ========================================================== */
 
@@ -31,7 +66,6 @@
         font-style: normal;
         font-display: swap;
       }
-
       @font-face {
         font-family: "Vazirmatn";
         src: url("fonts/Vazirmatn-Medium.woff2") format("woff2");
@@ -39,7 +73,6 @@
         font-style: normal;
         font-display: swap;
       }
-
       @font-face {
         font-family: "Vazirmatn";
         src: url("fonts/Vazirmatn-SemiBold.woff2") format("woff2");
@@ -47,7 +80,6 @@
         font-style: normal;
         font-display: swap;
       }
-
       @font-face {
         font-family: "Vazirmatn";
         src: url("fonts/Vazirmatn-Bold.woff2") format("woff2");
@@ -55,7 +87,6 @@
         font-style: normal;
         font-display: swap;
       }
-
       @font-face {
         font-family: "Vazirmatn";
         src: url("fonts/Vazirmatn-ExtraBold.woff2") format("woff2");
@@ -70,17 +101,14 @@
         --text: #F7F9FC;
         --muted: #AAB4C7;
         --line: rgba(255, 255, 255, 0.09);
-      
-        --primary: #2a57a7;
+
+        /* Primary palette — solid and rgb must match */
+        --primary: #5B8CFF;
         --primary-rgb: 91, 140, 255;
         --primary-light: #7AA4FF;
-      
-        --secondary: #8B5CF6;
-        --secondary-rgb: 139, 92, 246;
-        --secondary-light: #A78BFA;
-      
+
         --danger: #F08D8D;
-      
+
         --shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
         --radius: 24px;
         --max: 1180px;
@@ -141,7 +169,6 @@
         margin-inline: auto;
       }
 
-      /* Keyboard focus (accessibility) */
       a:focus-visible,
       button:focus-visible,
       input:focus-visible,
@@ -159,7 +186,7 @@
         z-index: 100;
         backdrop-filter: blur(18px);
         -webkit-backdrop-filter: blur(18px);
-        background: rgba(13, 13, 13, 0.85);
+        background: rgba(11, 16, 32, 0.85);
         border-bottom: 1px solid var(--line);
       }
 
@@ -179,19 +206,6 @@
         letter-spacing: -0.5px;
       }
 
-      .brand-mark {
-        width: 42px;
-        height: 42px;
-        display: grid;
-        place-items: center;
-        border-radius: 13px;
-        border: 1px solid rgba(var(--primary-rgb), 0.35);
-        background: rgba(var(--primary-rgb), 0.08);
-        color: var(--primary);
-        font-weight: 900;
-        font-size: 1.15rem;
-      }
-
       .nav-links {
         display: flex;
         align-items: center;
@@ -205,7 +219,6 @@
         border-radius: 11px;
         transition: 0.2s;
       }
-
       .nav-links button:hover {
         color: var(--primary);
         background: rgba(var(--primary-rgb), 0.08);
@@ -241,7 +254,6 @@
           opacity 0.2s,
           border-color 0.2s;
       }
-
       .btn:hover:not(:disabled) {
         transform: translateY(-2px);
       }
@@ -263,7 +275,6 @@
         border: 1px solid rgba(var(--primary-rgb), 0.35);
         color: var(--primary);
       }
-
       .btn-secondary:hover:not(:disabled) {
         background: rgba(var(--primary-rgb), 0.08);
       }
@@ -275,8 +286,8 @@
       }
 
       .btn-danger {
-        background: rgba(217, 101, 101, 0.1);
-        border: 1px solid rgba(217, 101, 101, 0.28);
+        background: rgba(240, 141, 141, 0.1);
+        border: 1px solid rgba(240, 141, 141, 0.28);
         color: var(--danger);
       }
 
@@ -319,10 +330,6 @@
         line-height: 1.15;
         letter-spacing: -2px;
         margin-bottom: 22px;
-      }
-
-      .gold-text {
-        color: var(--primary);
       }
 
       .hero p {
@@ -378,7 +385,6 @@
         border-radius: 999px;
         background: rgba(255, 255, 255, 0.07);
       }
-
       .bar span {
         display: block;
         height: 100%;
@@ -394,7 +400,6 @@
         align-items: center;
         font-size: 0.85rem;
       }
-
       .preview-row strong {
         text-align: left;
         direction: ltr;
@@ -488,7 +493,6 @@
         margin-bottom: 22px;
         flex-wrap: wrap;
       }
-
       .app-top h2 {
         font-size: 1.8rem;
       }
@@ -509,7 +513,6 @@
         border-radius: 17px;
         background: rgba(255, 255, 255, 0.02);
       }
-
       .app-tabs button {
         flex: 1;
         min-width: 120px;
@@ -519,7 +522,6 @@
         color: var(--muted);
         transition: 0.2s;
       }
-
       .app-tabs button:hover {
         color: var(--text);
       }
@@ -564,7 +566,6 @@
         overflow: hidden;
         margin-bottom: 30px;
       }
-
       .progress-track span {
         display: block;
         height: 100%;
@@ -608,7 +609,6 @@
         color: var(--text);
         transition: 0.2s;
       }
-
       .option:hover {
         border-color: rgba(var(--primary-rgb), 0.5);
         background: rgba(var(--primary-rgb), 0.06);
@@ -628,7 +628,6 @@
         border-radius: 9px;
         color: var(--muted);
       }
-
       .option.selected .option-mark {
         background: var(--primary);
         color: #111;
@@ -685,7 +684,6 @@
             rgba(255, 255, 255, 0.08) 0
           );
       }
-
       .score-circle::before {
         content: "";
         position: absolute;
@@ -693,7 +691,6 @@
         border-radius: inherit;
         border: 1px solid var(--line);
       }
-
       .score-circle strong {
         font-size: 3rem;
         line-height: 1.2;
@@ -723,7 +720,6 @@
         gap: 12px;
         font-size: 0.92rem;
       }
-
       .domain-row strong {
         text-align: left;
         direction: ltr;
@@ -737,7 +733,6 @@
         position: relative;
         overflow: hidden;
       }
-
       .path-card::after {
         content: "";
         position: absolute;
@@ -764,7 +759,6 @@
         position: relative;
         z-index: 1;
       }
-
       .step {
         padding: 10px 12px;
         border-radius: 11px;
@@ -797,7 +791,6 @@
         color: var(--primary);
         font-size: 0.75rem;
       }
-
       .tag-accent {
         background: rgba(var(--primary-rgb), 0.2);
         border-color: rgba(var(--primary-rgb), 0.5);
@@ -844,7 +837,6 @@
         border-radius: 13px;
         padding: 12px 13px;
       }
-
       .field select option {
         background: #1a1a1a;
         color: var(--text);
@@ -853,7 +845,6 @@
         min-height: 110px;
         resize: vertical;
       }
-
       .field input:focus,
       .field textarea:focus,
       .field select:focus {
@@ -915,7 +906,6 @@
         align-items: center;
         font-size: 0.92rem;
       }
-
       .domain-progress strong {
         text-align: left;
         direction: ltr;
@@ -999,7 +989,6 @@
         transition: 0.3s;
         pointer-events: none;
       }
-
       #toast.show {
         transform: translateY(0);
         opacity: 1;
@@ -1029,10 +1018,9 @@
           flex-direction: column;
           align-items: stretch;
           padding: 10px 18px 16px;
-          background: rgba(13, 13, 13, 0.98);
+          background: rgba(11, 16, 32, 0.98);
           border-bottom: 1px solid var(--line);
         }
-
         .nav-links.open {
           display: flex;
         }
@@ -1053,7 +1041,6 @@
         .hero {
           padding-top: 45px;
         }
-
         .grid-3,
         .method-grid,
         .progress-stats,
@@ -1103,6 +1090,61 @@
           scroll-behavior: auto !important;
         }
       }
+
+      /* ================= PRINT ================= */
+
+      @media print {
+        header,
+        footer,
+        .app-tabs,
+        .app-top-actions,
+        .menu-toggle,
+        .hero-actions,
+        .kbd-hint,
+        #toast {
+          display: none !important;
+        }
+
+        body {
+          background: #fff !important;
+          color: #111 !important;
+        }
+        * {
+          color: #111 !important;
+          box-shadow: none !important;
+        }
+
+        .card,
+        .hero-card,
+        .question-card,
+        .project-item {
+          background: #fff !important;
+          border: 1px solid #ddd !important;
+          break-inside: avoid;
+        }
+
+        .container {
+          width: 100% !important;
+        }
+
+        .bar {
+          background: #eee !important;
+        }
+        .bar span {
+          background: #5B8CFF !important;
+        }
+        .score-circle {
+          background: #fff !important;
+          border: 6px solid #5B8CFF !important;
+        }
+        .tag {
+          border: 1px solid #999 !important;
+        }
+
+        section {
+          padding: 20px 0 !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -1114,12 +1156,13 @@
           href="#"
           class="brand"
           aria-label="Talentino - صفحه اصلی"
-          onclick="
-            showHome();
-            return false;
-          "
+          onclick="showHome(); return false;"
         >
-          <img src="./images/logo-talentino-1.png" alt="Talentino" width="130px">
+          <img
+            src="./images/logo-talentino-1.png"
+            alt="Talentino"
+            width="130"
+          />
         </a>
 
         <nav class="nav-links" id="navLinks" aria-label="منوی اصلی">
@@ -1155,7 +1198,7 @@
     </header>
 
     <main id="home">
-      <!-- ===================== LANDING (صفحه معرفی) ===================== -->
+      <!-- ===================== LANDING ===================== -->
 
       <div id="landing">
         <section class="hero">
@@ -1212,25 +1255,21 @@
                   <div class="bar"><span style="width: 86%"></span></div>
                   <strong>86</strong>
                 </div>
-
                 <div class="preview-row">
                   <span>حل مسئله</span>
                   <div class="bar"><span style="width: 82%"></span></div>
                   <strong>82</strong>
                 </div>
-
                 <div class="preview-row">
                   <span>طراحی</span>
                   <div class="bar"><span style="width: 74%"></span></div>
                   <strong>74</strong>
                 </div>
-
                 <div class="preview-row">
                   <span>موسیقی</span>
                   <div class="bar"><span style="width: 68%"></span></div>
                   <strong>68</strong>
                 </div>
-
                 <div class="preview-row">
                   <span>ارتباطات</span>
                   <div class="bar"><span style="width: 61%"></span></div>
@@ -1316,7 +1355,7 @@
         </section>
       </div>
 
-      <!-- ===================== APP (پنل برنامه) ===================== -->
+      <!-- ===================== APP ===================== -->
 
       <section id="app" class="app-shell">
         <div class="container">
@@ -1327,6 +1366,14 @@
             </div>
 
             <div class="app-top-actions">
+              <button
+                type="button"
+                class="btn btn-ghost"
+                onclick="window.print()"
+                title="ذخیره یا چاپ گزارش"
+              >
+                🖨 دانلود / چاپ گزارش
+              </button>
               <button type="button" class="btn btn-ghost" onclick="showHome()">
                 → بازگشت به صفحه اصلی
               </button>
@@ -1395,7 +1442,7 @@
             </button>
           </div>
 
-          <!-- ============ ASSESSMENT PANEL ============ -->
+          <!-- ============ ASSESSMENT ============ -->
 
           <div id="panel-assessment" class="app-panel" role="tabpanel">
             <div
@@ -1426,9 +1473,10 @@
                 </div>
                 <div class="card">
                   <strong>۵ سطح پاسخ</strong>
-                 <p>از «کاملاً مخالفم» تا «کاملاً موافقم»</p>
+                  <p>از «کاملاً مخالفم» تا «کاملاً موافقم»</p>
                 </div>
               </div>
+
               <p
                 id="startNote"
                 style="
@@ -1483,7 +1531,7 @@
                     class="btn btn-ghost"
                     onclick="previousQuestion()"
                   >
-                   →  قبلی
+                    → قبلی
                   </button>
 
                   <button
@@ -1523,7 +1571,7 @@
             </div>
           </div>
 
-          <!-- ============ RESULTS PANEL ============ -->
+          <!-- ============ RESULTS ============ -->
 
           <div id="panel-results" class="app-panel" role="tabpanel">
             <div id="noResults" class="card">
@@ -1599,7 +1647,7 @@
             </div>
           </div>
 
-          <!-- ============ PATHS PANEL ============ -->
+          <!-- ============ PATHS ============ -->
 
           <div id="panel-paths" class="app-panel" role="tabpanel">
             <div class="section-heading">
@@ -1613,7 +1661,7 @@
             <div id="pathsContainer" class="grid grid-3"></div>
           </div>
 
-          <!-- ============ CHALLENGES PANEL ============ -->
+          <!-- ============ CHALLENGES ============ -->
 
           <div id="panel-challenges" class="app-panel" role="tabpanel">
             <div class="section-heading">
@@ -1627,7 +1675,7 @@
             <div id="challengesContainer" class="grid grid-3"></div>
           </div>
 
-          <!-- ============ PROJECTS PANEL ============ -->
+          <!-- ============ PROJECTS ============ -->
 
           <div id="panel-projects" class="app-panel" role="tabpanel">
             <div class="section-heading">
@@ -1675,7 +1723,7 @@
             </div>
           </div>
 
-          <!-- ============ PROGRESS PANEL ============ -->
+          <!-- ============ PROGRESS ============ -->
 
           <div id="panel-progress" class="app-panel" role="tabpanel">
             <div class="section-heading">
@@ -1714,7 +1762,7 @@
             </div>
           </div>
 
-          <!-- ============ METHODOLOGY PANEL ============ -->
+          <!-- ============ METHODOLOGY ============ -->
 
           <div id="panel-method" class="app-panel" role="tabpanel">
             <div class="section-heading">
@@ -1807,13 +1855,14 @@
           <strong class="footer-brand">Talentino</strong>
           <div>کشف ← تحلیل ← مسیر ← پروژه ← پیشرفت</div>
         </div>
+      </div>
     </footer>
 
     <div id="toast" role="status" aria-live="polite"></div>
 
     <script>
       /* =========================================================
-       TALENTINO ENGINE v3
+       TALENTINO ENGINE
        Explainable Multi-Domain Interest Profiling
     ========================================================== */
 
@@ -2094,140 +2143,136 @@
       const DOMAIN_KEYS = Object.keys(DOMAINS);
 
       /* =========================================================
-       2. QUESTION BANK  (18 domains × 3 questions = 54)
+       2. QUESTION BANK  —  18 domains × 5 questions = 90
     ========================================================== */
 
       const QUESTIONS = [
+        /* Technology */
+        { domain: "technology", text: "وقتی از یک برنامه یا وب‌سایت استفاده می‌کنی، کنجکاوی که بدانی پشت آن چگونه ساخته شده است؟" },
+        { domain: "technology", text: "یادگیری ابزارها و فناوری‌های دیجیتال جدید برایت لذت‌بخش است؟" },
+        { domain: "technology", text: "ساختن یک ابزار دیجیتال برای حل یک مسئله واقعی برایت جذاب است؟" },
+        { domain: "technology", text: "وقتی یک فناوری جدید می‌بینی، دوست داری بیشتر درباره نحوه کار کردن آن بدانی؟" },
+        { domain: "technology", text: "کار کردن با رایانه برای ساختن یا تغییر دادن یک چیز جدید برایت جذاب است؟" },
 
-  /* Technology */
-  { domain: "technology", text: "وقتی از یک برنامه یا وب‌سایت استفاده می‌کنی، کنجکاوی که بدانی پشت آن چگونه ساخته شده است؟" },
-  { domain: "technology", text: "یادگیری ابزارها و فناوری‌های دیجیتال جدید برایت لذت‌بخش است؟" },
-  { domain: "technology", text: "ساختن یک ابزار دیجیتال برای حل یک مسئله واقعی برایت جذاب است؟" },
-  { domain: "technology", text: "وقتی یک فناوری جدید می‌بینی، دوست داری بیشتر درباره نحوه کار کردن آن بدانی؟" },
-  { domain: "technology", text: "کار کردن با رایانه برای ساختن یا تغییر دادن یک چیز جدید برایت جذاب است؟" },
+        /* Problem Solving */
+        { domain: "problem", text: "وقتی با یک مسئله پیچیده روبه‌رو می‌شوی، از پیدا کردن راه‌حل آن لذت می‌بری؟" },
+        { domain: "problem", text: "مقایسه کردن چند راه‌حل مختلف برای یک مسئله برایت جذاب است؟" },
+        { domain: "problem", text: "پیدا کردن علت اصلی یک خطا یا مشکل برایت جالب است؟" },
+        { domain: "problem", text: "وقتی یک روش جواب نمی‌دهد، پیدا کردن روش دیگری برایت جذاب است؟" },
+        { domain: "problem", text: "بررسی مرحله‌به‌مرحله یک مسئله برای پیدا کردن راه‌حل آن برایت لذت‌بخش است؟" },
 
-  /* Problem Solving */
-  { domain: "problem", text: "وقتی با یک مسئله پیچیده روبه‌رو می‌شوی، از پیدا کردن راه‌حل آن لذت می‌بری؟" },
-  { domain: "problem", text: "مقایسه کردن چند راه‌حل مختلف برای یک مسئله برایت جذاب است؟" },
-  { domain: "problem", text: "پیدا کردن علت اصلی یک خطا یا مشکل برایت جالب است؟" },
-  { domain: "problem", text: "وقتی یک روش جواب نمی‌دهد، پیدا کردن روش دیگری برایت جذاب است؟" },
-  { domain: "problem", text: "بررسی مرحله‌به‌مرحله یک مسئله برای پیدا کردن راه‌حل آن برایت لذت‌بخش است؟" },
+        /* Design */
+        { domain: "design", text: "تصور کردن ظاهر نهایی یک اثر قبل از شروع طراحی برایت طبیعی است؟" },
+        { domain: "design", text: "وقتی ظاهر یک طرح را مناسب نمی‌بینی، به تغییر دادن آن فکر می‌کنی؟" },
+        { domain: "design", text: "توجه به فاصله، اندازه و جای عناصر در یک طرح برایت مهم است؟" },
+        { domain: "design", text: "انتخاب رنگ‌ها و شکل‌های مناسب برای یک طرح برایت جذاب است؟" },
+        { domain: "design", text: "تلاش برای زیباتر و منظم‌تر کردن ظاهر یک اثر برایت لذت‌بخش است؟" },
 
-  /* Design */
-  { domain: "design", text: "تصور کردن ظاهر نهایی یک اثر قبل از شروع طراحی برایت طبیعی است؟" },
-  { domain: "design", text: "وقتی ظاهر یک طرح را مناسب نمی‌بینی، به تغییر دادن آن فکر می‌کنی؟" },
-  { domain: "design", text: "توجه به فاصله، اندازه و جای عناصر در یک طرح برایت مهم است؟" },
-  { domain: "design", text: "انتخاب رنگ‌ها و شکل‌های مناسب برای یک طرح برایت جذاب است؟" },
-  { domain: "design", text: "تلاش برای زیباتر و منظم‌تر کردن ظاهر یک اثر برایت لذت‌بخش است؟" },
+        /* Music */
+        { domain: "music", text: "وقتی موسیقی می‌شنوی، توجهت به تفاوت صداها و سازهای مختلف جلب می‌شود؟" },
+        { domain: "music", text: "گاهی بدون شنیدن موسیقی، ملودی یا ریتمی در ذهنت شکل می‌گیرد؟" },
+        { domain: "music", text: "تمرین کردن یک قطعه موسیقی برای بهتر شدن اجرای آن برایت لذت‌بخش است؟" },
+        { domain: "music", text: "توجه کردن به ریتم و ضرب موسیقی برایت جذاب است؟" },
+        { domain: "music", text: "ساختن یا تغییر دادن یک ملودی برای بیان یک احساس برایت جذاب است؟" },
 
-  /* Music */
-  { domain: "music", text: "وقتی موسیقی می‌شنوی، توجهت به تفاوت صداها و سازهای مختلف جلب می‌شود؟" },
-  { domain: "music", text: "گاهی بدون شنیدن موسیقی، ملودی یا ریتمی در ذهنت شکل می‌گیرد؟" },
-  { domain: "music", text: "تمرین کردن یک قطعه موسیقی برای بهتر شدن اجرای آن برایت لذت‌بخش است؟" },
-  { domain: "music", text: "توجه کردن به ریتم و ضرب موسیقی برایت جذاب است؟" },
-  { domain: "music", text: "ساختن یا تغییر دادن یک ملودی برای بیان یک احساس برایت جذاب است؟" },
+        /* Science */
+        { domain: "science", text: "وقتی یک ادعای علمی می‌شنوی، دوست داری شواهد آن را بررسی کنی؟" },
+        { domain: "science", text: "اگر نتیجه یک آزمایش با انتظار تو متفاوت باشد، دوست داری علت آن را بررسی کنی؟" },
+        { domain: "science", text: "دسته‌بندی و مقایسه کردن پدیده‌های مختلف برایت جذاب است؟" },
+        { domain: "science", text: "مشاهده کردن یک پدیده و پیدا کردن توضیحی برای آن برایت جالب است؟" },
+        { domain: "science", text: "انجام دادن آزمایش برای بررسی اینکه یک ایده درست است یا نه برایت جذاب است؟" },
 
-  /* Science */
-  { domain: "science", text: "وقتی یک ادعای علمی می‌شنوی، دوست داری شواهد آن را بررسی کنی؟" },
-  { domain: "science", text: "اگر نتیجه یک آزمایش با انتظار تو متفاوت باشد، دوست داری علت آن را بررسی کنی؟" },
-  { domain: "science", text: "دسته‌بندی و مقایسه کردن پدیده‌های مختلف برایت جذاب است؟" },
-  { domain: "science", text: "مشاهده کردن یک پدیده و پیدا کردن توضیحی برای آن برایت جالب است؟" },
-  { domain: "science", text: "انجام دادن آزمایش برای بررسی اینکه یک ایده درست است یا نه برایت جذاب است؟" },
+        /* Mathematics */
+        { domain: "mathematics", text: "حل کردن مسئله‌ای که برای رسیدن به جواب آن باید چند مرحله فکر کنی برایت لذت‌بخش است؟" },
+        { domain: "mathematics", text: "پیدا کردن الگوها و رابطه‌های منطقی بین اعداد یا شکل‌ها برایت جذاب است؟" },
+        { domain: "mathematics", text: "حل مسئله‌های ریاضی که پاسخ آن‌ها را از قبل نمی‌دانی برایت جالب است؟" },
+        { domain: "mathematics", text: "بررسی کردن اینکه چگونه یک عدد یا مقدار از مقدار دیگری به دست می‌آید برایت جذاب است؟" },
+        { domain: "mathematics", text: "پیدا کردن یک روش منطقی و کوتاه‌تر برای حل یک مسئله ریاضی برایت لذت‌بخش است؟" },
 
-  /* Mathematics */
-  { domain: "mathematics", text: "حل کردن مسئله‌ای که برای رسیدن به جواب آن باید چند مرحله فکر کنی برایت لذت‌بخش است؟" },
-  { domain: "mathematics", text: "پیدا کردن الگوها و رابطه‌های منطقی بین اعداد یا شکل‌ها برایت جذاب است؟" },
-  { domain: "mathematics", text: "حل مسئله‌های ریاضی که پاسخ آن‌ها را از قبل نمی‌دانی برایت جالب است؟" },
-  { domain: "mathematics", text: "بررسی کردن اینکه چگونه یک عدد یا مقدار از مقدار دیگری به دست می‌آید برایت جذاب است؟" },
-  { domain: "mathematics", text: "پیدا کردن یک روش منطقی و کوتاه‌تر برای حل یک مسئله ریاضی برایت لذت‌بخش است؟" },
+        /* Literature */
+        { domain: "literature", text: "پیدا کردن واژه دقیق برای بیان یک منظور مشخص برایت مهم است؟" },
+        { domain: "literature", text: "نوشتن درباره یک صحنه یا احساس برایت جذاب است؟" },
+        { domain: "literature", text: "خواندن متن‌هایی با سبک‌های نوشتاری متفاوت برایت لذت‌بخش است؟" },
+        { domain: "literature", text: "توجه کردن به شیوه‌ای که یک نویسنده احساس یا مفهوم خاصی را بیان می‌کند برایت جالب است؟" },
+        { domain: "literature", text: "ساختن یک داستان یا توصیف یک موضوع با استفاده از واژه‌های خودت برایت جذاب است؟" },
 
-  /* Literature */
-  { domain: "literature", text: "پیدا کردن واژه دقیق برای بیان یک منظور مشخص برایت مهم است؟" },
-  { domain: "literature", text: "نوشتن درباره یک صحنه یا احساس برایت جذاب است؟" },
-  { domain: "literature", text: "خواندن متن‌هایی با سبک‌های نوشتاری متفاوت برایت لذت‌بخش است؟" },
-  { domain: "literature", text: "توجه کردن به شیوه‌ای که یک نویسنده احساس یا مفهوم خاصی را بیان می‌کند برایت جالب است؟" },
-  { domain: "literature", text: "ساختن یک داستان یا توصیف یک موضوع با استفاده از واژه‌های خودت برایت جذاب است؟" },
+        /* Languages */
+        { domain: "languages", text: "یادگیری واژه‌های یک زبان جدید برایت جذاب است؟" },
+        { domain: "languages", text: "توجه به تفاوت‌های تلفظ و لهجه در زبان‌ها برایت جالب است؟" },
+        { domain: "languages", text: "یادگیری یک زبان جدید حتی بدون نیاز فوری برایت لذت‌بخش است؟" },
+        { domain: "languages", text: "مقایسه کردن شیوه بیان یک مفهوم در زبان‌های مختلف برایت جذاب است؟" },
+        { domain: "languages", text: "تلاش برای فهمیدن معنای یک جمله در زبانی که هنوز به‌خوبی بلد نیستی برایت جالب است؟" },
 
-  /* Languages */
-  { domain: "languages", text: "یادگیری واژه‌های یک زبان جدید برایت جذاب است؟" },
+        /* Communication */
+        { domain: "communication", text: "وقتی با کسی صحبت می‌کنی، به واکنش او نسبت به حرف‌هایت توجه می‌کنی؟" },
+        { domain: "communication", text: "بیان کردن یک نظر به شکلی که دیگران آن را به‌خوبی درک کنند برایت جذاب است؟" },
+        { domain: "communication", text: "وقتی موضوعی پیچیده را توضیح می‌دهی، پیدا کردن مثال مناسب برایت جالب است؟" },
+        { domain: "communication", text: "تلاش برای فهمیدن منظور واقعی یک نفر هنگام صحبت کردن برایت جذاب است؟" },
+        { domain: "communication", text: "صحبت کردن درباره یک موضوع و شنیدن دیدگاه‌های متفاوت دیگران برایت لذت‌بخش است؟" },
 
-{ domain: "languages", text: "توجه به تفاوت‌های تلفظ و لهجه در زبان‌ها برایت جالب است؟" },
-  { domain: "languages", text: "یادگیری یک زبان جدید حتی بدون نیاز فوری برایت لذت‌بخش است؟" },
-  { domain: "languages", text: "مقایسه کردن شیوه بیان یک مفهوم در زبان‌های مختلف برایت جذاب است؟" },
-  { domain: "languages", text: "تلاش برای فهمیدن معنای یک جمله در زبانی که هنوز به‌خوبی بلد نیستی برایت جالب است؟" },
+        /* Social */
+        { domain: "social", text: "شناختن افراد جدید و آشنایی با آن‌ها برایت لذت‌بخش است؟" },
+        { domain: "social", text: "کمک کردن به افراد برای حل یک اختلاف یا سوءتفاهم برایت رضایت‌بخش است؟" },
+        { domain: "social", text: "کار کردن با دیگران برای رسیدن به یک هدف مشترک را دوست داری؟" },
+        { domain: "social", text: "شنیدن تجربه‌ها و دیدگاه‌های متفاوت افراد برایت جالب است؟" },
+        { domain: "social", text: "مشارکت در فعالیت‌هایی که به همکاری چند نفر نیاز دارند برایت جذاب است؟" },
 
-  /* Communication */
-  { domain: "communication", text: "وقتی با کسی صحبت می‌کنی، به واکنش او نسبت به حرف‌هایت توجه می‌کنی؟" },
-  { domain: "communication", text: "بیان کردن یک نظر به شکلی که دیگران آن را به‌خوبی درک کنند برایت جذاب است؟" },
-  { domain: "communication", text: "وقتی موضوعی پیچیده را توضیح می‌دهی، پیدا کردن مثال مناسب برایت جالب است؟" },
-  { domain: "communication", text: "تلاش برای فهمیدن منظور واقعی یک نفر هنگام صحبت کردن برایت جذاب است؟" },
-  { domain: "communication", text: "صحبت کردن درباره یک موضوع و شنیدن دیدگاه‌های متفاوت دیگران برایت لذت‌بخش است؟" },
+        /* Leadership */
+        { domain: "leadership", text: "وقتی در یک کار گروهی مسئولیت مشخصی نداری، تمایل داری برای سازمان‌دهی کارها پیش‌قدم شوی؟" },
+        { domain: "leadership", text: "بر عهده گرفتن مسئولیت تصمیم‌های یک گروه برایت جذاب است؟" },
+        { domain: "leadership", text: "برنامه‌ریزی و تقسیم وظایف اعضای یک گروه برایت جالب است؟" },
+        { domain: "leadership", text: "هماهنگ کردن افراد برای رسیدن به یک هدف مشترک برایت لذت‌بخش است؟" },
+        { domain: "leadership", text: "وقتی یک کار گروهی بدون برنامه پیش می‌رود، دوست داری به سازمان‌دهی آن کمک کنی؟" },
 
-  /* Social */
-  { domain: "social", text: "شناختن افراد جدید و آشنایی با آن‌ها برایت لذت‌بخش است؟" },
-  { domain: "social", text: "کمک کردن به افراد برای حل یک اختلاف یا سوءتفاهم برایت رضایت‌بخش است؟" },
-  { domain: "social", text: "کار کردن با دیگران برای رسیدن به یک هدف مشترک را دوست داری؟" },
-  { domain: "social", text: "شنیدن تجربه‌ها و دیدگاه‌های متفاوت افراد برایت جالب است؟" },
-  { domain: "social", text: "مشارکت در فعالیت‌هایی که به همکاری چند نفر نیاز دارند برایت جذاب است؟" },
+        /* Entrepreneurship */
+        { domain: "entrepreneurship", text: "وقتی محصول یا خدمتی را می‌بینی، به ایده‌هایی برای بهتر کردن آن فکر می‌کنی؟" },
+        { domain: "entrepreneurship", text: "تبدیل کردن یک ایده به محصول یا خدمتی که دیگران بتوانند از آن استفاده کنند برایت جذاب است؟" },
+        { domain: "entrepreneurship", text: "فکر کردن به اینکه یک ایده چگونه می‌تواند درآمد ایجاد کند برایت جالب است؟" },
+        { domain: "entrepreneurship", text: "پیدا کردن یک نیاز و فکر کردن به راهی برای پاسخ دادن به آن برایت جذاب است؟" },
+        { domain: "entrepreneurship", text: "بررسی کردن اینکه مردم به یک محصول یا خدمت جدید نیاز دارند یا نه برایت جالب است؟" },
 
-  /* Leadership */
-  { domain: "leadership", text: "وقتی در یک کار گروهی مسئولیت مشخصی نداری، تمایل داری برای سازمان‌دهی کارها پیش‌قدم شوی؟" },
-  { domain: "leadership", text: "بر عهده گرفتن مسئولیت تصمیم‌های یک گروه برایت جذاب است؟" },
-  { domain: "leadership", text: "برنامه‌ریزی و تقسیم وظایف اعضای یک گروه برایت جالب است؟" },
-  { domain: "leadership", text: "هماهنگ کردن افراد برای رسیدن به یک هدف مشترک برایت لذت‌بخش است؟" },
-  { domain: "leadership", text: "وقتی یک کار گروهی بدون برنامه پیش می‌رود، دوست داری به سازمان‌دهی آن کمک کنی؟" },
+        /* Technical */
+        { domain: "technical", text: "وقتی وسیله‌ای خراب می‌شود، دوست داری علت خرابی آن را خودت بررسی کنی؟" },
+        { domain: "technical", text: "فهمیدن اینکه قطعات یک وسیله چگونه به یکدیگر متصل می‌شوند برایت جذاب است؟" },
+        { domain: "technical", text: "ساختن یا مونتاژ کردن یک وسیله با ابزار واقعی برایت لذت‌بخش است؟" },
+        { domain: "technical", text: "کار کردن با ابزار برای ساختن یا تعمیر کردن یک وسیله برایت جذاب است؟" },
+        { domain: "technical", text: "باز کردن یک وسیله برای فهمیدن نحوه کار کردن آن برایت جالب است؟" },
 
-  /* Entrepreneurship */
-  { domain: "entrepreneurship", text: "وقتی محصول یا خدمتی را می‌بینی، به ایده‌هایی برای بهتر کردن آن فکر می‌کنی؟" },
-  { domain: "entrepreneurship", text: "تبدیل کردن یک ایده به محصول یا خدمتی که دیگران بتوانند از آن استفاده کنند برایت جذاب است؟" },
-  { domain: "entrepreneurship", text: "فکر کردن به اینکه یک ایده چگونه می‌تواند درآمد ایجاد کند برایت جالب است؟" },
-  { domain: "entrepreneurship", text: "پیدا کردن یک نیاز و فکر کردن به راهی برای پاسخ دادن به آن برایت جذاب است؟" },
-  { domain: "entrepreneurship", text: "بررسی کردن اینکه مردم به یک محصول یا خدمت جدید نیاز دارند یا نه برایت جالب است؟" },
+        /* Sports */
+        { domain: "sports", text: "تمرین منظم برای بهتر شدن در یک مهارت ورزشی برایت لذت‌بخش است؟" },
+        { domain: "sports", text: "تلاش برای بهتر کردن رکورد یا عملکرد قبلی خودت برایت انگیزه‌بخش است؟" },
+        { domain: "sports", text: "توجه به نحوه درست انجام دادن حرکات ورزشی برایت جالب است؟" },
+        { domain: "sports", text: "یادگیری یک مهارت یا حرکت ورزشی جدید برایت جذاب است؟" },
+        { domain: "sports", text: "ادامه دادن تمرین یک مهارت ورزشی تا بهتر شدن در آن برایت لذت‌بخش است؟" },
 
-  /* Technical */
-  { domain: "technical", text: "وقتی وسیله‌ای خراب می‌شود، دوست داری علت خرابی آن را خودت بررسی کنی؟" },
-  { domain: "technical", text: "فهمیدن اینکه قطعات یک وسیله چگونه به یکدیگر متصل می‌شوند برایت جذاب است؟" },
-  { domain: "technical", text: "ساختن یا مونتاژ کردن یک وسیله با ابزار واقعی برایت لذت‌بخش است؟" },
-  { domain: "technical", text: "کار کردن با ابزار برای ساختن یا تعمیر کردن یک وسیله برایت جذاب است؟" },
-  { domain: "technical", text: "باز کردن یک وسیله برای فهمیدن نحوه کار کردن آن برایت جالب است؟" },
+        /* Performance */
+        { domain: "performance", text: "اجرا کردن یک فعالیت هنری یا نمایشی در برابر دیگران برایت جذاب است؟" },
+        { domain: "performance", text: "تمرین کردن نحوه بیان، صدا یا حرکات بدن برای یک اجرا برایت لذت‌بخش است؟" },
+        { domain: "performance", text: "تجربه کردن نقش‌ها و شیوه‌های بیان متفاوت در یک اجرا برایت جذاب است؟" },
+        { domain: "performance", text: "بیان کردن یک احساس یا داستان از طریق اجرا برایت جالب است؟" },
+        { domain: "performance", text: "تمرین کردن یک اجرا تا بتوانی آن را بهتر در برابر دیگران ارائه کنی برایت لذت‌بخش است؟" },
 
-  /* Sports */
-  { domain: "sports", text: "تمرین منظم برای بهتر شدن در یک مهارت ورزشی برایت لذت‌بخش است؟" },
-  { domain: "sports", text: "تلاش برای بهتر کردن رکورد یا عملکرد قبلی خودت برایت انگیزه‌بخش است؟" },
-  { domain: "sports", text: "توجه به نحوه درست انجام دادن حرکات ورزشی برایت جالب است؟" },
-  { domain: "sports", text: "یادگیری یک مهارت یا حرکت ورزشی جدید برایت جذاب است؟" },
-  { domain: "sports", text: "ادامه دادن تمرین یک مهارت ورزشی تا بهتر شدن در آن برایت لذت‌بخش است؟" },
+        /* Education */
+        { domain: "education", text: "وقتی پاسخ یک سؤال را می‌دانی، توضیح دادن دلیل آن برایت لذت‌بخش است؟" },
+        { domain: "education", text: "کمک کردن به کسی برای فهمیدن یک موضوع دشوار برایت رضایت‌بخش است؟" },
+        { domain: "education", text: "پیدا کردن روش‌های متفاوت برای آموزش یک موضوع برایت جذاب است؟" },
+        { domain: "education", text: "توضیح دادن یک موضوع به شکلی ساده و قابل فهم برایت جالب است؟" },
+        { domain: "education", text: "دیدن اینکه کسی با توضیح تو یک موضوع را بهتر می‌فهمد برایت رضایت‌بخش است؟" },
 
-  /* Performance */
-  { domain: "performance", text: "اجرا کردن یک فعالیت هنری یا نمایشی در برابر دیگران برایت جذاب است؟" },
+        /* Environment */
+        { domain: "environment", text: "توجه کردن به گیاهان، جانوران و پدیده‌های طبیعی اطراف برایت جالب است؟" },
+        { domain: "environment", text: "یادگیری درباره تأثیر فعالیت‌های انسان بر محیط‌زیست برایت جذاب است؟" },
+        { domain: "environment", text: "مشارکت در فعالیت‌هایی برای مراقبت از طبیعت برایت لذت‌بخش است؟" },
+        { domain: "environment", text: "بررسی کردن علت تغییرات در طبیعت برایت جالب است؟" },
+        { domain: "environment", text: "فکر کردن به راه‌هایی برای کاهش آسیب به محیط‌زیست برایت جذاب است؟" },
 
-{ domain: "performance", text: "تمرین کردن نحوه بیان، صدا یا حرکات بدن برای یک اجرا برایت لذت‌بخش است؟" },
-  { domain: "performance", text: "تجربه کردن نقش‌ها و شیوه‌های بیان متفاوت در یک اجرا برایت جذاب است؟" },
-  { domain: "performance", text: "بیان کردن یک احساس یا داستان از طریق اجرا برایت جالب است؟" },
-  { domain: "performance", text: "تمرین کردن یک اجرا تا بتوانی آن را بهتر در برابر دیگران ارائه کنی برایت لذت‌بخش است؟" },
-
-  /* Education */
-  { domain: "education", text: "وقتی پاسخ یک سؤال را می‌دانی، توضیح دادن دلیل آن برایت لذت‌بخش است؟" },
-  { domain: "education", text: "کمک کردن به کسی برای فهمیدن یک موضوع دشوار برایت رضایت‌بخش است؟" },
-  { domain: "education", text: "پیدا کردن روش‌های متفاوت برای آموزش یک موضوع برایت جذاب است؟" },
-  { domain: "education", text: "توضیح دادن یک موضوع به شکلی ساده و قابل فهم برایت جالب است؟" },
-  { domain: "education", text: "دیدن اینکه کسی با توضیح تو یک موضوع را بهتر می‌فهمد برایت رضایت‌بخش است؟" },
-
-  /* Environment */
-  { domain: "environment", text: "توجه کردن به گیاهان، جانوران و پدیده‌های طبیعی اطراف برایت جالب است؟" },
-  { domain: "environment", text: "یادگیری درباره تأثیر فعالیت‌های انسان بر محیط‌زیست برایت جذاب است؟" },
-  { domain: "environment", text: "مشارکت در فعالیت‌هایی برای مراقبت از طبیعت برایت لذت‌بخش است؟" },
-  { domain: "environment", text: "بررسی کردن علت تغییرات در طبیعت برایت جالب است؟" },
-  { domain: "environment", text: "فکر کردن به راه‌هایی برای کاهش آسیب به محیط‌زیست برایت جذاب است؟" },
-
-  /* Creativity */
-  { domain: "creativity", text: "وقتی با یک مسئله روبه‌رو می‌شوی، به راه‌حل‌های متفاوت از روش‌های معمول فکر می‌کنی؟" },
-  { domain: "creativity", text: "استفاده از یک وسیله یا ایده به شیوه‌ای متفاوت از کاربرد معمول آن برایت جذاب است؟" },
-  { domain: "creativity", text: "محدودیت‌هایی مثل زمان یا امکانات کم، تو را به پیدا کردن ایده‌های جدید تشویق می‌کند؟" },
-  { domain: "creativity", text: "ترکیب کردن چند ایده برای ساختن یک ایده جدید برایت جذاب است؟" },
-  { domain: "creativity", text: "پیدا کردن کاربردهای جدید برای چیزهای معمولی برایت لذت‌بخش است؟" }
-
-];
+        /* Creativity */
+        { domain: "creativity", text: "وقتی با یک مسئله روبه‌رو می‌شوی، به راه‌حل‌های متفاوت از روش‌های معمول فکر می‌کنی؟" },
+        { domain: "creativity", text: "استفاده از یک وسیله یا ایده به شیوه‌ای متفاوت از کاربرد معمول آن برایت جذاب است؟" },
+        { domain: "creativity", text: "محدودیت‌هایی مثل زمان یا امکانات کم، تو را به پیدا کردن ایده‌های جدید تشویق می‌کند؟" },
+        { domain: "creativity", text: "ترکیب کردن چند ایده برای ساختن یک ایده جدید برایت جذاب است؟" },
+        { domain: "creativity", text: "پیدا کردن کاربردهای جدید برای چیزهای معمولی برایت لذت‌بخش است؟" },
+      ];
 
       /* =========================================================
        3. ANSWER SCALE
@@ -2246,160 +2291,24 @@
     ========================================================== */
 
       const CHALLENGES = [
-        {
-          id: "web-page",
-          title: "ساخت یک صفحه وب",
-          domain: "technology",
-          level: "مقدماتی",
-          time: "۶۰ دقیقه",
-          description: "یک صفحه معرفی شخصی با HTML و CSS بساز.",
-        },
-        {
-          id: "multi-step",
-          title: "حل یک مسئله چندمرحله‌ای",
-          domain: "problem",
-          level: "متوسط",
-          time: "۴۵ دقیقه",
-          description:
-            "یک مسئله را به چند مرحله کوچک تقسیم و راه‌حل را مستند کن.",
-        },
-        {
-          id: "poster",
-          title: "طراحی یک پوستر",
-          domain: "design",
-          level: "مقدماتی",
-          time: "۹۰ دقیقه",
-          description:
-            "برای یک رویداد فرضی پوستر طراحی کن و دلیل انتخاب رنگ و فونت را بنویس.",
-        },
-        {
-          id: "melody",
-          title: "ساخت یک ملودی",
-          domain: "music",
-          level: "مقدماتی",
-          time: "۶۰ دقیقه",
-          description: "یک ملودی کوتاه بساز و ساختار آن را توضیح بده.",
-        },
-        {
-          id: "experiment",
-          title: "طراحی یک آزمایش",
-          domain: "science",
-          level: "متوسط",
-          time: "۶۰ دقیقه",
-          description: "برای یک سؤال علمی، فرضیه، متغیرها و روش آزمایش بنویس.",
-        },
-        {
-          id: "number-pattern",
-          title: "پیدا کردن الگوی عددی",
-          domain: "mathematics",
-          level: "متوسط",
-          time: "۳۰ دقیقه",
-          description: "یک الگوی عددی طراحی کن و قانون آن را توضیح بده.",
-        },
-        {
-          id: "short-story",
-          title: "داستان کوتاه",
-          domain: "literature",
-          level: "مقدماتی",
-          time: "۶۰ دقیقه",
-          description: "یک داستان کوتاه با شروع، بحران و پایان بنویس.",
-        },
-        {
-          id: "foreign-intro",
-          title: "معرفی یک موضوع به زبان دیگر",
-          domain: "languages",
-          level: "متوسط",
-          time: "۴۵ دقیقه",
-          description: "یک موضوع ساده را در یک زبان خارجی معرفی کن.",
-        },
-        {
-          id: "three-min-talk",
-          title: "ارائه سه‌دقیقه‌ای",
-          domain: "communication",
-          level: "مقدماتی",
-          time: "۳۰ دقیقه",
-          description:
-            "یک موضوع را در سه دقیقه با ساختار مقدمه، بدنه و نتیجه ارائه کن.",
-        },
-        {
-          id: "team-project",
-          title: "پروژه تیمی کوچک",
-          domain: "social",
-          level: "متوسط",
-          time: "۱۲۰ دقیقه",
-          description:
-            "با دو یا سه نفر یک فعالیت کوچک را تقسیم وظایف و اجرا کن.",
-        },
-        {
-          id: "project-plan",
-          title: "برنامه‌ریزی یک پروژه",
-          domain: "leadership",
-          level: "متوسط",
-          time: "۴۵ دقیقه",
-          description: "برای یک پروژه فرضی زمان‌بندی و تقسیم وظایف ایجاد کن.",
-        },
-        {
-          id: "product-idea",
-          title: "ایده یک محصول",
-          domain: "entrepreneurship",
-          level: "متوسط",
-          time: "۶۰ دقیقه",
-          description:
-            "یک مشکل واقعی را پیدا کن و نمونه اولیه راه‌حل را تعریف کن.",
-        },
-        {
-          id: "simple-device",
-          title: "ساخت یک وسیله ساده",
-          domain: "technical",
-          level: "مقدماتی",
-          time: "۹۰ دقیقه",
-          description:
-            "با ابزارهای امن و در دسترس (و در صورت نیاز با کمک بزرگ‌تر) یک وسیله ساده بساز.",
-        },
-        {
-          id: "sport-goal",
-          title: "هدف ورزشی",
-          domain: "sports",
-          level: "مقدماتی",
-          time: "۳۰ دقیقه",
-          description:
-            "یک هدف ورزشی سالم و قابل اندازه‌گیری برای خودت تعریف کن.",
-        },
-        {
-          id: "short-performance",
-          title: "اجرای کوتاه",
-          domain: "performance",
-          level: "متوسط",
-          time: "۶۰ دقیقه",
-          description:
-            "یک اجرای کوتاه آماده و ضبط کن و نقاط قوت و ضعف را بنویس.",
-        },
-        {
-          id: "teach-concept",
-          title: "آموزش یک مفهوم",
-          domain: "education",
-          level: "مقدماتی",
-          time: "۴۵ دقیقه",
-          description:
-            "یک مفهوم را طوری توضیح بده که دانش‌آموز دیگری بتواند آن را بفهمد.",
-        },
-        {
-          id: "eco-issue",
-          title: "بررسی یک مسئله محیط‌زیستی",
-          domain: "environment",
-          level: "متوسط",
-          time: "۹۰ دقیقه",
-          description:
-            "یک مشکل محیط‌زیستی محلی را بررسی و یک راه‌حل پیشنهادی ارائه کن.",
-        },
-        {
-          id: "twenty-ideas",
-          title: "ایده‌پردازی ۲۰گانه",
-          domain: "creativity",
-          level: "مقدماتی",
-          time: "۳۰ دقیقه",
-          description: "برای یک مسئله مشخص، ۲۰ راه‌حل متفاوت تولید کن.",
-        },
+        { id: "web-page", title: "ساخت یک صفحه وب", domain: "technology", level: "مقدماتی", time: "۶۰ دقیقه", description: "یک صفحه معرفی شخصی با HTML و CSS بساز." },
+        { id: "multi-step", title: "حل یک مسئله چندمرحله‌ای", domain: "problem", level: "متوسط", time: "۴۵ دقیقه", description: "یک مسئله را به چند مرحله کوچک تقسیم و راه‌حل را مستند کن." },
+        { id: "poster", title: "طراحی یک پوستر", domain: "design", level: "مقدماتی", time: "۹۰ دقیقه", description: "برای یک رویداد فرضی پوستر طراحی کن و دلیل انتخاب رنگ و فونت را بنویس." },
+        { id: "melody", title: "ساخت یک ملودی", domain: "music", level: "مقدماتی", time: "۶۰ دقیقه", description: "یک ملودی کوتاه بساز و ساختار آن را توضیح بده." },
+        { id: "experiment", title: "طراحی یک آزمایش", domain: "science", level: "متوسط", time: "۶۰ دقیقه", description: "برای یک سؤال علمی، فرضیه، متغیرها و روش آزمایش بنویس." },
+        { id: "number-pattern", title: "پیدا کردن الگوی عددی", domain: "mathematics", level: "متوسط", time: "۳۰ دقیقه", description: "یک الگوی عددی طراحی کن و قانون آن را توضیح بده." },
+        { id: "short-story", title: "داستان کوتاه", domain: "literature", level: "مقدماتی", time: "۶۰ دقیقه", description: "یک داستان کوتاه با شروع، بحران و پایان بنویس." },
+        { id: "foreign-intro", title: "معرفی یک موضوع به زبان دیگر", domain: "languages", level: "متوسط", time: "۴۵ دقیقه", description: "یک موضوع ساده را در یک زبان خارجی معرفی کن." },
+        { id: "three-min-talk", title: "ارائه سه‌دقیقه‌ای", domain: "communication", level: "مقدماتی", time: "۳۰ دقیقه", description: "یک موضوع را در سه دقیقه با ساختار مقدمه، بدنه و نتیجه ارائه کن." },
+        { id: "team-project", title: "پروژه تیمی کوچک", domain: "social", level: "متوسط", time: "۱۲۰ دقیقه", description: "با دو یا سه نفر یک فعالیت کوچک را تقسیم وظایف و اجرا کن." },
+        { id: "project-plan", title: "برنامه‌ریزی یک پروژه", domain: "leadership", level: "متوسط", time: "۴۵ دقیقه", description: "برای یک پروژه فرضی زمان‌بندی و تقسیم وظایف ایجاد کن." },
+        { id: "product-idea", title: "ایده یک محصول", domain: "entrepreneurship", level: "متوسط", time: "۶۰ دقیقه", description: "یک مشکل واقعی را پیدا کن و نمونه اولیه راه‌حل را تعریف کن." },
+        { id: "simple-device", title: "ساخت یک وسیله ساده", domain: "technical", level: "مقدماتی", time: "۹۰ دقیقه", description: "با ابزارهای امن و در دسترس (و در صورت نیاز با کمک بزرگ‌تر) یک وسیله ساده بساز." },
+        { id: "sport-goal", title: "هدف ورزشی", domain: "sports", level: "مقدماتی", time: "۳۰ دقیقه", description: "یک هدف ورزشی سالم و قابل اندازه‌گیری برای خودت تعریف کن." },
+        { id: "short-performance", title: "اجرای کوتاه", domain: "performance", level: "متوسط", time: "۶۰ دقیقه", description: "یک اجرای کوتاه آماده و ضبط کن و نقاط قوت و ضعف را بنویس." },
+        { id: "teach-concept", title: "آموزش یک مفهوم", domain: "education", level: "مقدماتی", time: "۴۵ دقیقه", description: "یک مفهوم را طوری توضیح بده که دانش‌آموز دیگری بتواند آن را بفهمد." },
+        { id: "eco-issue", title: "بررسی یک مسئله محیط‌زیستی", domain: "environment", level: "متوسط", time: "۹۰ دقیقه", description: "یک مشکل محیط‌زیستی محلی را بررسی و یک راه‌حل پیشنهادی ارائه کن." },
+        { id: "twenty-ideas", title: "ایده‌پردازی ۲۰گانه", domain: "creativity", level: "مقدماتی", time: "۳۰ دقیقه", description: "برای یک مسئله مشخص، ۲۰ راه‌حل متفاوت تولید کن." },
       ];
 
       const CHALLENGE_IDS = CHALLENGES.map((c) => c.id);
@@ -2417,7 +2326,7 @@
       function defaultState() {
         return {
           version: 3,
-          draft: null, // { currentQuestion, answers }
+          draft: null,
           answers: {},
           resultsReady: false,
           completedChallenges: [],
@@ -2426,7 +2335,7 @@
       }
 
       let state = defaultState();
-      let assessmentView = "start"; // start | quiz | complete
+      let assessmentView = "start";
 
       /* =========================================================
        6. STORAGE (validated)
@@ -2600,13 +2509,12 @@
       });
 
       /* =========================================================
-       9. NAVIGATION  (Landing ⇄ App)
+       9. NAVIGATION
     ========================================================== */
 
       function toggleMenu(forceClose = false) {
         const nav = el("navLinks");
         const toggle = el("menuToggle");
-
         const open = forceClose ? false : !nav.classList.contains("open");
 
         nav.classList.toggle("open", open);
@@ -2633,7 +2541,6 @@
           showHome(id);
           return;
         }
-
         toggleMenu(true);
         el(id)?.scrollIntoView({ behavior: "smooth" });
       }
@@ -2645,7 +2552,6 @@
         el("app").classList.add("open");
 
         switchPanel(panel);
-
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
@@ -2686,7 +2592,6 @@
           if (assessmentView === "complete") assessmentView = "start";
           renderAssessmentStart();
         }
-
         if (panel === "results") renderResults();
         if (panel === "paths") renderPaths();
         if (panel === "challenges") renderChallenges();
@@ -2733,7 +2638,6 @@
               beginAssessment(false),
             ),
           );
-
           actions.appendChild(
             makeButton("شروع از نو", "btn-secondary", () =>
               beginAssessment(true),
@@ -2748,7 +2652,6 @@
               beginAssessment(true),
             ),
           );
-
           actions.appendChild(
             makeButton("مشاهده پروفایل فعلی", "btn-secondary", () =>
               switchPanel("results"),
@@ -2791,9 +2694,9 @@
 
         const answeredCount = Object.keys(draft.answers).length;
 
-        el("questionCounter").textContent =
-          `سؤال ${fa(index + 1)} از ${fa(QUESTIONS.length)}`;
-
+        el("questionCounter").textContent = `سؤال ${fa(index + 1)} از ${fa(
+          QUESTIONS.length,
+        )}`;
         el("questionNumber").textContent = `پرسش ${fa(index + 1)}`;
         el("questionText").textContent = question.text;
 
@@ -2801,7 +2704,6 @@
         el("questionDomain").textContent = `${domain.icon} ${domain.name}`;
 
         const percent = Math.round((answeredCount / QUESTIONS.length) * 100);
-
         el("assessmentProgress").style.width = `${percent}%`;
         el("progressBarWrap").setAttribute("aria-valuenow", String(percent));
 
@@ -2819,28 +2721,25 @@
           button.setAttribute("aria-pressed", String(isSelected));
 
           button.innerHTML = `
-          <span class="option-mark">${isSelected ? "✓" : fa(answer.value)}</span>
-          <span>${answer.label}</span>
-        `;
+            <span class="option-mark">${isSelected ? "✓" : fa(answer.value)}</span>
+            <span>${answer.label}</span>
+          `;
 
           button.addEventListener("click", () => selectAnswer(answer.value));
 
           if (isSelected) selectedButton = button;
-
           container.appendChild(button);
         });
 
         if (focusSelected && selectedButton) selectedButton.focus();
 
         el("prevQuestionBtn").disabled = index === 0;
-
         el("nextQuestionBtn").textContent =
           index === QUESTIONS.length - 1 ? "پایان و تحلیل ✓" : "بعدی ←";
       }
 
       function selectAnswer(value) {
         if (!state.draft) return;
-
         state.draft.answers[state.draft.currentQuestion] = value;
         saveState();
         renderQuestion(true);
@@ -2924,7 +2823,6 @@
           if (value === undefined) return;
 
           const s = stats[question.domain];
-
           s.sum += value;
           s.count++;
           if (value >= 4) s.strong++;
@@ -2933,7 +2831,6 @@
 
         DOMAIN_KEYS.forEach((key) => {
           const s = stats[key];
-
           s.score =
             s.count === 0 ? 0 : Math.round(((s.sum / s.count - 1) / 4) * 100);
         });
@@ -3002,21 +2899,17 @@
         sorted.forEach((item) => {
           const domain = domainOf(item.key);
           const row = document.createElement("div");
-
           row.className = "domain-row";
-
           row.innerHTML = `
-          <span>${domain.icon} ${domain.name}</span>
-          <div class="bar"><span style="width:${item.score}%"></span></div>
-          <strong>${fa(item.score)}</strong>
-        `;
-
+            <span>${domain.icon} ${domain.name}</span>
+            <div class="bar"><span style="width:${item.score}%"></span></div>
+            <strong>${fa(item.score)}</strong>
+          `;
           list.appendChild(row);
         });
 
         sorted.slice(0, TOP_COUNT).forEach((item, i) => {
           const domain = domainOf(item.key);
-
           el(`topDomain${i + 1}`).textContent = `${domain.icon} ${domain.name}`;
           el(`topDomain${i + 1}Desc`).textContent = domain.description;
         });
@@ -3024,7 +2917,6 @@
 
       function renderInsights(sorted, overall) {
         const insights = [];
-
         const spread = sorted[0].score - sorted[sorted.length - 1].score;
 
         if (spread < 25) {
@@ -3063,12 +2955,11 @@
 
         if (!state.resultsReady) {
           container.innerHTML = `
-          <div class="card">
-            <h3>ابتدا ارزیابی را کامل کن.</h3>
-            <p>بعد از تحلیل، مسیرها بر اساس پروفایل تو مرتب می‌شوند.</p>
-          </div>
-        `;
-
+            <div class="card">
+              <h3>ابتدا ارزیابی را کامل کن.</h3>
+              <p>بعد از تحلیل، مسیرها بر اساس پروفایل تو مرتب می‌شوند.</p>
+            </div>
+          `;
           return;
         }
 
@@ -3083,13 +2974,15 @@
             card.className = "card path-card";
 
             card.innerHTML = `
-          <div class="path-level">مسیر ${fa(index + 1)} · امتیاز ${fa(item.score)}</div>
-          <h3>${domain.icon} ${domain.name}</h3>
-          <p>${domain.description}</p>
-          <div class="steps">
-            ${domain.path.map((step, i) => `<div class="step">${fa(i + 1)}. ${step}</div>`).join("")}
-          </div>
-        `;
+              <div class="path-level">مسیر ${fa(index + 1)} · امتیاز ${fa(item.score)}</div>
+              <h3>${domain.icon} ${domain.name}</h3>
+              <p>${domain.description}</p>
+              <div class="steps">
+                ${domain.path
+                  .map((step, i) => `<div class="step">${fa(i + 1)}. ${step}</div>`)
+                  .join("")}
+              </div>
+            `;
 
             container.appendChild(card);
           });
@@ -3123,27 +3016,26 @@
           card.className = "card challenge-card";
 
           card.innerHTML = `
-          <div>
-            <span class="tag">${domain.icon} ${domain.name}</span>
-            ${isRecommended ? '<span class="tag tag-accent">پیشنهادی برای تو</span>' : ""}
-          </div>
+            <div>
+              <span class="tag">${domain.icon} ${domain.name}</span>
+              ${isRecommended ? '<span class="tag tag-accent">پیشنهادی برای تو</span>' : ""}
+            </div>
 
-          <h3 style="margin-top:12px">${challenge.title}</h3>
+            <h3 style="margin-top:12px">${challenge.title}</h3>
 
-          <div class="challenge-meta">
-            <span class="tag">${challenge.level}</span>
-            <span class="tag">⏱ ${challenge.time}</span>
-          </div>
+            <div class="challenge-meta">
+              <span class="tag">${challenge.level}</span>
+              <span class="tag">⏱ ${challenge.time}</span>
+            </div>
 
-          <p>${challenge.description}</p>
-        `;
+            <p>${challenge.description}</p>
+          `;
 
           const button = makeButton(
             completed ? "✓ تکمیل شده" : "تکمیل کردم",
             completed ? "btn-secondary" : "btn-primary",
             () => toggleChallenge(challenge.id),
           );
-
           button.setAttribute("aria-pressed", String(completed));
 
           card.appendChild(button);
@@ -3178,10 +3070,8 @@
         DOMAIN_KEYS.forEach((key) => {
           const domain = DOMAINS[key];
           const option = document.createElement("option");
-
           option.value = key;
           option.textContent = `${domain.icon} ${domain.name}`;
-
           select.appendChild(option);
         });
       }
@@ -3207,12 +3097,9 @@
         });
 
         saveState();
-
         event.target.reset();
-
         renderProjects();
         updateProgressDashboard();
-
         showToast("پروژه با موفقیت ثبت شد 📁");
       }
 
@@ -3232,17 +3119,17 @@
           item.className = "project-item";
 
           item.innerHTML = `
-          <div class="project-item-top">
-            <div>
-              <span class="tag">${domain.icon} ${domain.name}</span>
-              <h3 style="margin-top:7px">${escapeHTML(project.title)}</h3>
+            <div class="project-item-top">
+              <div>
+                <span class="tag">${domain.icon} ${domain.name}</span>
+                <h3 style="margin-top:7px">${escapeHTML(project.title)}</h3>
+              </div>
             </div>
-          </div>
 
-          <p>${escapeHTML(project.description)}</p>
+            <p>${escapeHTML(project.description)}</p>
 
-          <small style="color:var(--muted)">ثبت شده در ${escapeHTML(project.createdAt)}</small>
-        `;
+            <small style="color:var(--muted)">ثبت شده در ${escapeHTML(project.createdAt)}</small>
+          `;
 
           const deleteButton = makeButton("حذف", "btn-danger btn-small", () =>
             deleteProject(project.id),
@@ -3257,12 +3144,9 @@
         if (!confirm("این پروژه حذف شود؟")) return;
 
         state.projects = state.projects.filter((project) => project.id !== id);
-
         saveState();
-
         renderProjects();
         updateProgressDashboard();
-
         showToast("پروژه حذف شد.");
       }
 
@@ -3297,12 +3181,11 @@
 
           const row = document.createElement("div");
           row.className = "domain-progress";
-
           row.innerHTML = `
-          <span>${domain.icon} ${domain.name}</span>
-          <div class="bar"><span style="width:${score}%"></span></div>
-          <strong>${fa(score)}</strong>
-        `;
+            <span>${domain.icon} ${domain.name}</span>
+            <div class="bar"><span style="width:${score}%"></span></div>
+            <strong>${fa(score)}</strong>
+          `;
 
           container.appendChild(row);
         });
@@ -3316,7 +3199,6 @@
         const confirmed = confirm(
           "همه پاسخ‌ها، پروفایل، پروژه‌ها و پیشرفت ذخیره‌شده حذف شود؟",
         );
-
         if (!confirmed) return;
 
         try {
@@ -3336,7 +3218,6 @@
         updateProgressDashboard();
 
         switchPanel("assessment");
-
         showToast("اطلاعات پاک شد.");
       }
 
@@ -3366,4 +3247,4 @@
       });
     </script>
   </body>
-</html>
+  </html>
