@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0B1020" />
+    <meta name="color-scheme" content="dark" />
 
     <title>Talentino | سامانه تعاملی کشف و پرورش استعداد</title>
 
@@ -15,11 +16,6 @@
       href="./images/logo-talentino-2.png"
       sizes="180x180"
     />
-    <link
-      rel="mask-icon"
-      href="./images/logo-talentino-2.png"
-      color="#000000"
-    />
 
     <meta
       name="description"
@@ -30,12 +26,14 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Talentino" />
     <meta property="og:title" content="Talentino | سامانه تعاملی کشف استعداد" />
     <meta
       property="og:description"
       content="پروفایل چندبعدی علایق، مسیر یادگیری شخصی‌سازی‌شده و چالش‌های عملی برای دانش‌آموزان."
     />
     <meta property="og:image" content="./images/logo-talentino-1.png" />
+    <meta property="og:image:alt" content="لوگوی Talentino" />
     <meta property="og:locale" content="fa_IR" />
 
     <!-- Twitter Card -->
@@ -49,6 +47,7 @@
       content="پروفایل چندبعدی علایق، مسیر یادگیری شخصی‌سازی‌شده و چالش‌های عملی."
     />
     <meta name="twitter:image" content="./images/logo-talentino-1.png" />
+    <meta name="twitter:image:alt" content="لوگوی Talentino" />
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -68,6 +67,7 @@
       /* =========================================================
        TALENTINO — Interactive Talent Discovery System
        Single-file: HTML + CSS + JavaScript + LocalStorage
+       Design system: tokens → base → components → views → print
     ========================================================== */
 
       @font-face {
@@ -106,53 +106,143 @@
         font-display: swap;
       }
 
+      /* ================= TOKENS ================= */
+
       :root {
+        color-scheme: dark;
+
+        /* Surfaces */
         --bg: #0b1020;
         --surface: #11182b;
-        --text: #f7f9fc;
-        --muted: #aab4c7;
-        --line: rgba(255, 255, 255, 0.09);
+        --surface-2: #161f36;
+        --surface-3: #1d2845;
 
-        /* Primary palette — solid and rgb must match */
+        /* Text */
+        --text: #f7f9fc;
+        --text-soft: #d5dcea;
+        --muted: #aab4c7;
+
+        /* Borders */
+        --line: rgba(255, 255, 255, 0.09);
+        --line-strong: rgba(255, 255, 255, 0.18);
+
+        /* Brand — solid and rgb must match */
         --primary: #3a84c1;
         --primary-rgb: 58, 132, 193;
         --primary-light: #5aa0d9;
+        --on-primary: #0b1020;
 
+        /* Status */
+        --success: #5cb88a;
+        --success-rgb: 92, 184, 138;
+        --warning: #d9a95b;
+        --warning-rgb: 217, 169, 91;
         --danger: #f08d8d;
+        --danger-rgb: 240, 141, 141;
 
-        --shadow: 0 25px 80px rgba(0, 0, 0, 0.35);
-        --radius: 24px;
+        /* Spacing */
+        --sp-1: 4px;
+        --sp-2: 8px;
+        --sp-3: 12px;
+        --sp-4: 16px;
+        --sp-5: 24px;
+        --sp-6: 32px;
+        --sp-7: 48px;
+        --sp-8: 72px;
+
+        /* Radii */
+        --r-sm: 10px;
+        --r-md: 14px;
+        --r-lg: 20px;
+        --r-pill: 999px;
+
+        /* Shadows */
+        --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.25);
+        --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.28);
+
+        /* Typography */
+        --fs-xs: 0.78rem;
+        --fs-sm: 0.88rem;
+        --fs-md: 1rem;
+        --fs-lg: 1.15rem;
+        --fs-xl: 1.45rem;
+        --fs-2xl: clamp(1.7rem, 4vw, 2.5rem);
+        --fs-hero: clamp(2.1rem, 5.5vw, 4rem);
+        --fw-regular: 400;
+        --fw-medium: 500;
+        --fw-semibold: 600;
+        --fw-bold: 700;
+        --fw-heavy: 800;
+
+        /* Motion */
+        --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+        --t-fast: 0.15s;
+        --t-base: 0.25s;
+
+        /* Layout */
         --max: 1180px;
+        --header-h: 72px;
+
+        /* Layers */
+        --z-menu: 90;
+        --z-header: 100;
+        --z-toast: 900;
+        --z-dialog: 1000;
       }
 
-      * {
+      /* ================= BASE ================= */
+
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
+      }
+      * {
         margin: 0;
         padding: 0;
+      }
+
+      [hidden] {
+        display: none !important;
       }
 
       html {
         scroll-behavior: smooth;
         scroll-padding-top: 90px;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
       }
 
       body {
         min-height: 100vh;
         background:
           radial-gradient(
-            circle at 85% 5%,
-            rgba(var(--primary-rgb), 0.08),
-            transparent 30%
-          ),
-          radial-gradient(
-            circle at 10% 50%,
-            rgba(var(--primary-rgb), 0.04),
-            transparent 28%
+            circle at 85% 0%,
+            rgba(var(--primary-rgb), 0.07),
+            transparent 32%
           ),
           var(--bg);
         color: var(--text);
         font-family: Vazirmatn, Tahoma, "Segoe UI", sans-serif;
-        line-height: 1.8;
+        font-size: var(--fs-md);
+        font-weight: var(--fw-regular);
+        line-height: 1.85;
+        overflow-x: hidden;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        line-height: 1.4;
+        font-weight: var(--fw-heavy);
+        letter-spacing: 0; /* Persian script must not be letter-spaced */
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
       }
 
       button,
@@ -160,19 +250,33 @@
       textarea,
       select {
         font: inherit;
+        color: inherit;
       }
       button {
         border: 0;
         cursor: pointer;
+        background: none;
       }
       a {
         color: inherit;
         text-decoration: none;
       }
+      ol,
+      ul {
+        list-style: none;
+      }
 
       ::selection {
         background: var(--primary);
-        color: var(--bg);
+        color: var(--on-primary);
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--primary-light);
+        outline-offset: 2px;
+      }
+      [tabindex="-1"]:focus {
+        outline: none;
       }
 
       .container {
@@ -180,59 +284,92 @@
         margin-inline: auto;
       }
 
-      a:focus-visible,
-      button:focus-visible,
-      input:focus-visible,
-      textarea:focus-visible,
-      select:focus-visible {
-        outline: 2px solid var(--primary);
-        outline-offset: 2px;
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .skip-link {
+        position: fixed;
+        top: var(--sp-3);
+        inset-inline-start: var(--sp-3);
+        z-index: var(--z-dialog);
+        padding: var(--sp-2) var(--sp-4);
+        border-radius: var(--r-sm);
+        background: var(--primary-light);
+        color: var(--on-primary);
+        font-weight: var(--fw-bold);
+        transform: translateY(-200%);
+      }
+      .skip-link:focus {
+        transform: none;
       }
 
       /* ================= HEADER ================= */
 
-      header {
+      .site-header {
         position: sticky;
         top: 0;
-        z-index: 100;
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-        background: rgba(11, 16, 32, 0.85);
+        z-index: var(--z-header);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        background: rgba(11, 16, 32, 0.9);
         border-bottom: 1px solid var(--line);
       }
 
       .nav {
-        min-height: 76px;
+        min-height: var(--header-h);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: var(--sp-4);
       }
 
       .brand {
         display: flex;
         align-items: center;
-        gap: 12px;
-        font-weight: 900;
-        letter-spacing: -0.5px;
+        gap: var(--sp-3);
+        flex: 0 0 auto;
+        border-radius: var(--r-sm);
+      }
+      .brand img {
+        width: 150px;
       }
 
       .nav-links {
         display: flex;
         align-items: center;
         gap: 6px;
+        margin-inline-end: auto;
+        margin-inline-start: var(--sp-5);
       }
 
-      .nav-links button {
-        background: transparent;
+      .nav-link {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 13px;
+        border-radius: var(--r-sm);
         color: var(--muted);
-        padding: 9px 13px;
-        border-radius: 11px;
-        transition: 0.2s;
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
+        transition:
+          color var(--t-fast),
+          background var(--t-fast);
       }
-      .nav-links button:hover {
-        color: var(--primary);
-        background: rgba(var(--primary-rgb), 0.08);
+      .nav-link:hover {
+        color: var(--text);
+        background: rgba(var(--primary-rgb), 0.1);
+      }
+      .nav-link[aria-current="page"] {
+        color: var(--primary-light);
+        background: rgba(var(--primary-rgb), 0.12);
       }
 
       .menu-toggle {
@@ -241,10 +378,9 @@
         height: 44px;
         align-items: center;
         justify-content: center;
-        border-radius: 12px;
+        border-radius: var(--r-md);
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid var(--line);
-        color: var(--text);
         font-size: 1.25rem;
       }
 
@@ -256,17 +392,22 @@
         justify-content: center;
         gap: 9px;
         min-height: 46px;
-        padding: 10px 18px;
-        border-radius: 13px;
-        font-weight: 800;
+        padding: 10px 20px;
+        border-radius: var(--r-md);
+        border: 1px solid transparent;
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-md);
+        line-height: 1.5;
+        text-align: center;
         transition:
-          transform 0.2s,
-          background 0.2s,
-          opacity 0.2s,
-          border-color 0.2s;
+          background var(--t-fast),
+          border-color var(--t-fast),
+          color var(--t-fast),
+          opacity var(--t-fast),
+          transform var(--t-fast);
       }
-      .btn:hover:not(:disabled) {
-        transform: translateY(-2px);
+      .btn:active:not(:disabled) {
+        transform: translateY(1px);
       }
       .btn:disabled {
         opacity: 0.4;
@@ -275,7 +416,7 @@
 
       .btn-primary {
         background: var(--primary);
-        color: #111;
+        color: var(--on-primary);
       }
       .btn-primary:hover:not(:disabled) {
         background: var(--primary-light);
@@ -283,30 +424,218 @@
 
       .btn-secondary {
         background: transparent;
-        border: 1px solid rgba(var(--primary-rgb), 0.35);
-        color: var(--primary);
+        border-color: rgba(var(--primary-rgb), 0.45);
+        color: var(--primary-light);
       }
       .btn-secondary:hover:not(:disabled) {
-        background: rgba(var(--primary-rgb), 0.08);
+        background: rgba(var(--primary-rgb), 0.12);
+      }
+
+      .btn-success {
+        background: rgba(var(--success-rgb), 0.12);
+        border-color: rgba(var(--success-rgb), 0.4);
+        color: var(--success);
+      }
+      .btn-success:hover:not(:disabled) {
+        background: rgba(var(--success-rgb), 0.2);
       }
 
       .btn-ghost {
         background: rgba(255, 255, 255, 0.04);
-        border: 1px solid var(--line);
-        color: var(--muted);
+        border-color: var(--line);
+        color: var(--text-soft);
+      }
+      .btn-ghost:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--line-strong);
       }
 
       .btn-danger {
-        background: rgba(240, 141, 141, 0.1);
-        border: 1px solid rgba(240, 141, 141, 0.28);
+        background: rgba(var(--danger-rgb), 0.1);
+        border-color: rgba(var(--danger-rgb), 0.3);
         color: var(--danger);
+      }
+      .btn-danger:hover:not(:disabled) {
+        background: rgba(var(--danger-rgb), 0.18);
       }
 
       .btn-small {
-        min-height: 36px;
-        padding: 5px 13px;
-        font-size: 0.85rem;
-        border-radius: 10px;
+        min-height: 38px;
+        padding: 5px 14px;
+        font-size: var(--fs-sm);
+        border-radius: var(--r-sm);
+      }
+
+      /* ================= TAGS / BADGES ================= */
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--sp-2);
+        padding: 6px 13px;
+        border: 1px solid rgba(var(--primary-rgb), 0.3);
+        background: rgba(var(--primary-rgb), 0.07);
+        border-radius: var(--r-pill);
+        color: var(--primary-light);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-bold);
+        line-height: 1.6;
+        margin-bottom: var(--sp-4);
+      }
+
+      .tag {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: var(--r-pill);
+        background: rgba(var(--primary-rgb), 0.09);
+        border: 1px solid rgba(var(--primary-rgb), 0.22);
+        color: var(--primary-light);
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-medium);
+        line-height: 1.7;
+      }
+      .tag-accent {
+        background: rgba(var(--primary-rgb), 0.22);
+        border-color: rgba(var(--primary-rgb), 0.55);
+        color: var(--text);
+        font-weight: var(--fw-bold);
+      }
+      .tag-success {
+        background: rgba(var(--success-rgb), 0.12);
+        border-color: rgba(var(--success-rgb), 0.35);
+        color: var(--success);
+      }
+      .tag-warning {
+        background: rgba(var(--warning-rgb), 0.1);
+        border-color: rgba(var(--warning-rgb), 0.35);
+        color: var(--warning);
+      }
+      .tag-neutral {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: var(--line);
+        color: var(--muted);
+      }
+
+      /* ================= CARDS / SECTIONS ================= */
+
+      section {
+        padding: 55px 0;
+      }
+
+      .section-heading {
+        margin-bottom: var(--sp-5);
+      }
+      .section-heading h2 {
+        font-size: var(--fs-2xl);
+        margin-bottom: var(--sp-2);
+      }
+      .section-heading p {
+        color: var(--muted);
+        max-width: 750px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 18px;
+      }
+      .grid > * {
+        min-width: 0;
+      }
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: 23px;
+      }
+      .card h3 {
+        margin-bottom: 7px;
+        font-size: var(--fs-lg);
+      }
+      .card p {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .feature-card {
+        min-height: 190px;
+      }
+      .feature-icon {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: var(--r-md);
+        background: rgba(var(--primary-rgb), 0.09);
+        border: 1px solid rgba(var(--primary-rgb), 0.2);
+        font-size: 1.3rem;
+        margin-bottom: var(--sp-4);
+      }
+
+      .bar {
+        height: 9px;
+        overflow: hidden;
+        border-radius: var(--r-pill);
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .bar > span {
+        display: block;
+        height: 100%;
+        border-radius: inherit;
+        background: var(--primary);
+        transform-origin: right center;
+      }
+      .bar.is-animated > span {
+        animation: bar-in 0.7s var(--ease) both;
+      }
+      @keyframes bar-in {
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      .notice {
+        padding: var(--sp-4) var(--sp-4);
+        border-radius: var(--r-md);
+        background: rgba(var(--primary-rgb), 0.06);
+        border: 1px solid rgba(var(--primary-rgb), 0.22);
+        border-inline-start: 4px solid var(--primary);
+        color: var(--text-soft);
+        margin-top: var(--sp-4);
+        font-size: var(--fs-sm);
+      }
+      .notice-warning {
+        background: rgba(var(--warning-rgb), 0.08);
+        border-color: rgba(var(--warning-rgb), 0.35);
+        border-inline-start-color: var(--warning);
+      }
+      .notice-success {
+        background: rgba(var(--success-rgb), 0.08);
+        border-color: rgba(var(--success-rgb), 0.3);
+        border-inline-start-color: var(--success);
+      }
+
+      .empty-state {
+        text-align: start;
+      }
+      .empty-state .btn-row {
+        margin-top: var(--sp-4);
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .muted {
+        color: var(--muted);
       }
 
       /* ================= HERO ================= */
@@ -321,87 +650,65 @@
         gap: 55px;
         align-items: center;
       }
-
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 7px 12px;
-        border: 1px solid rgba(var(--primary-rgb), 0.3);
-        background: rgba(var(--primary-rgb), 0.06);
-        border-radius: 999px;
-        color: var(--primary);
-        font-size: 0.85rem;
-        font-weight: 800;
-        margin-bottom: 20px;
+      .hero-grid > * {
+        min-width: 0;
       }
 
       .hero h1 {
-        font-size: clamp(2.2rem, 6vw, 4.8rem);
-        line-height: 1.15;
-        letter-spacing: -2px;
+        font-size: var(--fs-hero);
+        line-height: 1.3;
         margin-bottom: 22px;
       }
 
-      .hero p {
+      .hero-lead {
         max-width: 680px;
         color: var(--muted);
         font-size: 1.05rem;
         margin-bottom: 28px;
       }
 
-      .hero-actions {
+      .hero-facts {
         display: flex;
-        gap: 12px;
         flex-wrap: wrap;
+        gap: 8px 22px;
+        margin-top: var(--sp-5);
+        color: var(--muted);
+        font-size: var(--fs-sm);
+      }
+      .hero-facts strong {
+        color: var(--text);
+        font-weight: var(--fw-bold);
       }
 
       .hero-card {
         padding: 24px;
         border: 1px solid var(--line);
-        background: linear-gradient(
-          145deg,
-          rgba(255, 255, 255, 0.06),
-          rgba(255, 255, 255, 0.015)
-        );
-        border-radius: 30px;
-        box-shadow: var(--shadow);
+        background: var(--surface);
+        border-radius: 26px;
+        box-shadow: var(--shadow-md);
       }
 
       .profile-preview {
         display: grid;
-        gap: 16px;
+        gap: var(--sp-4);
       }
-
       .profile-preview-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: var(--sp-3);
       }
-
       .profile-preview h3 {
-        font-size: 1.1rem;
+        font-size: var(--fs-lg);
       }
-
+      .profile-preview small {
+        color: var(--muted);
+      }
       .mini-score {
         font-size: 1.8rem;
-        font-weight: 900;
-        color: var(--primary);
+        font-weight: var(--fw-heavy);
+        color: var(--primary-light);
         direction: ltr;
-      }
-
-      .bar {
-        height: 9px;
-        overflow: hidden;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.07);
-      }
-      .bar span {
-        display: block;
-        height: 100%;
-        border-radius: inherit;
-        background: var(--primary);
-        transition: width 0.5s ease;
       }
 
       .preview-row {
@@ -409,80 +716,15 @@
         grid-template-columns: 95px 1fr 45px;
         gap: 12px;
         align-items: center;
-        font-size: 0.85rem;
+        font-size: var(--fs-sm);
       }
       .preview-row strong {
         text-align: left;
         direction: ltr;
-        color: var(--primary);
+        color: var(--primary-light);
       }
 
-      /* ================= SECTIONS ================= */
-
-      section {
-        padding: 55px 0;
-      }
-
-      .section-heading {
-        margin-bottom: 28px;
-      }
-      .section-heading h2 {
-        font-size: clamp(1.7rem, 4vw, 2.7rem);
-        margin-bottom: 8px;
-        line-height: 1.3;
-      }
-      .section-heading p {
-        color: var(--muted);
-        max-width: 750px;
-      }
-
-      .grid {
-        display: grid;
-        gap: 18px;
-      }
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .card {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 23px;
-      }
-
-      .feature-card {
-        min-height: 190px;
-        transition:
-          transform 0.2s,
-          border-color 0.2s;
-      }
-      .feature-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(var(--primary-rgb), 0.35);
-      }
-
-      .feature-icon {
-        width: 48px;
-        height: 48px;
-        display: grid;
-        place-items: center;
-        border-radius: 14px;
-        background: rgba(var(--primary-rgb), 0.08);
-        border: 1px solid rgba(var(--primary-rgb), 0.18);
-        font-size: 1.3rem;
-        margin-bottom: 16px;
-      }
-
-      .card h3 {
-        margin-bottom: 7px;
-      }
-      .card p {
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-
-      /* ================= APP ================= */
+      /* ================= APP SHELL ================= */
 
       #app {
         display: none;
@@ -504,8 +746,11 @@
         margin-bottom: 22px;
         flex-wrap: wrap;
       }
-      .app-top h2 {
+      .app-top h1 {
         font-size: 1.8rem;
+      }
+      .app-top .eyebrow {
+        margin-bottom: var(--sp-2);
       }
 
       .app-top-actions {
@@ -514,159 +759,240 @@
         flex-wrap: wrap;
       }
 
+      .storage-warning {
+        margin: 0 0 var(--sp-4);
+      }
+
       .app-tabs {
         display: flex;
-        gap: 7px;
-        flex-wrap: wrap;
+        gap: 6px;
         margin-bottom: 25px;
-        padding: 7px;
+        padding: 6px;
         border: 1px solid var(--line);
-        border-radius: 17px;
+        border-radius: var(--r-lg);
         background: rgba(255, 255, 255, 0.02);
+        overflow-x: auto;
+        scrollbar-width: thin;
       }
-      .app-tabs button {
-        flex: 1;
-        min-width: 120px;
-        padding: 10px;
-        border-radius: 12px;
-        background: transparent;
+      .tab {
+        flex: 1 0 auto;
+        min-width: 110px;
+        min-height: 44px;
+        padding: 8px 14px;
+        border-radius: var(--r-md);
         color: var(--muted);
-        transition: 0.2s;
+        font-weight: var(--fw-medium);
+        white-space: nowrap;
+        transition:
+          color var(--t-fast),
+          background var(--t-fast);
       }
-      .app-tabs button:hover {
+      .tab:hover {
         color: var(--text);
+        background: rgba(255, 255, 255, 0.04);
       }
-      .app-tabs button.active {
-        background: rgba(var(--primary-rgb), 0.1);
-        color: var(--primary);
-      }
-
-      .app-panel {
-        display: none;
-      }
-      .app-panel.active {
-        display: block;
-        animation: fadeIn 0.3s ease;
+      .tab[aria-selected="true"] {
+        background: rgba(var(--primary-rgb), 0.16);
+        color: var(--primary-light);
+        font-weight: var(--fw-bold);
       }
 
-      @keyframes fadeIn {
+      .app-panel:focus {
+        outline: none;
+      }
+      .app-panel:not([hidden]) {
+        animation: panel-in 0.25s var(--ease);
+      }
+      @keyframes panel-in {
         from {
           opacity: 0;
-          transform: translateY(7px);
+          transform: translateY(6px);
         }
         to {
           opacity: 1;
-          transform: translateY(0);
+          transform: none;
         }
       }
 
       /* ================= ASSESSMENT ================= */
+
+      .start-card {
+        max-width: 850px;
+        margin: auto;
+      }
+      .start-card h2 {
+        margin-bottom: 10px;
+        font-size: var(--fs-xl);
+      }
+      .start-card .lead {
+        color: var(--muted);
+        margin-bottom: 20px;
+      }
+      .start-stats {
+        margin-bottom: 22px;
+      }
+      .start-stats .card strong {
+        font-size: var(--fs-lg);
+      }
+      .start-note {
+        color: var(--text-soft);
+        margin-bottom: var(--sp-4);
+        font-size: 0.9rem;
+      }
 
       .assessment-top {
         display: flex;
         justify-content: space-between;
         gap: 20px;
         align-items: center;
-        margin-bottom: 15px;
+        margin-bottom: 14px;
+        max-width: 850px;
+        margin-inline: auto;
+      }
+      .assessment-top .hint {
+        color: var(--muted);
+        font-size: var(--fs-sm);
       }
 
+      .progress-wrap {
+        max-width: 850px;
+        margin: 0 auto 26px;
+      }
       .progress-track {
         height: 10px;
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.07);
+        border-radius: var(--r-pill);
+        background: rgba(255, 255, 255, 0.08);
         overflow: hidden;
-        margin-bottom: 30px;
       }
-      .progress-track span {
+      .progress-track > span {
         display: block;
         height: 100%;
         width: 0;
         background: var(--primary);
-        transition: width 0.3s;
+        border-radius: inherit;
+        transition: width 0.3s var(--ease);
+      }
+      .progress-meta {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--sp-3);
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: var(--fs-xs);
       }
 
       .question-card {
         max-width: 850px;
         margin: auto;
       }
-
       .question-number {
-        color: var(--primary);
-        font-weight: 900;
+        color: var(--primary-light);
+        font-weight: var(--fw-heavy);
         margin-bottom: 8px;
       }
-
       .question-text {
-        font-size: clamp(1.3rem, 3vw, 2rem);
-        line-height: 1.6;
+        font-size: clamp(1.25rem, 3vw, 1.9rem);
+        line-height: 1.7;
+        font-weight: var(--fw-bold);
         margin-bottom: 25px;
       }
 
       .options {
         display: grid;
-        gap: 12px;
+        gap: 10px;
       }
-
       .option {
         display: flex;
         align-items: center;
         gap: 13px;
         width: 100%;
-        text-align: right;
-        padding: 16px;
-        border-radius: 16px;
+        min-height: 56px;
+        text-align: start;
+        padding: 12px 16px;
+        border-radius: var(--r-md);
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--line);
         color: var(--text);
-        transition: 0.2s;
+        transition:
+          border-color var(--t-fast),
+          background var(--t-fast);
       }
       .option:hover {
-        border-color: rgba(var(--primary-rgb), 0.5);
-        background: rgba(var(--primary-rgb), 0.06);
+        border-color: rgba(var(--primary-rgb), 0.55);
+        background: rgba(var(--primary-rgb), 0.07);
       }
-      .option.selected {
+      .option[aria-pressed="true"] {
         border-color: var(--primary);
-        background: rgba(var(--primary-rgb), 0.1);
+        background: rgba(var(--primary-rgb), 0.14);
+        font-weight: var(--fw-bold);
       }
-
       .option-mark {
         width: 30px;
         height: 30px;
         display: grid;
         place-items: center;
         flex: 0 0 auto;
-        border: 1px solid var(--line);
+        border: 1px solid var(--line-strong);
         border-radius: 9px;
         color: var(--muted);
+        font-size: var(--fs-sm);
       }
-      .option.selected .option-mark {
+      .option[aria-pressed="true"] .option-mark {
         background: var(--primary);
-        color: #111;
+        color: var(--on-primary);
         border-color: var(--primary);
-        font-weight: 900;
+        font-weight: var(--fw-heavy);
+      }
+
+      .answer-hint {
+        margin-top: var(--sp-3);
+        color: var(--warning);
+        font-size: var(--fs-sm);
+        min-height: 1.5em;
+      }
+      .options.is-invalid .option {
+        border-color: rgba(var(--warning-rgb), 0.55);
       }
 
       .assessment-actions {
         display: flex;
         justify-content: space-between;
         gap: 12px;
-        margin-top: 28px;
+        margin-top: var(--sp-4);
+      }
+
+      .quiz-foot {
+        display: flex;
+        justify-content: center;
+        margin-top: var(--sp-4);
       }
 
       .kbd-hint {
         color: var(--muted);
-        font-size: 0.8rem;
+        font-size: var(--fs-xs);
         margin-top: 14px;
         text-align: center;
       }
 
-      /* ================= RESULT ================= */
+      .complete-card {
+        max-width: 850px;
+        margin: auto;
+      }
+      .complete-card p {
+        color: var(--muted);
+        margin: 12px 0 20px;
+      }
+
+      /* ================= RESULTS ================= */
 
       .result-hero {
         display: grid;
         grid-template-columns: 0.8fr 1.2fr;
         gap: 25px;
         margin-bottom: 25px;
+      }
+      .result-hero > * {
+        min-width: 0;
       }
 
       .result-main {
@@ -677,143 +1003,263 @@
         text-align: center;
       }
 
-      .score-circle {
+      .score-ring {
+        position: relative;
         width: 180px;
         height: 180px;
-        border-radius: 50%;
-        display: grid;
-        place-items: center;
-        position: relative;
-        background:
-          radial-gradient(
-            circle at center,
-            var(--surface) 57%,
-            transparent 58%
-          ),
-          conic-gradient(
-            var(--primary) var(--score),
-            rgba(255, 255, 255, 0.08) 0
-          );
       }
-      .score-circle::before {
-        content: "";
+      .score-ring svg {
+        width: 100%;
+        height: 100%;
+        transform: rotate(-90deg);
+      }
+      .score-ring .ring-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.09);
+        stroke-width: 9;
+      }
+      .score-ring .ring-fg {
+        fill: none;
+        stroke: var(--primary);
+        stroke-width: 9;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.8s var(--ease);
+      }
+      .score-ring .ring-label {
         position: absolute;
-        inset: 8px;
-        border-radius: inherit;
-        border: 1px solid var(--line);
+        inset: 0;
+        display: grid;
+        place-content: center;
+        text-align: center;
       }
-      .score-circle strong {
+      .score-ring strong {
         font-size: 3rem;
         line-height: 1.2;
-        color: var(--primary);
+        color: var(--primary-light);
+        font-weight: var(--fw-heavy);
       }
-      .score-circle small {
+      .score-ring small {
         display: block;
         color: var(--muted);
-        font-size: 0.8rem;
+        font-size: var(--fs-xs);
+        max-width: 110px;
+        line-height: 1.5;
       }
 
       .result-description {
         color: var(--muted);
         margin-top: 18px;
         max-width: 500px;
+        font-size: 0.95rem;
+      }
+      .insight-list {
+        margin-top: var(--sp-3);
+        display: grid;
+        gap: var(--sp-2);
+        max-width: 500px;
+        text-align: start;
+        color: var(--text-soft);
+        font-size: var(--fs-sm);
       }
 
       .domain-list {
         display: grid;
-        gap: 12px;
+        gap: 10px;
       }
-
       .domain-row {
         display: grid;
-        grid-template-columns: 175px 1fr 48px;
+        grid-template-columns: 26px 175px 1fr 44px;
         align-items: center;
         gap: 12px;
         font-size: 0.92rem;
       }
-      .domain-row strong {
-        text-align: left;
-        direction: ltr;
-        color: var(--primary);
+      .domain-row .rank {
+        color: var(--muted);
+        font-size: var(--fs-xs);
+        text-align: center;
       }
       .domain-row .bar {
         height: 10px;
       }
+      .domain-row .bar > span {
+        opacity: 0.55;
+      }
+      .domain-row.is-top .bar > span {
+        opacity: 1;
+      }
+      .domain-row.is-top .name {
+        font-weight: var(--fw-bold);
+      }
+      .domain-row strong,
+      .domain-progress strong {
+        text-align: left;
+        direction: ltr;
+        color: var(--primary-light);
+      }
+
+      .top-card .meta {
+        margin-top: var(--sp-3);
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .next-steps {
+        margin-top: var(--sp-5);
+      }
+
+      /* ================= PATHS ================= */
 
       .path-card {
-        position: relative;
-        overflow: hidden;
+        display: flex;
+        flex-direction: column;
       }
-      .path-card::after {
-        content: "";
-        position: absolute;
-        width: 120px;
-        height: 120px;
-        left: -55px;
-        bottom: -55px;
-        border-radius: 50%;
-        background: rgba(var(--primary-rgb), 0.06);
-        pointer-events: none;
-      }
-
       .path-level {
-        color: var(--primary);
-        font-size: 0.8rem;
-        font-weight: 900;
+        color: var(--primary-light);
+        font-size: var(--fs-xs);
+        font-weight: var(--fw-heavy);
         margin-bottom: 6px;
+      }
+      .path-progress {
+        margin: var(--sp-3) 0 0;
+        display: grid;
+        gap: 6px;
+      }
+      .path-progress .bar {
+        height: 6px;
+      }
+      .path-progress small {
+        color: var(--muted);
+        font-size: var(--fs-xs);
       }
 
       .steps {
-        margin-top: 16px;
+        margin-top: var(--sp-4);
         display: grid;
-        gap: 8px;
+        gap: 0;
         position: relative;
-        z-index: 1;
       }
       .step {
-        padding: 10px 12px;
-        border-radius: 11px;
-        background: rgba(255, 255, 255, 0.03);
+        position: relative;
+        padding-inline-start: 0;
+      }
+      .step label {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 9px 4px;
+        min-height: 44px;
+        border-radius: var(--r-sm);
+        color: var(--text-soft);
+        font-size: var(--fs-sm);
+        cursor: pointer;
+        transition: background var(--t-fast);
+      }
+      .step label:hover {
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .step input {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        inset: 0;
+        margin: 0;
+        cursor: pointer;
+      }
+      .step-dot {
+        flex: 0 0 auto;
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        border: 1.5px solid var(--line-strong);
+        background: var(--surface);
         color: var(--muted);
-        font-size: 0.88rem;
+        font-size: var(--fs-xs);
+        position: relative;
+        z-index: 1;
+        transition:
+          background var(--t-fast),
+          border-color var(--t-fast);
+      }
+      .step:not(:last-child) label::after {
+        content: "";
+        position: absolute;
+        inset-inline-start: 18px;
+        top: calc(50% + 14px);
+        height: calc(100% - 14px);
+        width: 1.5px;
+        background: var(--line-strong);
+      }
+      .step input:checked + .step-dot {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: var(--on-primary);
+        font-weight: var(--fw-heavy);
+      }
+      .step input:checked ~ .step-text {
+        color: var(--muted);
+        text-decoration: line-through;
+        text-decoration-color: rgba(255, 255, 255, 0.25);
+      }
+      .step input:focus-visible + .step-dot {
+        outline: 2px solid var(--primary-light);
+        outline-offset: 2px;
+      }
+
+      .path-actions {
+        margin-top: auto;
+        padding-top: var(--sp-4);
+        display: flex;
+        gap: var(--sp-2);
+        flex-wrap: wrap;
       }
 
       /* ================= CHALLENGES ================= */
+
+      .summary-bar {
+        display: grid;
+        gap: 8px;
+        margin-bottom: var(--sp-5);
+      }
+      .summary-bar .row {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--sp-3);
+        font-size: var(--fs-sm);
+        color: var(--text-soft);
+      }
+      .summary-bar .bar {
+        height: 8px;
+      }
+      .summary-bar .bar > span {
+        transition: transform 0.4s var(--ease);
+      }
 
       .challenge-card {
         display: flex;
         flex-direction: column;
         min-height: 235px;
       }
-
+      .challenge-card.is-done {
+        border-color: rgba(var(--success-rgb), 0.35);
+      }
       .challenge-meta {
         display: flex;
         gap: 7px;
         flex-wrap: wrap;
         margin: 10px 0;
       }
-
-      .tag {
-        display: inline-block;
-        padding: 4px 9px;
-        border-radius: 999px;
-        background: rgba(var(--primary-rgb), 0.07);
-        border: 1px solid rgba(var(--primary-rgb), 0.18);
-        color: var(--primary);
-        font-size: 0.75rem;
-      }
-      .tag-accent {
-        background: rgba(var(--primary-rgb), 0.2);
-        border-color: rgba(var(--primary-rgb), 0.5);
-        color: var(--primary-light);
-        font-weight: 700;
-      }
-
-      .challenge-card .btn {
-        margin-top: auto;
-      }
       .challenge-card p {
-        margin-bottom: 16px;
+        margin-bottom: var(--sp-4);
+      }
+      .challenge-actions {
+        margin-top: auto;
+        display: grid;
+        gap: var(--sp-2);
       }
 
       /* ================= PROJECTS ================= */
@@ -821,66 +1267,122 @@
       .project-form {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 13px;
-        margin-bottom: 22px;
+        gap: 14px;
+        margin-bottom: var(--sp-5);
+      }
+      .project-form > * {
+        min-width: 0;
       }
 
       .field {
         display: grid;
         gap: 7px;
+        align-content: start;
       }
       .field.full {
         grid-column: 1 / -1;
       }
       .field label {
-        color: var(--muted);
-        font-size: 0.85rem;
+        color: var(--text-soft);
+        font-size: var(--fs-sm);
+        font-weight: var(--fw-medium);
       }
-
       .field input,
       .field textarea,
       .field select {
         width: 100%;
-        border: 1px solid var(--line);
-        outline: none;
+        border: 1px solid var(--line-strong);
         background: rgba(255, 255, 255, 0.03);
         color: var(--text);
-        border-radius: 13px;
-        padding: 12px 13px;
+        border-radius: var(--r-md);
+        padding: 12px 14px;
+        transition:
+          border-color var(--t-fast),
+          background var(--t-fast);
+      }
+      .field input::placeholder,
+      .field textarea::placeholder {
+        color: #8590a6;
       }
       .field select option {
-        background: #1a1a1a;
+        background: var(--surface-2);
         color: var(--text);
       }
       .field textarea {
         min-height: 110px;
         resize: vertical;
       }
-      .field input:focus,
-      .field textarea:focus,
-      .field select:focus {
-        border-color: var(--primary);
-        background: rgba(var(--primary-rgb), 0.04);
+      .field input:focus-visible,
+      .field textarea:focus-visible,
+      .field select:focus-visible {
+        outline: none;
+        border-color: var(--primary-light);
+        background: rgba(var(--primary-rgb), 0.06);
+        box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+      }
+      .field [aria-invalid="true"] {
+        border-color: var(--danger);
+      }
+      .field-error {
+        color: var(--danger);
+        font-size: var(--fs-xs);
+        min-height: 1.2em;
+      }
+      .field-count {
+        color: var(--muted);
+        font-size: var(--fs-xs);
+        text-align: end;
+      }
+
+      .list-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--sp-3);
+        margin-bottom: var(--sp-3);
+        padding-top: var(--sp-4);
+        border-top: 1px solid var(--line);
+      }
+      .list-head h3 {
+        font-size: var(--fs-lg);
       }
 
       .project-list {
         display: grid;
         gap: 12px;
       }
-
       .project-item {
         padding: 17px;
         border: 1px solid var(--line);
-        border-radius: 16px;
+        border-radius: var(--r-md);
         background: rgba(255, 255, 255, 0.025);
+        min-width: 0;
       }
-
       .project-item-top {
         display: flex;
         justify-content: space-between;
         gap: 15px;
-        align-items: center;
+        align-items: flex-start;
         margin-bottom: 8px;
+      }
+      .project-item-top > div {
+        min-width: 0;
+      }
+      .project-item h3 {
+        margin: 7px 0 0;
+        font-size: var(--fs-lg);
+        overflow-wrap: anywhere;
+      }
+      .project-item p {
+        color: var(--text-soft);
+        font-size: 0.92rem;
+        overflow-wrap: anywhere;
+        white-space: pre-line;
+      }
+      .project-item small {
+        display: block;
+        margin-top: var(--sp-2);
+        color: var(--muted);
       }
 
       /* ================= PROGRESS ================= */
@@ -888,39 +1390,76 @@
       .progress-stats {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 13px;
-        margin-bottom: 22px;
+        gap: 14px;
+        margin-bottom: var(--sp-4);
       }
-
       .stat {
         text-align: center;
       }
       .stat strong {
         display: block;
         font-size: 2rem;
-        color: var(--primary);
+        line-height: 1.5;
+        color: var(--primary-light);
+        font-weight: var(--fw-heavy);
       }
       .stat span {
         color: var(--muted);
-        font-size: 0.85rem;
+        font-size: var(--fs-sm);
+      }
+      .stat small {
+        display: block;
+        color: var(--muted);
+        font-size: var(--fs-xs);
+      }
+
+      .next-action {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--sp-4);
+        flex-wrap: wrap;
+        margin-bottom: var(--sp-4);
+        border-color: rgba(var(--primary-rgb), 0.35);
+        background: rgba(var(--primary-rgb), 0.07);
+      }
+      .next-action p {
+        color: var(--text);
+        margin: 0;
+        flex: 1 1 260px;
+      }
+      .next-action small {
+        display: block;
+        color: var(--primary-light);
+        font-weight: var(--fw-bold);
+        font-size: var(--fs-xs);
+      }
+
+      .overview-grid {
+        margin-bottom: var(--sp-4);
       }
 
       .domain-progress-list {
         display: grid;
         gap: 14px;
       }
-
       .domain-progress {
         display: grid;
         grid-template-columns: 175px 1fr 45px;
-        gap: 12px;
+        gap: 6px 12px;
         align-items: center;
         font-size: 0.92rem;
       }
-      .domain-progress strong {
-        text-align: left;
-        direction: ltr;
-        color: var(--primary);
+      .domain-progress .dp-meta {
+        grid-column: 2 / 3;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: -2px;
+      }
+
+      .data-actions {
+        margin-top: var(--sp-4);
       }
 
       /* ================= METHODOLOGY ================= */
@@ -930,37 +1469,51 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
       }
+      .method-grid > * {
+        min-width: 0;
+      }
       .method-step {
         display: flex;
         gap: 14px;
       }
-
       .method-number {
         width: 42px;
         height: 42px;
         flex: 0 0 auto;
         display: grid;
         place-items: center;
-        border-radius: 12px;
-        background: rgba(var(--primary-rgb), 0.09);
-        color: var(--primary);
-        font-weight: 900;
+        border-radius: var(--r-md);
+        background: rgba(var(--primary-rgb), 0.12);
+        color: var(--primary-light);
+        font-weight: var(--fw-heavy);
       }
-
-      .notice {
-        padding: 17px;
-        border-radius: 15px;
-        background: rgba(var(--primary-rgb), 0.05);
-        border: 1px solid rgba(var(--primary-rgb), 0.22);
-        color: #e8d9a5;
-        margin-top: 18px;
-        font-size: 0.9rem;
+      .method-extra {
+        margin-top: var(--sp-4);
       }
-
-      .insight {
-        margin-top: 12px;
-        color: #d5d5d5;
-        font-size: 0.9rem;
+      .live-calc {
+        margin-top: var(--sp-4);
+      }
+      .live-calc h3 {
+        margin-bottom: var(--sp-2);
+      }
+      .calc-line {
+        display: block;
+        margin-top: var(--sp-2);
+        padding: 9px 12px;
+        border-radius: var(--r-sm);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text-soft);
+        font-size: var(--fs-sm);
+        direction: ltr;
+        text-align: right;
+        overflow-x: auto;
+      }
+      .method-list {
+        margin-top: var(--sp-2);
+        display: grid;
+        gap: 6px;
+        color: var(--muted);
+        font-size: 0.92rem;
       }
 
       /* ================= FOOTER ================= */
@@ -978,8 +1531,8 @@
         flex-wrap: wrap;
       }
       .footer-brand {
-        color: var(--primary);
-        font-weight: 900;
+        color: var(--primary-light);
+        font-weight: var(--fw-heavy);
       }
 
       /* ================= TOAST ================= */
@@ -988,24 +1541,77 @@
         position: fixed;
         left: 22px;
         bottom: 22px;
-        z-index: 999;
+        z-index: var(--z-toast);
         max-width: min(380px, calc(100% - 44px));
         padding: 13px 16px;
-        border: 1px solid rgba(var(--primary-rgb), 0.4);
-        border-radius: 14px;
-        background: #1c1c1c;
-        box-shadow: var(--shadow);
+        border: 1px solid rgba(var(--primary-rgb), 0.45);
+        border-inline-start-width: 4px;
+        border-radius: var(--r-md);
+        background: var(--surface-3);
+        color: var(--text);
+        box-shadow: var(--shadow-md);
+        font-size: var(--fs-sm);
         transform: translateY(130px);
         opacity: 0;
-        transition: 0.3s;
+        transition:
+          transform var(--t-base) var(--ease),
+          opacity var(--t-base);
         pointer-events: none;
       }
       #toast.show {
         transform: translateY(0);
         opacity: 1;
       }
+      #toast.success {
+        border-color: rgba(var(--success-rgb), 0.55);
+      }
+      #toast.error {
+        border-color: rgba(var(--danger-rgb), 0.6);
+      }
+
+      /* ================= DIALOG ================= */
+
+      .dialog {
+        margin: auto;
+        width: min(440px, calc(100% - 32px));
+        padding: var(--sp-5);
+        border: 1px solid var(--line-strong);
+        border-radius: var(--r-lg);
+        background: var(--surface-2);
+        color: var(--text);
+        box-shadow: var(--shadow-md);
+      }
+      .dialog::backdrop {
+        background: rgba(5, 8, 18, 0.7);
+      }
+      .dialog h2 {
+        font-size: var(--fs-lg);
+        margin-bottom: var(--sp-2);
+      }
+      .dialog p {
+        color: var(--text-soft);
+        margin-bottom: var(--sp-5);
+      }
+      .dialog-actions {
+        display: flex;
+        gap: var(--sp-3);
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+
+      /* ================= PRINT REPORT (screen: hidden) ================= */
+
+      #printReport {
+        display: none;
+      }
 
       /* ================= RESPONSIVE ================= */
+
+      @media (min-width: 1500px) {
+        :root {
+          --max: 1280px;
+        }
+      }
 
       @media (max-width: 900px) {
         .hero-grid,
@@ -1019,15 +1625,17 @@
         .menu-toggle {
           display: inline-flex;
         }
-
         .nav-links {
           display: none;
           position: absolute;
           top: 100%;
           right: 0;
           left: 0;
+          z-index: var(--z-menu);
           flex-direction: column;
           align-items: stretch;
+          gap: 2px;
+          margin: 0;
           padding: 10px 18px 16px;
           background: rgba(11, 16, 32, 0.98);
           border-bottom: 1px solid var(--line);
@@ -1035,13 +1643,16 @@
         .nav-links.open {
           display: flex;
         }
-        .nav-links button {
-          text-align: right;
+        .nav-link {
           padding: 12px 13px;
+          min-height: 44px;
         }
 
         .progress-stats {
           grid-template-columns: repeat(2, 1fr);
+        }
+        .hero {
+          padding-top: 56px;
         }
       }
 
@@ -1049,8 +1660,11 @@
         .container {
           width: min(var(--max), calc(100% - 24px));
         }
+        section {
+          padding: 40px 0;
+        }
         .hero {
-          padding-top: 45px;
+          padding-top: 36px;
         }
         .grid-3,
         .method-grid,
@@ -1062,33 +1676,88 @@
           grid-column: auto;
         }
 
-        .domain-row,
+        .domain-row {
+          grid-template-columns: 22px 1fr auto;
+          gap: 4px 10px;
+          font-size: 0.88rem;
+        }
+        .domain-row .name {
+          grid-column: 2 / 4;
+        }
+        .domain-row .bar {
+          grid-column: 2 / 3;
+        }
+        .domain-row strong {
+          grid-column: 3 / 4;
+        }
+        .domain-row .rank {
+          grid-row: 1 / 3;
+          align-self: start;
+          padding-top: 4px;
+        }
         .domain-progress {
-          grid-template-columns: 125px 1fr 42px;
-          font-size: 0.82rem;
+          grid-template-columns: 1fr 44px;
+          font-size: 0.88rem;
+        }
+        .domain-progress > span {
+          grid-column: 1 / -1;
+        }
+        .domain-progress .dp-meta {
+          grid-column: 1 / -1;
+        }
+
+        .preview-row {
+          grid-template-columns: 78px 1fr 36px;
+          gap: 8px;
         }
 
         .app-top,
         .assessment-top {
           align-items: flex-start;
           flex-direction: column;
+          gap: var(--sp-3);
+        }
+        .app-top-actions {
+          width: 100%;
+        }
+        .app-top-actions .btn {
+          flex: 1 1 auto;
+        }
+        .app-top h1 {
+          font-size: 1.5rem;
+        }
+        .card {
+          padding: 18px;
         }
 
-        .hero h1 {
-          letter-spacing: -1px;
-        }
-        .score-circle {
+        .score-ring {
           width: 155px;
           height: 155px;
         }
+        .assessment-actions .btn {
+          flex: 1;
+        }
         .kbd-hint {
           display: none;
+        }
+        .hero-actions .btn,
+        #startActions .btn {
+          flex: 1 1 100%;
+        }
+        #toast {
+          left: 12px;
+          right: 12px;
+          max-width: none;
+          bottom: 12px;
         }
       }
 
       @media (max-width: 480px) {
         .nav > .btn-primary {
           display: none;
+        }
+        .brand img {
+          width: 128px;
         }
       }
 
@@ -1104,89 +1773,169 @@
 
       /* ================= PRINT ================= */
 
+      @page {
+        size: A4;
+        margin: 14mm;
+      }
+
       @media print {
-        header,
-        footer,
-        .app-tabs,
-        .app-top-actions,
-        .menu-toggle,
-        .hero-actions,
-        .kbd-hint,
-        #toast {
+        body > *:not(#printReport) {
           display: none !important;
         }
 
+        html,
         body {
           background: #fff !important;
           color: #111 !important;
-        }
-        * {
-          color: #111 !important;
-          box-shadow: none !important;
+          font-size: 11pt;
+          line-height: 1.7;
+          overflow: visible;
         }
 
-        .card,
-        .hero-card,
-        .question-card,
-        .project-item {
-          background: #fff !important;
-          border: 1px solid #ddd !important;
+        #printReport {
+          display: block !important;
+          color: #111;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        #printReport h1 {
+          font-size: 20pt;
+          margin-bottom: 2pt;
+        }
+        #printReport h2 {
+          font-size: 13pt;
+          margin: 16pt 0 6pt;
+          padding-bottom: 3pt;
+          border-bottom: 1.5px solid #3a84c1;
+          break-after: avoid;
+        }
+        #printReport h3 {
+          font-size: 11pt;
+          margin-bottom: 2pt;
+        }
+        #printReport p {
+          color: #333;
+          margin-bottom: 4pt;
+        }
+
+        .pr-head {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+          padding-bottom: 8pt;
+          border-bottom: 2px solid #111;
+        }
+        .pr-brand {
+          font-weight: 800;
+          font-size: 12pt;
+          color: #2a6ba3;
+          direction: ltr;
+        }
+        .pr-sub {
+          color: #555;
+          font-size: 10pt;
+        }
+        .pr-overall {
+          display: flex;
+          align-items: baseline;
+          gap: 8pt;
+          margin-top: 10pt;
+        }
+        .pr-overall strong {
+          font-size: 26pt;
+          color: #2a6ba3;
+        }
+        .pr-rank {
+          display: grid;
+          gap: 4pt;
+        }
+        .pr-row {
+          display: grid;
+          grid-template-columns: 16pt 150pt 1fr 26pt;
+          gap: 8pt;
+          align-items: center;
+          break-inside: avoid;
+          font-size: 10pt;
+        }
+        .pr-row strong {
+          direction: ltr;
+          text-align: left;
+        }
+        .pr-bar {
+          height: 7pt;
+          background: #e6e9ef;
+          border-radius: 4pt;
+          overflow: hidden;
+        }
+        .pr-bar span {
+          display: block;
+          height: 100%;
+          background: #2a6ba3;
+        }
+        .pr-card {
+          border: 1px solid #ccd2dd;
+          border-radius: 6pt;
+          padding: 8pt 10pt;
+          margin-bottom: 6pt;
           break-inside: avoid;
         }
-
-        .container {
-          width: 100% !important;
+        .pr-steps {
+          margin: 4pt 0 0;
+          display: grid;
+          gap: 1pt;
+          font-size: 10pt;
         }
-
-        .bar {
-          background: #eee !important;
+        .pr-list {
+          display: grid;
+          gap: 3pt;
+          font-size: 10pt;
         }
-        .bar span {
-          background: #5b8cff !important;
+        .pr-note {
+          margin-top: 14pt;
+          padding: 8pt 10pt;
+          border: 1px solid #999;
+          border-radius: 6pt;
+          font-size: 9.5pt;
+          color: #333;
+          break-inside: avoid;
         }
-        .score-circle {
-          background: #fff !important;
-          border: 6px solid #5b8cff !important;
-        }
-        .tag {
-          border: 1px solid #999 !important;
-        }
-
-        section {
-          padding: 20px 0 !important;
+        .pr-foot {
+          margin-top: 12pt;
+          font-size: 9pt;
+          color: #666;
         }
       }
     </style>
   </head>
   <body>
+    <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
     <!-- ===================== HEADER ===================== -->
 
-    <header>
+    <header class="site-header">
       <div class="container nav">
-        <a
-          href="#"
-          class="brand"
-          aria-label="Talentino - صفحه اصلی"
-          onclick="
-            showHome();
-            return false;
-          "
-        >
+        <a href="#/" class="brand" aria-label="Talentino - صفحه اصلی">
           <img
             src="./images/logo-talentino-1.png"
             alt="Talentino"
             width="150"
+            decoding="async"
           />
         </a>
 
         <nav class="nav-links" id="navLinks" aria-label="منوی اصلی">
-          <button type="button" onclick="showHome()">خانه</button>
-          <button type="button" onclick="scrollToSection('about')">
-            درباره سامانه
-          </button>
-          <button type="button" onclick="openApp('assessment')">ارزیابی</button>
-          <button type="button" onclick="openApp('results')">پروفایل من</button>
-          <button type="button" onclick="openApp('progress')">پیشرفت</button>
+          <a class="nav-link" href="#/" data-nav="home">خانه</a>
+          <a class="nav-link" href="#/about" data-nav="about">درباره سامانه</a>
+          <a class="nav-link" href="#/app/assessment" data-nav="assessment"
+            >ارزیابی</a
+          >
+          <a class="nav-link" href="#/app/results" data-nav="results"
+            >پروفایل من</a
+          >
+          <a class="nav-link" href="#/app/progress" data-nav="progress"
+            >پیشرفت</a
+          >
         </nav>
 
         <button
@@ -1196,96 +1945,99 @@
           aria-label="باز و بسته کردن منو"
           aria-expanded="false"
           aria-controls="navLinks"
-          onclick="toggleMenu()"
+          data-action="toggle-menu"
         >
           ☰
         </button>
 
-        <button
-          type="button"
-          class="btn btn-primary"
-          onclick="openApp('assessment')"
-        >
-          شروع ارزیابی
-        </button>
+        <a class="btn btn-primary" href="#/app/assessment">شروع ارزیابی</a>
       </div>
     </header>
 
-    <main id="home">
+    <noscript>
+      <div class="container" style="padding: 24px 0">
+        برای استفاده از Talentino باید جاوااسکریپت مرورگر فعال باشد.
+      </div>
+    </noscript>
+
+    <main id="main" tabindex="-1">
       <!-- ===================== LANDING ===================== -->
 
       <div id="landing">
-        <section class="hero">
+        <section class="hero" aria-labelledby="heroTitle">
           <div class="container hero-grid">
             <div>
               <span class="eyebrow">● سامانه تعاملی کشف و پرورش استعداد</span>
 
-              <h1>استعدادت را کشف کن. مسیرت را بساز.</h1>
+              <h1 id="heroTitle">استعدادت را کشف کن. مسیرت را بساز.</h1>
 
-              <p>
+              <p class="hero-lead">
                 Talentino با تحلیل پاسخ‌های دانش‌آموز، یک پروفایل چندبعدی از
                 گرایش‌ها و علایق او ایجاد می‌کند و سپس مسیرهای یادگیری، چالش‌ها
                 و پروژه‌های متناسب پیشنهاد می‌دهد.
               </p>
 
-              <div class="hero-actions">
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="openApp('assessment')"
+              <div class="hero-actions btn-row">
+                <a class="btn btn-primary" href="#/app/assessment"
+                  >شروع کشف استعداد ←</a
                 >
-                  شروع کشف استعداد ←
-                </button>
-
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  onclick="scrollToSection('about')"
-                >
-                  روش کار سامانه
-                </button>
+                <a class="btn btn-secondary" href="#/about">روش کار سامانه</a>
               </div>
+
+              <div
+                class="hero-facts"
+                id="heroFacts"
+                aria-label="ابعاد سامانه"
+              ></div>
             </div>
 
             <div class="hero-card">
               <div class="profile-preview">
                 <div class="profile-preview-header">
                   <div>
-                    <small style="color: var(--muted)"
-                      >نمونه پروفایل چندبعدی (تصویری)</small
-                    >
+                    <small>نمونه پروفایل چندبعدی (تصویری)</small>
                     <h3>پروفایل علایق</h3>
                   </div>
-                  <div class="mini-score">86%</div>
+                  <div class="mini-score" aria-hidden="true">86%</div>
                 </div>
 
                 <div class="preview-row">
                   <span>فناوری</span>
-                  <div class="bar"><span style="width: 86%"></span></div>
+                  <div class="bar is-animated" aria-hidden="true">
+                    <span style="width: 86%"></span>
+                  </div>
                   <strong>86</strong>
                 </div>
                 <div class="preview-row">
                   <span>حل مسئله</span>
-                  <div class="bar"><span style="width: 82%"></span></div>
+                  <div class="bar is-animated" aria-hidden="true">
+                    <span style="width: 82%"></span>
+                  </div>
                   <strong>82</strong>
                 </div>
                 <div class="preview-row">
                   <span>طراحی</span>
-                  <div class="bar"><span style="width: 74%"></span></div>
+                  <div class="bar is-animated" aria-hidden="true">
+                    <span style="width: 74%"></span>
+                  </div>
                   <strong>74</strong>
                 </div>
                 <div class="preview-row">
                   <span>موسیقی</span>
-                  <div class="bar"><span style="width: 68%"></span></div>
+                  <div class="bar is-animated" aria-hidden="true">
+                    <span style="width: 68%"></span>
+                  </div>
                   <strong>68</strong>
                 </div>
                 <div class="preview-row">
                   <span>ارتباطات</span>
-                  <div class="bar"><span style="width: 61%"></span></div>
+                  <div class="bar is-animated" aria-hidden="true">
+                    <span style="width: 61%"></span>
+                  </div>
                   <strong>61</strong>
                 </div>
 
-                <div class="notice" style="margin-top: 5px">
+                <div class="notice">
                   پروفایل، یک ارزیابی اولیه برای خودشناسی و انتخاب مسیر یادگیری
                   است؛ تشخیص علمی یا قطعی استعداد نیست.
                 </div>
@@ -1294,11 +2046,11 @@
           </div>
         </section>
 
-        <section id="about">
+        <section id="about" aria-labelledby="aboutTitle">
           <div class="container">
             <div class="section-heading">
               <span class="eyebrow">از کشف تا عمل</span>
-              <h2>Talentino فقط یک آزمون نیست.</h2>
+              <h2 id="aboutTitle">Talentino فقط یک آزمون نیست.</h2>
               <p>
                 هدف سامانه این است که نتیجه ارزیابی به یک مسیر عملی برای رشد
                 تبدیل شود.
@@ -1366,86 +2118,122 @@
 
       <!-- ===================== APP ===================== -->
 
-      <section id="app" class="app-shell">
+      <section id="app" class="app-shell" aria-label="پنل Talentino">
         <div class="container">
           <div class="app-top">
             <div>
               <span class="eyebrow">پنل Talentino</span>
-              <h2 id="appTitle">ارزیابی اولیه</h2>
+              <h1 id="appTitle" tabindex="-1">ارزیابی اولیه</h1>
             </div>
 
             <div class="app-top-actions">
-              <button type="button" class="btn btn-ghost" onclick="showHome()">
-                → بازگشت به صفحه اصلی
-              </button>
+              <a class="btn btn-ghost" href="#/">→ بازگشت به صفحه اصلی</a>
               <button
                 type="button"
                 class="btn btn-ghost"
-                onclick="window.print()"
+                data-action="print"
                 title="ذخیره یا چاپ گزارش"
               >
                 دانلود / چاپ گزارش
               </button>
-              <button type="button" class="btn btn-danger" onclick="resetAll()">
+              <button type="button" class="btn btn-danger" data-action="reset">
                 پاک‌سازی اطلاعات
               </button>
             </div>
           </div>
 
+          <div
+            id="storageWarning"
+            class="notice notice-warning storage-warning"
+            role="alert"
+            hidden
+          >
+            ذخیره‌سازی در مرورگر ممکن نشد؛ ممکن است اطلاعات پس از بستن صفحه از
+            بین برود.
+          </div>
+
           <div class="app-tabs" role="tablist" aria-label="بخش‌های پنل">
             <button
               type="button"
+              class="tab"
               role="tab"
               id="tab-assessment"
-              onclick="switchPanel('assessment')"
+              data-panel="assessment"
+              aria-controls="panel-assessment"
+              aria-selected="false"
+              tabindex="-1"
             >
               🧭 ارزیابی
             </button>
             <button
               type="button"
+              class="tab"
               role="tab"
               id="tab-results"
-              onclick="switchPanel('results')"
+              data-panel="results"
+              aria-controls="panel-results"
+              aria-selected="false"
+              tabindex="-1"
             >
               📊 پروفایل
             </button>
             <button
               type="button"
+              class="tab"
               role="tab"
               id="tab-paths"
-              onclick="switchPanel('paths')"
+              data-panel="paths"
+              aria-controls="panel-paths"
+              aria-selected="false"
+              tabindex="-1"
             >
               🛤️ مسیرها
             </button>
             <button
               type="button"
+              class="tab"
               role="tab"
               id="tab-challenges"
-              onclick="switchPanel('challenges')"
+              data-panel="challenges"
+              aria-controls="panel-challenges"
+              aria-selected="false"
+              tabindex="-1"
             >
               🎯 چالش‌ها
             </button>
             <button
               type="button"
+              class="tab"
               role="tab"
               id="tab-projects"
-              onclick="switchPanel('projects')"
+              data-panel="projects"
+              aria-controls="panel-projects"
+              aria-selected="false"
+              tabindex="-1"
             >
               📁 پروژه‌ها
             </button>
             <button
               type="button"
+              class="tab"
               role="tab"
               id="tab-progress"
-              onclick="switchPanel('progress')"
+              data-panel="progress"
+              aria-controls="panel-progress"
+              aria-selected="false"
+              tabindex="-1"
             >
               📈 پیشرفت
             </button>
             <button
               type="button"
+              class="tab"
               role="tab"
               id="tab-method"
-              onclick="switchPanel('method')"
+              data-panel="method"
+              aria-controls="panel-method"
+              aria-selected="false"
+              tabindex="-1"
             >
               🔬 روش‌شناسی
             </button>
@@ -1453,25 +2241,26 @@
 
           <!-- ============ ASSESSMENT ============ -->
 
-          <div id="panel-assessment" class="app-panel" role="tabpanel">
-            <div
-              id="assessmentStart"
-              class="card"
-              style="max-width: 850px; margin: auto"
-            >
+          <div
+            id="panel-assessment"
+            class="app-panel"
+            role="tabpanel"
+            aria-labelledby="tab-assessment"
+            tabindex="-1"
+            hidden
+          >
+            <div id="assessmentStart" class="card start-card">
               <span class="eyebrow">شروع</span>
 
-              <h2 style="margin-bottom: 10px">
-                آماده‌ای پروفایل خودت را بسازی؟
-              </h2>
+              <h2>آماده‌ای پروفایل خودت را بسازی؟</h2>
 
-              <p style="color: var(--muted); margin-bottom: 20px">
+              <p class="lead">
                 این ارزیابی شامل مجموعه‌ای از موقعیت‌ها و فعالیت‌های مختلف است.
                 پاسخ درست یا غلط وجود ندارد؛ پاسخ واقعی خودت را انتخاب کن.
                 پاسخ‌هایت خودکار ذخیره می‌شوند و هر زمان می‌توانی ادامه بدهی.
               </p>
 
-              <div class="grid grid-3" style="margin-bottom: 22px">
+              <div class="grid grid-3 start-stats">
                 <div class="card">
                   <strong id="infoDomains">—</strong>
                   <p>پروفایل چندبعدی</p>
@@ -1486,23 +2275,16 @@
                 </div>
               </div>
 
-              <p
-                id="startNote"
-                style="
-                  color: var(--muted);
-                  margin-bottom: 16px;
-                  font-size: 0.9rem;
-                "
-              ></p>
+              <p id="startNote" class="start-note" aria-live="polite"></p>
 
-              <div id="startActions" class="hero-actions"></div>
+              <div id="startActions" class="hero-actions btn-row"></div>
             </div>
 
-            <div id="assessmentQuiz" style="display: none">
+            <div id="assessmentQuiz" hidden>
               <div class="assessment-top">
                 <div>
-                  <strong id="questionCounter">—</strong>
-                  <div style="color: var(--muted); font-size: 0.85rem">
+                  <strong id="questionCounter" aria-live="polite">—</strong>
+                  <div class="hint">
                     پاسخ خودت را بر اساس علاقه و رفتار واقعی انتخاب کن.
                   </div>
                 </div>
@@ -1510,35 +2292,45 @@
                 <span id="questionDomain" class="tag">حوزه</span>
               </div>
 
-              <div
-                class="progress-track"
-                role="progressbar"
-                id="progressBarWrap"
-                aria-label="پیشرفت ارزیابی"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                aria-valuenow="0"
-              >
-                <span id="assessmentProgress"></span>
+              <div class="progress-wrap">
+                <div
+                  class="progress-track"
+                  role="progressbar"
+                  id="progressBarWrap"
+                  aria-label="پیشرفت ارزیابی"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="0"
+                >
+                  <span id="assessmentProgress"></span>
+                </div>
+                <div class="progress-meta">
+                  <span id="progressAnswered"></span>
+                  <span id="progressRemaining"></span>
+                </div>
               </div>
 
               <div class="card question-card">
                 <div class="question-number" id="questionNumber">پرسش ۱</div>
-                <div class="question-text" id="questionText">...</div>
+                <div class="question-text" id="questionText" tabindex="-1">
+                  ...
+                </div>
 
                 <div
                   class="options"
                   id="optionsContainer"
                   role="group"
-                  aria-label="گزینه‌های پاسخ"
+                  aria-labelledby="questionText"
                 ></div>
+
+                <div class="answer-hint" id="answerHint" role="alert"></div>
 
                 <div class="assessment-actions">
                   <button
                     type="button"
                     id="prevQuestionBtn"
                     class="btn btn-ghost"
-                    onclick="previousQuestion()"
+                    data-action="prev-question"
                   >
                     → قبلی
                   </button>
@@ -1547,7 +2339,7 @@
                     type="button"
                     id="nextQuestionBtn"
                     class="btn btn-primary"
-                    onclick="nextQuestion()"
+                    data-action="next-question"
                   >
                     بعدی ←
                   </button>
@@ -1558,61 +2350,74 @@
                   برای قبلی
                 </div>
               </div>
+
+              <div class="quiz-foot">
+                <button
+                  type="button"
+                  class="btn btn-ghost btn-small"
+                  data-action="exit-quiz"
+                >
+                  خروج از ارزیابی (پاسخ‌ها ذخیره می‌مانند)
+                </button>
+              </div>
             </div>
 
-            <div id="assessmentComplete" style="display: none" class="card">
+            <div id="assessmentComplete" hidden class="card complete-card">
               <span class="eyebrow">تحلیل کامل شد</span>
 
               <h2>پروفایل اولیه تو آماده است 🎉</h2>
 
-              <p style="color: var(--muted); margin: 12px 0 20px">
+              <p>
                 سامانه پاسخ‌ها را بر اساس الگوریتم امتیازدهی چندبعدی تحلیل کرده
                 است.
               </p>
 
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="switchPanel('results')"
-              >
-                مشاهده پروفایل
-              </button>
+              <a class="btn btn-primary" href="#/app/results">مشاهده پروفایل</a>
             </div>
           </div>
 
           <!-- ============ RESULTS ============ -->
 
-          <div id="panel-results" class="app-panel" role="tabpanel">
-            <div id="noResults" class="card">
+          <div
+            id="panel-results"
+            class="app-panel"
+            role="tabpanel"
+            aria-labelledby="tab-results"
+            tabindex="-1"
+            hidden
+          >
+            <div id="noResults" class="card empty-state">
               <h3>هنوز پروفایلی ساخته نشده است.</h3>
-              <p style="color: var(--muted); margin: 8px 0 18px">
-                ابتدا ارزیابی را کامل کن تا تحلیل نمایش داده شود.
-              </p>
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="switchPanel('assessment')"
-              >
-                شروع ارزیابی
-              </button>
+              <p>ابتدا ارزیابی را کامل کن تا تحلیل نمایش داده شود.</p>
+              <div class="btn-row" id="noResultsActions"></div>
             </div>
 
-            <div id="resultsContent" style="display: none">
+            <div id="resultsContent" hidden>
               <div class="result-hero">
                 <div class="card result-main">
-                  <div
-                    class="score-circle"
-                    id="overallCircle"
-                    style="--score: 0%"
-                  >
-                    <div>
+                  <div class="score-ring" id="overallRing">
+                    <svg
+                      viewBox="0 0 120 120"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <circle class="ring-bg" cx="60" cy="60" r="54"></circle>
+                      <circle
+                        class="ring-fg"
+                        id="ringFg"
+                        cx="60"
+                        cy="60"
+                        r="54"
+                      ></circle>
+                    </svg>
+                    <div class="ring-label">
                       <strong id="overallScore">۰</strong>
                       <small>میانگین کلی پاسخ‌ها</small>
                     </div>
                   </div>
 
                   <p id="resultSummary" class="result-description"></p>
-                  <div id="resultInsights" class="insight"></div>
+                  <div id="resultInsights" class="insight-list"></div>
                 </div>
 
                 <div class="card">
@@ -1621,27 +2426,30 @@
                     <p>رتبه‌بندی بر اساس امتیاز حوزه‌ها در همین ارزیابی.</p>
                   </div>
 
-                  <div id="domainResults" class="domain-list"></div>
+                  <ol id="domainResults" class="domain-list" role="list"></ol>
                 </div>
               </div>
 
               <div class="grid grid-3">
-                <div class="card">
+                <div class="card top-card">
                   <span class="tag">حوزه برجسته اول</span>
                   <h3 id="topDomain1" style="margin-top: 10px">—</h3>
                   <p id="topDomain1Desc">—</p>
+                  <div class="meta" id="topDomain1Meta"></div>
                 </div>
 
-                <div class="card">
+                <div class="card top-card">
                   <span class="tag">حوزه برجسته دوم</span>
                   <h3 id="topDomain2" style="margin-top: 10px">—</h3>
                   <p id="topDomain2Desc">—</p>
+                  <div class="meta" id="topDomain2Meta"></div>
                 </div>
 
-                <div class="card">
+                <div class="card top-card">
                   <span class="tag">حوزه برجسته سوم</span>
                   <h3 id="topDomain3" style="margin-top: 10px">—</h3>
                   <p id="topDomain3Desc">—</p>
+                  <div class="meta" id="topDomain3Meta"></div>
                 </div>
               </div>
 
@@ -1653,12 +2461,31 @@
                 باید با نمونه آماری مناسب، نظر متخصصان و آزمون‌های معتبر
                 اعتبارسنجی شود.
               </div>
+
+              <div class="next-steps btn-row">
+                <a class="btn btn-primary" href="#/app/paths"
+                  >مشاهده مسیرهای رشد</a
+                >
+                <a class="btn btn-secondary" href="#/app/challenges"
+                  >رفتن به چالش‌ها</a
+                >
+                <button type="button" class="btn btn-ghost" data-action="print">
+                  دانلود / چاپ گزارش
+                </button>
+              </div>
             </div>
           </div>
 
           <!-- ============ PATHS ============ -->
 
-          <div id="panel-paths" class="app-panel" role="tabpanel">
+          <div
+            id="panel-paths"
+            class="app-panel"
+            role="tabpanel"
+            aria-labelledby="tab-paths"
+            tabindex="-1"
+            hidden
+          >
             <div class="section-heading">
               <h2>مسیرهای پیشنهادی رشد</h2>
               <p>
@@ -1672,7 +2499,14 @@
 
           <!-- ============ CHALLENGES ============ -->
 
-          <div id="panel-challenges" class="app-panel" role="tabpanel">
+          <div
+            id="panel-challenges"
+            class="app-panel"
+            role="tabpanel"
+            aria-labelledby="tab-challenges"
+            tabindex="-1"
+            hidden
+          >
             <div class="section-heading">
               <h2>چالش‌های عملی</h2>
               <p>
@@ -1681,12 +2515,21 @@
               </p>
             </div>
 
+            <div id="challengeSummary" class="summary-bar"></div>
+
             <div id="challengesContainer" class="grid grid-3"></div>
           </div>
 
           <!-- ============ PROJECTS ============ -->
 
-          <div id="panel-projects" class="app-panel" role="tabpanel">
+          <div
+            id="panel-projects"
+            class="app-panel"
+            role="tabpanel"
+            aria-labelledby="tab-projects"
+            tabindex="-1"
+            hidden
+          >
             <div class="section-heading">
               <h2>دفتر پروژه</h2>
               <p>
@@ -1695,30 +2538,39 @@
             </div>
 
             <div class="card">
-              <form class="project-form" onsubmit="addProject(event)">
+              <form class="project-form" id="projectForm" novalidate>
                 <div class="field">
                   <label for="projectTitle">نام پروژه</label>
                   <input
                     id="projectTitle"
-                    required
                     maxlength="80"
+                    autocomplete="off"
+                    aria-describedby="projectTitleError"
                     placeholder="مثلاً وب‌سایت شخصی"
                   />
+                  <div class="field-error" id="projectTitleError"></div>
                 </div>
 
                 <div class="field">
                   <label for="projectDomain">حوزه</label>
-                  <select id="projectDomain" required></select>
+                  <select id="projectDomain"></select>
+                  <div class="field-error"></div>
                 </div>
 
                 <div class="field full">
                   <label for="projectDescription">توضیح پروژه</label>
                   <textarea
                     id="projectDescription"
-                    required
                     maxlength="500"
+                    aria-describedby="projectDescError projectDescCount"
                     placeholder="این پروژه چه چیزی را حل می‌کند؟ چه چیزی ساخته‌ای؟"
                   ></textarea>
+                  <div
+                    class="field-count"
+                    id="projectDescCount"
+                    aria-hidden="true"
+                  ></div>
+                  <div class="field-error" id="projectDescError"></div>
                 </div>
 
                 <div>
@@ -1734,7 +2586,14 @@
 
           <!-- ============ PROGRESS ============ -->
 
-          <div id="panel-progress" class="app-panel" role="tabpanel">
+          <div
+            id="panel-progress"
+            class="app-panel"
+            role="tabpanel"
+            aria-labelledby="tab-progress"
+            tabindex="-1"
+            hidden
+          >
             <div class="section-heading">
               <h2>داشبورد پیشرفت</h2>
               <p>
@@ -1743,10 +2602,13 @@
               </p>
             </div>
 
+            <div id="nextAction"></div>
+
             <div class="progress-stats">
               <div class="card stat">
                 <strong id="statQuestions">۰</strong>
                 <span>پاسخ ثبت‌شده</span>
+                <small id="statQuestionsOf"></small>
               </div>
 
               <div class="card stat">
@@ -1757,11 +2619,13 @@
               <div class="card stat">
                 <strong id="statChallenges">۰</strong>
                 <span>چالش تکمیل‌شده</span>
+                <small id="statChallengesOf"></small>
               </div>
 
               <div class="card stat">
                 <strong id="statScore">۰</strong>
                 <span>میانگین کلی پاسخ‌ها</span>
+                <small id="statScoreDelta"></small>
               </div>
             </div>
 
@@ -1769,11 +2633,49 @@
               <h3 style="margin-bottom: 18px">وضعیت حوزه‌ها</h3>
               <div id="progressDomains" class="domain-progress-list"></div>
             </div>
+
+            <div class="card data-actions">
+              <h3>پشتیبان‌گیری از داده‌ها</h3>
+              <p>
+                داده‌ها فقط در مرورگر خودت ذخیره می‌شوند. برای انتقال یا
+                نگهداری، از آن‌ها فایل پشتیبان بگیر یا فایل پشتیبان قبلی را
+                بازیابی کن.
+              </p>
+              <div class="btn-row" style="margin-top: 14px">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-small"
+                  data-action="export"
+                >
+                  دریافت فایل پشتیبان
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-ghost btn-small"
+                  data-action="import"
+                >
+                  بازیابی از فایل
+                </button>
+                <input
+                  type="file"
+                  id="importFile"
+                  accept="application/json,.json"
+                  hidden
+                />
+              </div>
+            </div>
           </div>
 
           <!-- ============ METHODOLOGY ============ -->
 
-          <div id="panel-method" class="app-panel" role="tabpanel">
+          <div
+            id="panel-method"
+            class="app-panel"
+            role="tabpanel"
+            aria-labelledby="tab-method"
+            tabindex="-1"
+            hidden
+          >
             <div class="section-heading">
               <span class="eyebrow">روش‌شناسی</span>
               <h2>Talentino چگونه تصمیم می‌گیرد؟</h2>
@@ -1783,9 +2685,9 @@
               </p>
             </div>
 
-            <div class="method-grid">
-              <div class="card method-step">
-                <div class="method-number">۱</div>
+            <ol class="method-grid" role="list">
+              <li class="card method-step">
+                <div class="method-number" aria-hidden="true">۱</div>
                 <div>
                   <h3>جمع‌آوری پاسخ</h3>
                   <p>
@@ -1793,10 +2695,10 @@
                     تا ۵ مشخص می‌کند.
                   </p>
                 </div>
-              </div>
+              </li>
 
-              <div class="card method-step">
-                <div class="method-number">۲</div>
+              <li class="card method-step">
+                <div class="method-number" aria-hidden="true">۲</div>
                 <div>
                   <h3>اتصال پاسخ به حوزه</h3>
                   <p>
@@ -1804,10 +2706,10 @@
                     دارد تا امتیازها قابل مقایسه باشند.
                   </p>
                 </div>
-              </div>
+              </li>
 
-              <div class="card method-step">
-                <div class="method-number">۳</div>
+              <li class="card method-step">
+                <div class="method-number" aria-hidden="true">۳</div>
                 <div>
                   <h3>محاسبه امتیاز</h3>
                   <p>
@@ -1815,10 +2717,10 @@
                     ۴) × ۱۰۰ به مقیاس ۰ تا ۱۰۰ تبدیل می‌شود.
                   </p>
                 </div>
-              </div>
+              </li>
 
-              <div class="card method-step">
-                <div class="method-number">۴</div>
+              <li class="card method-step">
+                <div class="method-number" aria-hidden="true">۴</div>
                 <div>
                   <h3>رتبه‌بندی و شکستن تساوی</h3>
                   <p>
@@ -1827,10 +2729,10 @@
                     حوزه‌ها ملاک است.
                   </p>
                 </div>
-              </div>
+              </li>
 
-              <div class="card method-step">
-                <div class="method-number">۵</div>
+              <li class="card method-step">
+                <div class="method-number" aria-hidden="true">۵</div>
                 <div>
                   <h3>تولید مسیر</h3>
                   <p>
@@ -1838,10 +2740,10 @@
                     می‌شوند.
                   </p>
                 </div>
-              </div>
+              </li>
 
-              <div class="card method-step">
-                <div class="method-number">۶</div>
+              <li class="card method-step">
+                <div class="method-number" aria-hidden="true">۶</div>
                 <div>
                   <h3>چرخه رشد</h3>
                   <p>
@@ -1849,7 +2751,23 @@
                     خود را ثبت می‌کند.
                   </p>
                 </div>
-              </div>
+              </li>
+            </ol>
+
+            <div class="card method-extra">
+              <h3>جزئیات اجرایی</h3>
+              <ul class="method-list" id="methodDetails"></ul>
+            </div>
+
+            <div id="liveCalc"></div>
+
+            <div class="notice">
+              <strong>نکته علمی:</strong>
+              این سامانه بر اساس یک مدل امتیازدهی ساده طراحی شده و نتیجه آن
+              «تشخیص قطعی استعداد» یا آزمون روان‌شناختی استاندارد نیست؛ علاقه
+              اعلام‌شده همان توانایی نیست. برای اعتبار علمی بیشتر، نسخه پژوهشی
+              باید با نمونه آماری مناسب، نظر متخصصان و آزمون‌های معتبر
+              اعتبارسنجی شود.
             </div>
           </div>
         </div>
@@ -1867,16 +2785,41 @@
       </div>
     </footer>
 
-    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+    <dialog
+      id="confirmDialog"
+      class="dialog"
+      aria-labelledby="dialogTitle"
+      aria-describedby="dialogMessage"
+    >
+      <form method="dialog">
+        <h2 id="dialogTitle"></h2>
+        <p id="dialogMessage"></p>
+        <div class="dialog-actions">
+          <button type="submit" value="cancel" class="btn btn-ghost" autofocus>
+            انصراف
+          </button>
+          <button
+            type="submit"
+            value="confirm"
+            class="btn btn-primary"
+            id="dialogConfirm"
+          >
+            تأیید
+          </button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Print-only report (filled by JS right before printing) -->
+    <div id="printReport" dir="rtl" lang="fa" aria-hidden="true"></div>
 
     <script>
       /* =========================================================
        TALENTINO ENGINE
        Explainable Multi-Domain Interest Profiling
-    ========================================================== */
-
-      /* =========================================================
-       1. DOMAIN DATABASE
+       Layout: data → state/storage → utils → routing → views → boot
     ========================================================== */
 
       const DOMAINS = {
@@ -2728,941 +3671,2268 @@
 
       const CHALLENGE_IDS = CHALLENGES.map((c) => c.id);
 
-      /* =========================================================
-       5. STATE
-       - answers / resultsReady : آخرین ارزیابی کامل‌شده
-       - draft                  : ارزیابی نیمه‌کاره (قابل ادامه)
-    ========================================================== */
+      (() => {
+        "use strict";
 
-      const STORAGE_KEY = "talentino_v3";
-      const TOP_COUNT = 3;
-      const PATH_COUNT = 6;
+        /* =======================================================
+         CONSTANTS
+      ======================================================= */
 
-      function defaultState() {
-        return {
-          version: 3,
-          draft: null,
-          answers: {},
-          resultsReady: false,
-          completedChallenges: [],
-          projects: [],
+        const STORAGE_KEY = "talentino_v3"; // key kept for backward compatibility
+        const SCHEMA_VERSION = 4; // v3 data is migrated transparently
+        const TOP_COUNT = 3;
+        const PATH_COUNT = 6;
+        const RECOMMENDED_CHALLENGES = 5;
+        const ANSWER_MIN = 1;
+        const ANSWER_MAX = 5;
+        const STRONG_THRESHOLD = 4;
+        const TITLE_MAX = 80;
+        const DESC_MAX = 500;
+        const MAX_PROJECTS = 200;
+        const HISTORY_MAX = 10;
+        const IMPORT_MAX_BYTES = 1000000;
+        const TOAST_MS = 2800;
+        const RING_RADIUS = 54;
+        const SITE_TITLE = "Talentino | سامانه تعاملی کشف و پرورش استعداد";
+
+        const PANELS = {
+          assessment: { title: "ارزیابی اولیه", render: renderAssessment },
+          results: { title: "پروفایل علایق", render: renderResults },
+          paths: { title: "مسیرهای رشد", render: renderPaths },
+          challenges: { title: "چالش‌های عملی", render: renderChallenges },
+          projects: { title: "دفتر پروژه", render: renderProjects },
+          progress: { title: "داشبورد پیشرفت", render: renderProgress },
+          method: { title: "روش‌شناسی", render: renderMethod },
         };
-      }
+        const PANEL_ORDER = Object.keys(PANELS);
 
-      let state = defaultState();
-      let assessmentView = "start";
+        const SCIENCE_NOTE =
+          "این سامانه بر اساس یک مدل امتیازدهی ساده طراحی شده و نتیجه آن «تشخیص قطعی استعداد» یا آزمون روان‌شناختی استاندارد نیست؛ علاقه اعلام‌شده همان توانایی نیست. برای اعتبار علمی بیشتر، نسخه پژوهشی باید با نمونه آماری مناسب، نظر متخصصان و آزمون‌های معتبر اعتبارسنجی شود.";
 
-      /* =========================================================
-       6. STORAGE (validated)
-    ========================================================== */
+        /* =======================================================
+         UTILITIES
+      ======================================================= */
 
-      function sanitizeAnswers(raw) {
-        const clean = {};
-        if (!raw || typeof raw !== "object") return clean;
+        const $ = (id) => document.getElementById(id);
 
-        Object.entries(raw).forEach(([key, value]) => {
-          const index = Number(key);
-          const val = Number(value);
+        function fa(value) {
+          return String(value).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
+        }
 
-          if (
-            Number.isInteger(index) &&
-            index >= 0 &&
-            index < QUESTIONS.length &&
-            Number.isInteger(val) &&
-            val >= 1 &&
-            val <= 5
-          ) {
-            clean[index] = val;
+        function faDec(value, digits = 1) {
+          return fa(Number(value).toFixed(digits)).replace(".", "٫");
+        }
+
+        function signed(value) {
+          if (value > 0) return `+${fa(value)}`;
+          if (value < 0) return `−${fa(Math.abs(value))}`;
+          return fa(0);
+        }
+
+        function cleanLine(value, max) {
+          return String(value ?? "")
+            .replace(/\s+/g, " ")
+            .trim()
+            .slice(0, max);
+        }
+
+        function cleanText(value, max) {
+          return String(value ?? "")
+            .replace(/\r\n?/g, "\n")
+            .trim()
+            .slice(0, max);
+        }
+
+        function makeId() {
+          return (
+            Date.now().toString(36) + Math.random().toString(36).slice(2, 7)
+          );
+        }
+
+        function domainOf(key) {
+          return (
+            DOMAINS[key] || {
+              name: "نامشخص",
+              icon: "📌",
+              description: "",
+              path: [],
+            }
+          );
+        }
+
+        function reducedMotion() {
+          return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        }
+
+        function isPlainObject(v) {
+          return v !== null && typeof v === "object" && !Array.isArray(v);
+        }
+
+        /**
+         * Safe DOM builder. Every string becomes a text node, so user data
+         * can never be interpreted as HTML (no innerHTML anywhere).
+         */
+        function h(tag, props, ...children) {
+          const node = document.createElement(tag);
+
+          if (props) {
+            for (const [key, value] of Object.entries(props)) {
+              if (value === undefined || value === null || value === false)
+                continue;
+              if (key === "class") node.className = value;
+              else if (key === "dataset") Object.assign(node.dataset, value);
+              else if (key === "style") Object.assign(node.style, value);
+              else if (key.startsWith("on") && typeof value === "function")
+                node.addEventListener(key.slice(2), value);
+              else if (value === true) node.setAttribute(key, "");
+              else node.setAttribute(key, String(value));
+            }
           }
-        });
 
-        return clean;
-      }
+          const append = (child) => {
+            if (child === undefined || child === null || child === false)
+              return;
+            if (Array.isArray(child)) child.forEach(append);
+            else if (child instanceof Node) node.appendChild(child);
+            else node.appendChild(document.createTextNode(String(child)));
+          };
+          children.forEach(append);
 
-      function loadState() {
-        try {
-          const saved = localStorage.getItem(STORAGE_KEY);
-          if (!saved) return;
+          return node;
+        }
 
-          const parsed = JSON.parse(saved);
-          if (!parsed || typeof parsed !== "object") return;
+        function barEl(percent, animated = false, extraClass = "") {
+          const p = Math.max(0, Math.min(100, Math.round(percent)));
+          return h(
+            "div",
+            {
+              class:
+                `bar${animated ? " is-animated" : ""} ${extraClass}`.trim(),
+              "aria-hidden": "true",
+            },
+            h("span", { style: { width: `${p}%` } }),
+          );
+        }
+
+        function linkBtn(label, href, className = "btn-primary") {
+          return h("a", { class: `btn ${className}`, href }, label);
+        }
+
+        function actionBtn(label, className, handler, attrs) {
+          return h(
+            "button",
+            {
+              type: "button",
+              class: `btn ${className}`,
+              onclick: handler,
+              ...attrs,
+            },
+            label,
+          );
+        }
+
+        /* =======================================================
+         STORAGE (defensive: never throws, falls back to memory)
+      ======================================================= */
+
+        const store = (() => {
+          const memory = new Map();
+          let healthy = true;
+          return {
+            get(key) {
+              try {
+                return window.localStorage.getItem(key);
+              } catch (error) {
+                healthy = false;
+                return memory.has(key) ? memory.get(key) : null;
+              }
+            },
+            set(key, value) {
+              try {
+                window.localStorage.setItem(key, value);
+                return true;
+              } catch (error) {
+                healthy = false;
+                memory.set(key, value);
+                return false;
+              }
+            },
+            remove(key) {
+              memory.delete(key);
+              try {
+                window.localStorage.removeItem(key);
+              } catch (error) {
+                healthy = false;
+              }
+            },
+            get healthy() {
+              return healthy;
+            },
+          };
+        })();
+
+        /* =======================================================
+         STATE
+         - answers / resultsReady : last completed assessment
+         - draft                  : in-progress assessment (resumable)
+         - completedChallenges    : challenge ids
+         - pathSteps              : { domainKey: [stepIndex, ...] }
+         - history                : score snapshots of finished assessments
+         - projects               : user portfolio
+      ======================================================= */
+
+        function defaultState() {
+          return {
+            version: SCHEMA_VERSION,
+            draft: null,
+            answers: {},
+            resultsReady: false,
+            completedChallenges: [],
+            pathSteps: {},
+            history: [],
+            projects: [],
+          };
+        }
+
+        let state = defaultState();
+        let rankingCache = null;
+        let assessmentView = "start";
+        let storageWarned = false;
+
+        function sanitizeAnswers(raw) {
+          const clean = {};
+          if (!isPlainObject(raw)) return clean;
+
+          Object.entries(raw).forEach(([key, value]) => {
+            const index = Number(key);
+            const val = Number(value);
+
+            if (
+              Number.isInteger(index) &&
+              index >= 0 &&
+              index < QUESTIONS.length &&
+              Number.isInteger(val) &&
+              val >= ANSWER_MIN &&
+              val <= ANSWER_MAX
+            ) {
+              clean[index] = val;
+            }
+          });
+
+          return clean;
+        }
+
+        function sanitizeScore(value) {
+          const n = Number(value);
+          return Number.isInteger(n) && n >= 0 && n <= 100 ? n : null;
+        }
+
+        /** Validates any stored / imported payload and returns a clean state. */
+        function normalizeState(raw) {
+          if (!isPlainObject(raw)) return null;
 
           const next = defaultState();
 
-          next.answers = sanitizeAnswers(parsed.answers);
+          const answers = sanitizeAnswers(raw.answers);
           next.resultsReady =
-            parsed.resultsReady === true &&
-            Object.keys(next.answers).length === QUESTIONS.length;
+            raw.resultsReady === true &&
+            Object.keys(answers).length === QUESTIONS.length;
+          next.answers = next.resultsReady ? answers : {};
 
-          if (parsed.draft && typeof parsed.draft === "object") {
-            const draftAnswers = sanitizeAnswers(parsed.draft.answers);
-            const cq = Number(parsed.draft.currentQuestion);
+          if (isPlainObject(raw.draft)) {
+            const draftAnswers = sanitizeAnswers(raw.draft.answers);
+            const cq = Number(raw.draft.currentQuestion);
+            const currentQuestion =
+              Number.isInteger(cq) && cq >= 0 && cq < QUESTIONS.length ? cq : 0;
 
-            next.draft = {
-              answers: draftAnswers,
-              currentQuestion:
-                Number.isInteger(cq) && cq >= 0 && cq < QUESTIONS.length
-                  ? cq
-                  : 0,
-            };
+            if (Object.keys(draftAnswers).length > 0 || currentQuestion > 0) {
+              next.draft = { answers: draftAnswers, currentQuestion };
+            }
           }
 
-          if (Array.isArray(parsed.completedChallenges)) {
-            next.completedChallenges = parsed.completedChallenges.filter((id) =>
-              CHALLENGE_IDS.includes(id),
+          if (Array.isArray(raw.completedChallenges)) {
+            next.completedChallenges = [
+              ...new Set(
+                raw.completedChallenges.filter((id) =>
+                  CHALLENGE_IDS.includes(id),
+                ),
+              ),
+            ];
+          }
+
+          if (isPlainObject(raw.pathSteps)) {
+            DOMAIN_KEYS.forEach((key) => {
+              const list = raw.pathSteps[key];
+              if (!Array.isArray(list)) return;
+              const max = DOMAINS[key].path.length;
+              const steps = [
+                ...new Set(
+                  list.filter((n) => Number.isInteger(n) && n >= 0 && n < max),
+                ),
+              ].sort((a, b) => a - b);
+              if (steps.length) next.pathSteps[key] = steps;
+            });
+          }
+
+          if (Array.isArray(raw.history)) {
+            next.history = raw.history
+              .map((entry) => {
+                if (!isPlainObject(entry) || !isPlainObject(entry.scores))
+                  return null;
+                const scores = {};
+                for (const key of DOMAIN_KEYS) {
+                  const s = sanitizeScore(entry.scores[key]);
+                  if (s === null) return null;
+                  scores[key] = s;
+                }
+                const overall = sanitizeScore(entry.overall);
+                if (overall === null) return null;
+                return {
+                  at: typeof entry.at === "string" ? entry.at.slice(0, 40) : "",
+                  overall,
+                  scores,
+                };
+              })
+              .filter(Boolean)
+              .slice(-HISTORY_MAX);
+          }
+
+          if (Array.isArray(raw.projects)) {
+            const seen = new Set();
+            raw.projects.slice(0, MAX_PROJECTS).forEach((p) => {
+              if (!isPlainObject(p)) return;
+              const title = cleanLine(p.title, TITLE_MAX);
+              const description = cleanText(p.description, DESC_MAX);
+              if (!title || !description) return;
+
+              let id =
+                typeof p.id === "string" && p.id && p.id.length <= 40
+                  ? p.id
+                  : makeId();
+              while (seen.has(id)) id = makeId();
+              seen.add(id);
+
+              next.projects.push({
+                id,
+                title,
+                domain: DOMAINS[p.domain] ? p.domain : DOMAIN_KEYS[0],
+                description,
+                createdAt:
+                  typeof p.createdAt === "string"
+                    ? p.createdAt.slice(0, 40)
+                    : "",
+              });
+            });
+          }
+
+          return next;
+        }
+
+        function seedHistory(target) {
+          if (!target.resultsReady || target.history.length) return;
+          target.history.push(makeSnapshot(target.answers, ""));
+        }
+
+        function loadState() {
+          const raw = store.get(STORAGE_KEY);
+          if (raw === null || raw === undefined) return "empty";
+
+          try {
+            const next = normalizeState(JSON.parse(raw));
+            if (!next) throw new Error("Unexpected data shape");
+            seedHistory(next);
+            state = next;
+            rankingCache = null;
+            return "ok";
+          } catch (error) {
+            console.warn("Saved data is corrupt and was ignored.", error);
+            // Keep the unreadable payload aside so nothing is silently lost.
+            store.set(STORAGE_KEY + "_corrupt", String(raw).slice(0, 200000));
+            state = defaultState();
+            rankingCache = null;
+            return "corrupt";
+          }
+        }
+
+        function saveState() {
+          state.version = SCHEMA_VERSION;
+          const ok = store.set(STORAGE_KEY, JSON.stringify(state));
+          updateStorageWarning();
+
+          if (!ok && !storageWarned) {
+            storageWarned = true;
+            showToast(
+              "ذخیره‌سازی در مرورگر ممکن نشد؛ ممکن است اطلاعات پس از بستن صفحه از بین برود.",
+              "error",
+            );
+          }
+          return ok;
+        }
+
+        function updateStorageWarning() {
+          $("storageWarning").hidden = store.healthy;
+        }
+
+        /* =======================================================
+         ALGORITHM
+         score = ((mean − 1) / 4) × 100   (scale 1..5 → 0..100)
+         Tie-break: score → count(answers ≥ 4) → max answer → fixed order
+         Deterministic: same answers always give the same ranking.
+      ======================================================= */
+
+        function computeStats(answers) {
+          const stats = {};
+
+          DOMAIN_KEYS.forEach((key) => {
+            stats[key] = {
+              sum: 0,
+              count: 0,
+              strong: 0,
+              max: 0,
+              mean: 0,
+              score: 0,
+            };
+          });
+
+          QUESTIONS.forEach((question, index) => {
+            const value = answers[index];
+            if (value === undefined) return;
+
+            const s = stats[question.domain];
+            s.sum += value;
+            s.count++;
+            if (value >= STRONG_THRESHOLD) s.strong++;
+            if (value > s.max) s.max = value;
+          });
+
+          DOMAIN_KEYS.forEach((key) => {
+            const s = stats[key];
+            s.mean = s.count === 0 ? 0 : s.sum / s.count;
+            s.score =
+              s.count === 0
+                ? 0
+                : Math.round(
+                    ((s.mean - ANSWER_MIN) / (ANSWER_MAX - ANSWER_MIN)) * 100,
+                  );
+          });
+
+          return stats;
+        }
+
+        function rankDomains(answers) {
+          const stats = computeStats(answers);
+
+          return DOMAIN_KEYS.map((key, order) => ({
+            key,
+            order,
+            ...stats[key],
+          })).sort(
+            (a, b) =>
+              b.score - a.score ||
+              b.strong - a.strong ||
+              b.max - a.max ||
+              a.order - b.order,
+          );
+        }
+
+        function getRanking() {
+          if (!state.resultsReady) return [];
+          if (!rankingCache || rankingCache.answers !== state.answers) {
+            rankingCache = {
+              answers: state.answers,
+              list: rankDomains(state.answers),
+            };
+          }
+          return rankingCache.list;
+        }
+
+        function calculateOverallScore(ranking) {
+          if (!ranking.length) return 0;
+          return Math.round(
+            ranking.reduce((total, item) => total + item.score, 0) /
+              ranking.length,
+          );
+        }
+
+        function makeSnapshot(answers, at) {
+          const ranking = rankDomains(answers);
+          const scores = {};
+          ranking.forEach((item) => {
+            scores[item.key] = item.score;
+          });
+          return { at, overall: calculateOverallScore(ranking), scores };
+        }
+
+        /** Change versus the previous finished assessment (or null). */
+        function historyDelta() {
+          if (state.history.length < 2) return null;
+          const prev = state.history[state.history.length - 2];
+          const cur = state.history[state.history.length - 1];
+          const perDomain = {};
+          DOMAIN_KEYS.forEach((key) => {
+            perDomain[key] = cur.scores[key] - prev.scores[key];
+          });
+          return { overall: cur.overall - prev.overall, perDomain };
+        }
+
+        function pathDoneCount(key) {
+          return (state.pathSteps[key] || []).length;
+        }
+
+        /* =======================================================
+         FEEDBACK: toast + confirm dialog
+      ======================================================= */
+
+        let toastTimer = 0;
+
+        function showToast(message, type = "info") {
+          const toast = $("toast");
+          clearTimeout(toastTimer);
+          toast.className = type;
+          toast.textContent = "";
+          requestAnimationFrame(() => {
+            toast.textContent = message;
+            toast.classList.add("show");
+          });
+          toastTimer = setTimeout(
+            () => toast.classList.remove("show"),
+            TOAST_MS,
+          );
+        }
+
+        function confirmAction({ title, message, confirmLabel, danger }) {
+          const dialog = $("confirmDialog");
+
+          if (typeof dialog.showModal !== "function") {
+            return Promise.resolve(window.confirm(message));
+          }
+
+          $("dialogTitle").textContent = title;
+          $("dialogMessage").textContent = message;
+          const confirmBtn = $("dialogConfirm");
+          confirmBtn.textContent = confirmLabel;
+          confirmBtn.className = `btn ${danger ? "btn-danger" : "btn-primary"}`;
+          dialog.returnValue = "";
+
+          return new Promise((resolve) => {
+            const onClose = () => {
+              dialog.removeEventListener("close", onClose);
+              resolve(dialog.returnValue === "confirm");
+            };
+            dialog.addEventListener("close", onClose);
+            dialog.showModal();
+          });
+        }
+
+        /* =======================================================
+         ROUTING  (#/  #/about  #/app/<panel>)
+      ======================================================= */
+
+        let currentView = "home";
+        let currentPanel = "assessment";
+        let routedOnce = false;
+        let keepFocus = false; // true when a tab was activated (focus stays on it)
+
+        function parseRoute() {
+          const parts = (location.hash || "")
+            .replace(/^#\/?/, "")
+            .split("/")
+            .filter(Boolean);
+
+          if (parts[0] === "app") {
+            return {
+              view: "app",
+              panel: PANELS[parts[1]] ? parts[1] : "assessment",
+            };
+          }
+          if (parts[0] === "about") return { view: "home", target: "about" };
+          return { view: "home" };
+        }
+
+        function go(hash) {
+          const current = location.hash || "#/";
+          if (current === hash || (hash === "#/" && current === "#")) route();
+          else location.hash = hash;
+        }
+
+        function route() {
+          const r = parseRoute();
+          const first = !routedOnce;
+          routedOnce = true;
+          closeMenu();
+
+          if (r.view === "app") {
+            const wasApp = currentView === "app";
+            currentView = "app";
+            $("landing").hidden = true;
+            $("app").classList.add("open");
+            setPanel(r.panel);
+
+            if (!wasApp) window.scrollTo(0, 0);
+            if (!first && !keepFocus) {
+              $("appTitle").focus({ preventScroll: true });
+            }
+          } else {
+            currentView = "home";
+            $("app").classList.remove("open");
+            $("landing").hidden = false;
+            document.title = SITE_TITLE;
+
+            if (r.target) {
+              requestAnimationFrame(() => {
+                $(r.target).scrollIntoView({
+                  behavior: reducedMotion() ? "auto" : "smooth",
+                });
+              });
+            } else {
+              window.scrollTo(0, 0);
+            }
+          }
+
+          keepFocus = false;
+          updateNav(r);
+        }
+
+        function setPanel(panel) {
+          currentPanel = panel;
+          if (panel === "assessment" && assessmentView === "complete") {
+            assessmentView = "start";
+          }
+
+          PANEL_ORDER.forEach((id) => {
+            const on = id === panel;
+            $("panel-" + id).hidden = !on;
+            const tab = $("tab-" + id);
+            tab.setAttribute("aria-selected", String(on));
+            tab.tabIndex = on ? 0 : -1;
+          });
+
+          $("appTitle").textContent = PANELS[panel].title;
+          document.title = `${PANELS[panel].title} | Talentino`;
+
+          PANELS[panel].render();
+
+          const activeTab = $("tab-" + panel);
+          if (activeTab.scrollIntoView) {
+            activeTab.scrollIntoView({
+              block: "nearest",
+              inline: "center",
+              behavior: "auto",
+            });
+          }
+        }
+
+        function renderActivePanel() {
+          if (currentView === "app") PANELS[currentPanel].render();
+        }
+
+        function updateNav(r) {
+          const route = r || parseRoute();
+          let active = null;
+          if (route.view === "home") active = route.target || "home";
+          else if (["assessment", "results", "progress"].includes(route.panel))
+            active = route.panel;
+
+          document.querySelectorAll(".nav-link").forEach((link) => {
+            if (link.dataset.nav === active)
+              link.setAttribute("aria-current", "page");
+            else link.removeAttribute("aria-current");
+          });
+        }
+
+        function closeMenu(returnFocus = false) {
+          const nav = $("navLinks");
+          if (!nav.classList.contains("open")) return;
+          nav.classList.remove("open");
+          $("menuToggle").setAttribute("aria-expanded", "false");
+          $("menuToggle").textContent = "☰";
+          if (returnFocus) $("menuToggle").focus();
+        }
+
+        function toggleMenu() {
+          const nav = $("navLinks");
+          const open = !nav.classList.contains("open");
+          nav.classList.toggle("open", open);
+          $("menuToggle").setAttribute("aria-expanded", String(open));
+          $("menuToggle").textContent = open ? "✕" : "☰";
+        }
+
+        /* =======================================================
+         ASSESSMENT
+      ======================================================= */
+
+        function setAssessmentView(view) {
+          assessmentView = view;
+          $("assessmentStart").hidden = view !== "start";
+          $("assessmentQuiz").hidden = view !== "quiz";
+          $("assessmentComplete").hidden = view !== "complete";
+        }
+
+        function renderAssessment() {
+          if (assessmentView === "quiz" && !state.draft) {
+            assessmentView = "start";
+          }
+          setAssessmentView(assessmentView);
+
+          if (assessmentView === "quiz") renderQuestion();
+          else if (assessmentView === "start") renderAssessmentStart();
+        }
+
+        function renderAssessmentStart() {
+          const actions = $("startActions");
+          const note = $("startNote");
+
+          $("infoDomains").textContent = `${fa(DOMAIN_KEYS.length)} حوزه`;
+          $("infoQuestions").textContent = `${fa(QUESTIONS.length)} پرسش`;
+
+          const draftCount = state.draft
+            ? Object.keys(state.draft.answers).length
+            : 0;
+
+          const buttons = [];
+
+          if (state.draft && draftCount > 0) {
+            note.textContent = `یک ارزیابی نیمه‌کاره داری (${fa(draftCount)} پاسخ از ${fa(QUESTIONS.length)}).`;
+            buttons.push(
+              actionBtn("ادامه ارزیابی", "btn-primary", () =>
+                beginAssessment(false),
+              ),
+              actionBtn("شروع از نو", "btn-secondary", () =>
+                beginAssessment(true),
+              ),
+            );
+          } else if (state.resultsReady) {
+            note.textContent =
+              "قبلاً یک ارزیابی کامل کرده‌ای. نتیجه قبلی تا پایان ارزیابی جدید حفظ می‌شود.";
+            buttons.push(
+              actionBtn("ارزیابی دوباره", "btn-primary", () =>
+                beginAssessment(true),
+              ),
+              linkBtn("مشاهده پروفایل فعلی", "#/app/results", "btn-secondary"),
+            );
+          } else {
+            note.textContent = "";
+            buttons.push(
+              actionBtn("شروع ارزیابی", "btn-primary", () =>
+                beginAssessment(true),
+              ),
             );
           }
 
-          if (Array.isArray(parsed.projects)) {
-            next.projects = parsed.projects
-              .filter(
-                (p) => p && typeof p === "object" && p.title && p.description,
-              )
-              .map((p) => ({
-                id: p.id ?? makeId(),
-                title: String(p.title).slice(0, 80),
-                domain: DOMAINS[p.domain] ? p.domain : DOMAIN_KEYS[0],
-                description: String(p.description).slice(0, 500),
-                createdAt: String(p.createdAt || ""),
-              }));
+          actions.replaceChildren(...buttons);
+        }
+
+        async function beginAssessment(fresh) {
+          const hasDraft =
+            state.draft && Object.keys(state.draft.answers).length > 0;
+
+          if (fresh && hasDraft) {
+            const ok = await confirmAction({
+              title: "شروع از نو",
+              message: "ارزیابی نیمه‌کاره قبلی حذف و از نو شروع شود؟",
+              confirmLabel: "حذف و شروع از نو",
+              danger: true,
+            });
+            if (!ok) return;
           }
 
-          state = next;
-        } catch (error) {
-          console.warn("Could not load saved data.", error);
-          state = defaultState();
-        }
-      }
-
-      function saveState() {
-        try {
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-          return true;
-        } catch (error) {
-          console.warn("Could not save data.", error);
-          showToast(
-            "ذخیره‌سازی در مرورگر ممکن نشد؛ ممکن است اطلاعات پس از بستن صفحه از بین برود.",
-          );
-          return false;
-        }
-      }
-
-      function makeId() {
-        return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-      }
-
-      /* =========================================================
-       7. UTILITIES
-    ========================================================== */
-
-      function fa(value) {
-        return String(value).replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[d]);
-      }
-
-      function escapeHTML(value) {
-        return String(value)
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
-      }
-
-      function domainOf(key) {
-        return (
-          DOMAINS[key] || {
-            name: "نامشخص",
-            icon: "📌",
-            description: "",
-            path: [],
+          if (fresh || !state.draft) {
+            state.draft = { currentQuestion: 0, answers: {} };
+            saveState();
           }
-        );
-      }
 
-      function el(id) {
-        return document.getElementById(id);
-      }
-
-      function showToast(message) {
-        const toast = el("toast");
-        toast.textContent = message;
-        toast.classList.add("show");
-
-        clearTimeout(window.__toastTimer);
-        window.__toastTimer = setTimeout(
-          () => toast.classList.remove("show"),
-          2800,
-        );
-      }
-
-      function makeButton(label, className, handler) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "btn " + className;
-        button.textContent = label;
-        button.addEventListener("click", handler);
-        return button;
-      }
-
-      /* =========================================================
-       8. INITIALIZATION
-    ========================================================== */
-
-      document.addEventListener("DOMContentLoaded", () => {
-        loadState();
-
-        el("infoDomains").textContent = `${fa(DOMAIN_KEYS.length)} حوزه`;
-        el("infoQuestions").textContent = `${fa(QUESTIONS.length)} پرسش`;
-
-        populateProjectDomains();
-        renderAssessmentStart();
-        renderProjects();
-        renderChallenges();
-        renderResults();
-        renderPaths();
-        updateProgressDashboard();
-      });
-
-      /* =========================================================
-       9. NAVIGATION
-    ========================================================== */
-
-      function toggleMenu(forceClose = false) {
-        const nav = el("navLinks");
-        const toggle = el("menuToggle");
-        const open = forceClose ? false : !nav.classList.contains("open");
-
-        nav.classList.toggle("open", open);
-        toggle.setAttribute("aria-expanded", String(open));
-      }
-
-      function showHome(scrollTargetId) {
-        toggleMenu(true);
-
-        el("app").classList.remove("open");
-        el("landing").style.display = "block";
-
-        if (scrollTargetId) {
-          setTimeout(() => {
-            el(scrollTargetId)?.scrollIntoView({ behavior: "smooth" });
-          }, 40);
-        } else {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      }
-
-      function scrollToSection(id) {
-        if (el("app").classList.contains("open")) {
-          showHome(id);
-          return;
-        }
-        toggleMenu(true);
-        el(id)?.scrollIntoView({ behavior: "smooth" });
-      }
-
-      function openApp(panel = "assessment") {
-        toggleMenu(true);
-
-        el("landing").style.display = "none";
-        el("app").classList.add("open");
-
-        switchPanel(panel);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
-
-      const PANEL_TITLES = {
-        assessment: "ارزیابی اولیه",
-        results: "پروفایل علایق",
-        paths: "مسیرهای رشد",
-        challenges: "چالش‌های عملی",
-        projects: "دفتر پروژه",
-        progress: "داشبورد پیشرفت",
-        method: "روش‌شناسی",
-      };
-
-      function switchPanel(panel) {
-        const target = el("panel-" + panel);
-        if (!target) return;
-
-        document
-          .querySelectorAll(".app-panel")
-          .forEach((p) => p.classList.remove("active"));
-
-        document.querySelectorAll(".app-tabs button").forEach((b) => {
-          b.classList.remove("active");
-          b.setAttribute("aria-selected", "false");
-        });
-
-        target.classList.add("active");
-
-        const tab = el("tab-" + panel);
-        if (tab) {
-          tab.classList.add("active");
-          tab.setAttribute("aria-selected", "true");
-        }
-
-        el("appTitle").textContent = PANEL_TITLES[panel] || "Talentino";
-
-        if (panel === "assessment") {
-          if (assessmentView === "complete") assessmentView = "start";
-          renderAssessmentStart();
-        }
-        if (panel === "results") renderResults();
-        if (panel === "paths") renderPaths();
-        if (panel === "challenges") renderChallenges();
-        if (panel === "progress") updateProgressDashboard();
-      }
-
-      /* =========================================================
-       10. ASSESSMENT FLOW
-    ========================================================== */
-
-      function setAssessmentView(view) {
-        assessmentView = view;
-
-        el("assessmentStart").style.display =
-          view === "start" ? "block" : "none";
-        el("assessmentQuiz").style.display = view === "quiz" ? "block" : "none";
-        el("assessmentComplete").style.display =
-          view === "complete" ? "block" : "none";
-      }
-
-      function renderAssessmentStart() {
-        if (assessmentView === "quiz") {
           setAssessmentView("quiz");
-          return;
+          renderQuestion();
+          $("questionText").focus({ preventScroll: true });
+          window.scrollTo(0, 0);
         }
 
-        setAssessmentView(assessmentView === "complete" ? "complete" : "start");
+        function renderQuestion() {
+          const draft = state.draft;
+          if (!draft) return;
 
-        const actions = el("startActions");
-        const note = el("startNote");
+          const index = draft.currentQuestion;
+          const question = QUESTIONS[index];
+          if (!question) return;
 
-        actions.innerHTML = "";
-        note.textContent = "";
+          const domain = domainOf(question.domain);
 
-        const draftCount = state.draft
-          ? Object.keys(state.draft.answers).length
-          : 0;
+          $("questionNumber").textContent = `پرسش ${fa(index + 1)}`;
+          $("questionText").textContent = question.text;
+          $("questionDomain").textContent = `${domain.icon} ${domain.name}`;
 
-        if (state.draft && draftCount > 0) {
-          note.textContent = `یک ارزیابی نیمه‌کاره داری (${fa(draftCount)} پاسخ از ${fa(QUESTIONS.length)}).`;
-
-          actions.appendChild(
-            makeButton("ادامه ارزیابی", "btn-primary", () =>
-              beginAssessment(false),
+          $("optionsContainer").replaceChildren(
+            ...ANSWERS.map((answer) =>
+              h(
+                "button",
+                {
+                  type: "button",
+                  class: "option",
+                  "aria-pressed": "false",
+                  dataset: { value: answer.value },
+                  onclick: () => selectAnswer(answer.value),
+                },
+                h("span", { class: "option-mark", "aria-hidden": "true" }),
+                h("span", null, answer.label),
+              ),
             ),
           );
-          actions.appendChild(
-            makeButton("شروع از نو", "btn-secondary", () =>
-              beginAssessment(true),
-            ),
-          );
-        } else if (state.resultsReady) {
-          note.textContent =
-            "قبلاً یک ارزیابی کامل کرده‌ای. نتیجه قبلی تا پایان ارزیابی جدید حفظ می‌شود.";
 
-          actions.appendChild(
-            makeButton("ارزیابی دوباره", "btn-primary", () =>
-              beginAssessment(true),
-            ),
-          );
-          actions.appendChild(
-            makeButton("مشاهده پروفایل فعلی", "btn-secondary", () =>
-              switchPanel("results"),
-            ),
-          );
-        } else {
-          actions.appendChild(
-            makeButton("شروع ارزیابی", "btn-primary", () =>
-              beginAssessment(true),
-            ),
-          );
-        }
-      }
-
-      function beginAssessment(fresh) {
-        const hasDraft =
-          state.draft && Object.keys(state.draft.answers).length > 0;
-
-        if (fresh && hasDraft) {
-          const ok = confirm("ارزیابی نیمه‌کاره قبلی حذف و از نو شروع شود؟");
-          if (!ok) return;
+          syncQuiz();
         }
 
-        if (fresh || !state.draft) {
-          state.draft = { currentQuestion: 0, answers: {} };
+        function syncQuiz() {
+          const draft = state.draft;
+          if (!draft) return;
+
+          const index = draft.currentQuestion;
+          const total = QUESTIONS.length;
+          const answeredCount = Object.keys(draft.answers).length;
+          const remaining = total - answeredCount;
+          const percent = Math.round((answeredCount / total) * 100);
+
+          $("questionCounter").textContent =
+            `سؤال ${fa(index + 1)} از ${fa(total)}`;
+
+          $("assessmentProgress").style.width = `${percent}%`;
+          const track = $("progressBarWrap");
+          track.setAttribute("aria-valuenow", String(percent));
+          track.setAttribute(
+            "aria-valuetext",
+            `${fa(answeredCount)} از ${fa(total)} پاسخ ثبت شده`,
+          );
+
+          $("progressAnswered").textContent =
+            `${fa(answeredCount)} پاسخ ثبت‌شده (${fa(percent)}٪)`;
+          $("progressRemaining").textContent =
+            remaining > 0
+              ? `${fa(remaining)} پرسش بی‌پاسخ`
+              : "همه پرسش‌ها پاسخ داده شد";
+
+          const selected = draft.answers[index];
+          $("optionsContainer")
+            .querySelectorAll(".option")
+            .forEach((button) => {
+              const value = Number(button.dataset.value);
+              const isSelected = selected === value;
+              button.setAttribute("aria-pressed", String(isSelected));
+              button.querySelector(".option-mark").textContent = isSelected
+                ? "✓"
+                : fa(value);
+            });
+
+          $("prevQuestionBtn").disabled = index === 0;
+          $("nextQuestionBtn").textContent =
+            index === total - 1 ? "پایان و تحلیل ✓" : "بعدی ←";
+
+          clearAnswerHint();
+        }
+
+        function showAnswerHint(message) {
+          $("answerHint").textContent = message;
+          $("optionsContainer").classList.add("is-invalid");
+        }
+
+        function clearAnswerHint() {
+          $("answerHint").textContent = "";
+          $("optionsContainer").classList.remove("is-invalid");
+        }
+
+        function selectAnswer(value) {
+          if (!state.draft) return;
+          state.draft.answers[state.draft.currentQuestion] = value;
           saveState();
+          syncQuiz();
         }
 
-        setAssessmentView("quiz");
-        renderQuestion();
-      }
-
-      function renderQuestion(focusSelected = false) {
-        const draft = state.draft;
-        if (!draft) return;
-
-        const index = draft.currentQuestion;
-        const question = QUESTIONS[index];
-        if (!question) return;
-
-        const answeredCount = Object.keys(draft.answers).length;
-
-        el("questionCounter").textContent = `سؤال ${fa(index + 1)} از ${fa(
-          QUESTIONS.length,
-        )}`;
-        el("questionNumber").textContent = `پرسش ${fa(index + 1)}`;
-        el("questionText").textContent = question.text;
-
-        const domain = domainOf(question.domain);
-        el("questionDomain").textContent = `${domain.icon} ${domain.name}`;
-
-        const percent = Math.round((answeredCount / QUESTIONS.length) * 100);
-        el("assessmentProgress").style.width = `${percent}%`;
-        el("progressBarWrap").setAttribute("aria-valuenow", String(percent));
-
-        const container = el("optionsContainer");
-        container.innerHTML = "";
-
-        let selectedButton = null;
-
-        ANSWERS.forEach((answer) => {
-          const isSelected = draft.answers[index] === answer.value;
-
-          const button = document.createElement("button");
-          button.type = "button";
-          button.className = "option" + (isSelected ? " selected" : "");
-          button.setAttribute("aria-pressed", String(isSelected));
-
-          button.innerHTML = `
-            <span class="option-mark">${isSelected ? "✓" : fa(answer.value)}</span>
-            <span>${answer.label}</span>
-          `;
-
-          button.addEventListener("click", () => selectAnswer(answer.value));
-
-          if (isSelected) selectedButton = button;
-          container.appendChild(button);
-        });
-
-        if (focusSelected && selectedButton) selectedButton.focus();
-
-        el("prevQuestionBtn").disabled = index === 0;
-        el("nextQuestionBtn").textContent =
-          index === QUESTIONS.length - 1 ? "پایان و تحلیل ✓" : "بعدی ←";
-      }
-
-      function selectAnswer(value) {
-        if (!state.draft) return;
-        state.draft.answers[state.draft.currentQuestion] = value;
-        saveState();
-        renderQuestion(true);
-      }
-
-      function nextQuestion() {
-        const draft = state.draft;
-        if (!draft) return;
-
-        if (draft.answers[draft.currentQuestion] === undefined) {
-          showToast("ابتدا یکی از گزینه‌ها را انتخاب کن.");
-          return;
-        }
-
-        if (draft.currentQuestion === QUESTIONS.length - 1) {
-          finishAssessment();
-          return;
-        }
-
-        draft.currentQuestion++;
-        saveState();
-        renderQuestion();
-      }
-
-      function previousQuestion() {
-        const draft = state.draft;
-        if (!draft || draft.currentQuestion <= 0) return;
-
-        draft.currentQuestion--;
-        saveState();
-        renderQuestion();
-      }
-
-      function finishAssessment() {
-        const draft = state.draft;
-        if (!draft) return;
-
-        const missing = QUESTIONS.findIndex(
-          (_, i) => draft.answers[i] === undefined,
-        );
-
-        if (missing !== -1) {
-          draft.currentQuestion = missing;
+        function afterQuestionChange() {
           saveState();
           renderQuestion();
-          showToast(`سؤال ${fa(missing + 1)} هنوز بی‌پاسخ است.`);
-          return;
+          $("questionText").focus({ preventScroll: true });
+          const top = $("assessmentQuiz").getBoundingClientRect().top;
+          if (top < 0) {
+            $("assessmentQuiz").scrollIntoView({
+              block: "start",
+              behavior: "auto",
+            });
+          }
         }
 
-        state.answers = { ...draft.answers };
-        state.resultsReady = true;
-        state.draft = null;
+        function nextQuestion() {
+          const draft = state.draft;
+          if (!draft) return;
 
-        saveState();
+          if (draft.answers[draft.currentQuestion] === undefined) {
+            showAnswerHint("ابتدا یکی از گزینه‌ها را انتخاب کن.");
+            const first = $("optionsContainer").querySelector(".option");
+            if (first) first.focus();
+            return;
+          }
 
-        setAssessmentView("complete");
+          if (draft.currentQuestion === QUESTIONS.length - 1) {
+            finishAssessment();
+            return;
+          }
 
-        renderResults();
-        renderPaths();
-        renderChallenges();
-        updateProgressDashboard();
+          draft.currentQuestion++;
+          afterQuestionChange();
+        }
 
-        showToast("تحلیل پروفایل با موفقیت انجام شد.");
-      }
+        function previousQuestion() {
+          const draft = state.draft;
+          if (!draft || draft.currentQuestion <= 0) return;
 
-      /* =========================================================
-       11. ALGORITHM
-       score = ((mean − 1) / 4) × 100   (scale 1..5 → 0..100)
-       Tie-break: score → count(answers ≥ 4) → max answer → fixed order
-    ========================================================== */
+          draft.currentQuestion--;
+          afterQuestionChange();
+        }
 
-      function computeStats(answers) {
-        const stats = {};
+        function exitQuiz() {
+          saveState();
+          assessmentView = "start";
+          renderAssessment();
+          const heading = $("assessmentStart").querySelector("h2");
+          heading.tabIndex = -1;
+          heading.focus({ preventScroll: true });
+        }
 
-        DOMAIN_KEYS.forEach((key) => {
-          stats[key] = { sum: 0, count: 0, strong: 0, max: 0, score: 0 };
-        });
+        function finishAssessment() {
+          const draft = state.draft;
+          if (!draft) return;
 
-        QUESTIONS.forEach((question, index) => {
-          const value = answers[index];
-          if (value === undefined) return;
+          const missing = QUESTIONS.findIndex(
+            (_, i) => draft.answers[i] === undefined,
+          );
 
-          const s = stats[question.domain];
-          s.sum += value;
-          s.count++;
-          if (value >= 4) s.strong++;
-          if (value > s.max) s.max = value;
-        });
+          if (missing !== -1) {
+            draft.currentQuestion = missing;
+            saveState();
+            renderQuestion();
+            showAnswerHint(`سؤال ${fa(missing + 1)} هنوز بی‌پاسخ است.`);
+            showToast(`سؤال ${fa(missing + 1)} هنوز بی‌پاسخ است.`);
+            return;
+          }
 
-        DOMAIN_KEYS.forEach((key) => {
-          const s = stats[key];
-          s.score =
-            s.count === 0 ? 0 : Math.round(((s.sum / s.count - 1) / 4) * 100);
-        });
+          state.answers = { ...draft.answers };
+          state.resultsReady = true;
+          state.draft = null;
+          rankingCache = null;
 
-        return stats;
-      }
+          state.history.push(
+            makeSnapshot(state.answers, new Date().toISOString()),
+          );
+          state.history = state.history.slice(-HISTORY_MAX);
 
-      function sortedDomains() {
-        if (!state.resultsReady) return [];
+          saveState();
 
-        const stats = computeStats(state.answers);
+          setAssessmentView("complete");
+          const heading = $("assessmentComplete").querySelector("h2");
+          heading.tabIndex = -1;
+          heading.focus({ preventScroll: true });
+          window.scrollTo(0, 0);
 
-        return DOMAIN_KEYS.map((key, order) => ({
-          key,
-          order,
-          ...stats[key],
-        })).sort(
-          (a, b) =>
-            b.score - a.score ||
-            b.strong - a.strong ||
-            b.max - a.max ||
-            a.order - b.order,
-        );
-      }
+          showToast("تحلیل پروفایل با موفقیت انجام شد.", "success");
+        }
 
-      function calculateOverallScore(sorted) {
-        if (!sorted.length) return 0;
+        /* =======================================================
+         RESULTS
+      ======================================================= */
 
-        return Math.round(
-          sorted.reduce((total, item) => total + item.score, 0) / sorted.length,
-        );
-      }
+        let resultsAnimated = false;
 
-      /* =========================================================
-       12. RESULTS
-    ========================================================== */
-
-      function renderResults() {
-        const ready = state.resultsReady;
-
-        el("noResults").style.display = ready ? "none" : "block";
-        el("resultsContent").style.display = ready ? "block" : "none";
-
-        if (!ready) return;
-
-        const sorted = sortedDomains();
-        const overall = calculateOverallScore(sorted);
-
-        el("overallScore").textContent = fa(overall);
-        el("overallCircle").style.setProperty("--score", `${overall}%`);
-
-        const topNames = sorted
-          .slice(0, TOP_COUNT)
-          .map((item) => domainOf(item.key).name);
-
-        el("resultSummary").textContent =
-          `میانگین کلی پاسخ‌های تو ${fa(overall)} از ${fa(100)} است. ` +
-          `سه حوزه برجسته‌تر در این ارزیابی عبارت‌اند از ${topNames.join("، ")}. ` +
-          `این نتیجه را نقطه شروع تجربه و ساخت پروژه‌های واقعی بدان، نه برچسب قطعی درباره توانایی.`;
-
-        renderInsights(sorted, overall);
-
-        const list = el("domainResults");
-        list.innerHTML = "";
-
-        sorted.forEach((item) => {
-          const domain = domainOf(item.key);
-          const row = document.createElement("div");
-          row.className = "domain-row";
-          row.innerHTML = `
-            <span>${domain.icon} ${domain.name}</span>
-            <div class="bar"><span style="width:${item.score}%"></span></div>
-            <strong>${fa(item.score)}</strong>
-          `;
-          list.appendChild(row);
-        });
-
-        sorted.slice(0, TOP_COUNT).forEach((item, i) => {
-          const domain = domainOf(item.key);
-          el(`topDomain${i + 1}`).textContent = `${domain.icon} ${domain.name}`;
-          el(`topDomain${i + 1}Desc`).textContent = domain.description;
-        });
-      }
-
-      function renderInsights(sorted, overall) {
-        const insights = [];
-        const spread = sorted[0].score - sorted[sorted.length - 1].score;
-
-        if (spread < 25) {
-          insights.push(
-            "پاسخ‌های تو در همه حوزه‌ها نسبتاً نزدیک به هم بوده است؛ بنابراین رتبه‌بندی تمایز زیادی ندارد و بهتر است چند حوزه را عملاً امتحان کنی.",
+        function startAssessmentButtons() {
+          const draftCount = state.draft
+            ? Object.keys(state.draft.answers).length
+            : 0;
+          return linkBtn(
+            draftCount > 0 ? "ادامه ارزیابی" : "شروع ارزیابی",
+            "#/app/assessment",
           );
         }
 
-        if (overall >= 90) {
-          insights.push(
-            "میانگین پاسخ‌هایت بسیار بالاست. اگر به بیشتر گزینه‌ها امتیاز بالا داده‌ای، به تفاوت‌های نسبی بین حوزه‌ها بیشتر از خود عددها توجه کن.",
+        function renderResults() {
+          const ready = state.resultsReady;
+
+          $("noResults").hidden = ready;
+          $("resultsContent").hidden = !ready;
+
+          if (!ready) {
+            $("noResultsActions").replaceChildren(startAssessmentButtons());
+            return;
+          }
+
+          const ranking = getRanking();
+          const overall = calculateOverallScore(ranking);
+          const animate = !resultsAnimated && !reducedMotion();
+          resultsAnimated = true;
+
+          $("overallScore").textContent = fa(overall);
+
+          const circumference = 2 * Math.PI * RING_RADIUS;
+          const ring = $("ringFg");
+          ring.style.strokeDasharray = String(circumference);
+          const target = circumference * (1 - overall / 100);
+          if (animate) {
+            ring.style.strokeDashoffset = String(circumference);
+            requestAnimationFrame(() =>
+              requestAnimationFrame(() => {
+                ring.style.strokeDashoffset = String(target);
+              }),
+            );
+          } else {
+            ring.style.strokeDashoffset = String(target);
+          }
+
+          const topNames = ranking
+            .slice(0, TOP_COUNT)
+            .map((item) => domainOf(item.key).name);
+
+          $("resultSummary").textContent = resultSummaryText(overall, topNames);
+
+          renderInsights(ranking, overall);
+
+          $("domainResults").replaceChildren(
+            ...ranking.map((item, i) => {
+              const domain = domainOf(item.key);
+              return h(
+                "li",
+                { class: `domain-row${i < TOP_COUNT ? " is-top" : ""}` },
+                h("span", { class: "rank", "aria-hidden": "true" }, fa(i + 1)),
+                h("span", { class: "name" }, `${domain.icon} ${domain.name}`),
+                barEl(item.score, animate),
+                h("strong", null, fa(item.score)),
+              );
+            }),
           );
-        } else if (overall <= 15) {
-          insights.push(
-            "میانگین پاسخ‌هایت بسیار پایین است. شاید گزینه‌ها با تجربه‌های فعلی تو فاصله دارند؛ امتحان کردن فعالیت‌های تازه می‌تواند کمک کند.",
-          );
-        }
 
-        if (sorted[TOP_COUNT - 1].score === sorted[TOP_COUNT].score) {
-          insights.push(
-            "در مرز حوزه‌های برجسته امتیاز برابر وجود دارد؛ حوزه‌های هم‌امتیاز را هم امتحان کن.",
-          );
-        }
-
-        el("resultInsights").innerHTML = insights
-          .map((text) => `<p style="margin-top:8px">💡 ${escapeHTML(text)}</p>`)
-          .join("");
-      }
-
-      /* =========================================================
-       13. LEARNING PATHS
-    ========================================================== */
-
-      function renderPaths() {
-        const container = el("pathsContainer");
-
-        if (!state.resultsReady) {
-          container.innerHTML = `
-            <div class="card">
-              <h3>ابتدا ارزیابی را کامل کن.</h3>
-              <p>بعد از تحلیل، مسیرها بر اساس پروفایل تو مرتب می‌شوند.</p>
-            </div>
-          `;
-          return;
-        }
-
-        container.innerHTML = "";
-
-        sortedDomains()
-          .slice(0, PATH_COUNT)
-          .forEach((item, index) => {
+          ranking.slice(0, TOP_COUNT).forEach((item, i) => {
             const domain = domainOf(item.key);
-
-            const card = document.createElement("article");
-            card.className = "card path-card";
-
-            card.innerHTML = `
-              <div class="path-level">مسیر ${fa(index + 1)} · امتیاز ${fa(item.score)}</div>
-              <h3>${domain.icon} ${domain.name}</h3>
-              <p>${domain.description}</p>
-              <div class="steps">
-                ${domain.path
-                  .map(
-                    (step, i) =>
-                      `<div class="step">${fa(i + 1)}. ${step}</div>`,
-                  )
-                  .join("")}
-              </div>
-            `;
-
-            container.appendChild(card);
+            $(`topDomain${i + 1}`).textContent =
+              `${domain.icon} ${domain.name}`;
+            $(`topDomain${i + 1}Desc`).textContent = domain.description;
+            $(`topDomain${i + 1}Meta`).replaceChildren(
+              h(
+                "span",
+                { class: "tag" },
+                `امتیاز ${fa(item.score)} از ${fa(100)}`,
+              ),
+              h(
+                "span",
+                { class: "tag tag-neutral" },
+                `میانگین پاسخ‌ها ${faDec(item.mean)} از ${fa(ANSWER_MAX)}`,
+              ),
+              h(
+                "span",
+                { class: "tag tag-neutral" },
+                `${fa(item.strong)} از ${fa(item.count)} پاسخ ۴ یا ۵`,
+              ),
+            );
           });
-      }
+        }
 
-      /* =========================================================
-       14. CHALLENGES
-    ========================================================== */
-
-      function renderChallenges() {
-        const container = el("challengesContainer");
-        container.innerHTML = "";
-
-        const recommended = state.resultsReady
-          ? sortedDomains()
-              .slice(0, 5)
-              .map((item) => item.key)
-          : [];
-
-        const list = [
-          ...CHALLENGES.filter((c) => recommended.includes(c.domain)),
-          ...CHALLENGES.filter((c) => !recommended.includes(c.domain)),
-        ];
-
-        list.forEach((challenge) => {
-          const domain = domainOf(challenge.domain);
-          const completed = state.completedChallenges.includes(challenge.id);
-          const isRecommended = recommended.includes(challenge.domain);
-
-          const card = document.createElement("article");
-          card.className = "card challenge-card";
-
-          card.innerHTML = `
-            <div>
-              <span class="tag">${domain.icon} ${domain.name}</span>
-              ${isRecommended ? '<span class="tag tag-accent">پیشنهادی برای تو</span>' : ""}
-            </div>
-
-            <h3 style="margin-top:12px">${challenge.title}</h3>
-
-            <div class="challenge-meta">
-              <span class="tag">${challenge.level}</span>
-              <span class="tag">⏱ ${challenge.time}</span>
-            </div>
-
-            <p>${challenge.description}</p>
-          `;
-
-          const button = makeButton(
-            completed ? "✓ تکمیل شده" : "تکمیل کردم",
-            completed ? "btn-secondary" : "btn-primary",
-            () => toggleChallenge(challenge.id),
+        function resultSummaryText(overall, topNames) {
+          return (
+            `میانگین کلی پاسخ‌های تو ${fa(overall)} از ${fa(100)} است. ` +
+            `سه حوزه برجسته‌تر در این ارزیابی عبارت‌اند از ${topNames.join("، ")}. ` +
+            `این نتیجه را نقطه شروع تجربه و ساخت پروژه‌های واقعی بدان، نه برچسب قطعی درباره توانایی.`
           );
-          button.setAttribute("aria-pressed", String(completed));
+        }
 
-          card.appendChild(button);
-          container.appendChild(card);
-        });
-      }
+        function insightTexts(ranking, overall) {
+          const insights = [];
+          const spread = ranking[0].score - ranking[ranking.length - 1].score;
 
-      function toggleChallenge(id) {
-        const index = state.completedChallenges.indexOf(id);
+          if (spread < 25) {
+            insights.push(
+              "پاسخ‌های تو در همه حوزه‌ها نسبتاً نزدیک به هم بوده است؛ بنابراین رتبه‌بندی تمایز زیادی ندارد و بهتر است چند حوزه را عملاً امتحان کنی.",
+            );
+          }
 
-        if (index >= 0) {
-          state.completedChallenges.splice(index, 1);
-          showToast("چالش دوباره فعال شد.");
+          if (overall >= 90) {
+            insights.push(
+              "میانگین پاسخ‌هایت بسیار بالاست. اگر به بیشتر گزینه‌ها امتیاز بالا داده‌ای، به تفاوت‌های نسبی بین حوزه‌ها بیشتر از خود عددها توجه کن.",
+            );
+          } else if (overall <= 15) {
+            insights.push(
+              "میانگین پاسخ‌هایت بسیار پایین است. شاید گزینه‌ها با تجربه‌های فعلی تو فاصله دارند؛ امتحان کردن فعالیت‌های تازه می‌تواند کمک کند.",
+            );
+          }
+
+          if (
+            ranking[TOP_COUNT] &&
+            ranking[TOP_COUNT - 1].score === ranking[TOP_COUNT].score
+          ) {
+            insights.push(
+              "در مرز حوزه‌های برجسته امتیاز برابر وجود دارد؛ حوزه‌های هم‌امتیاز را هم امتحان کن.",
+            );
+          }
+
+          return insights;
+        }
+
+        function renderInsights(ranking, overall) {
+          $("resultInsights").replaceChildren(
+            ...insightTexts(ranking, overall).map((text) =>
+              h("p", null, `💡 ${text}`),
+            ),
+          );
+        }
+
+        /* =======================================================
+         LEARNING PATHS
+      ======================================================= */
+
+        function renderPaths() {
+          const container = $("pathsContainer");
+
+          if (!state.resultsReady) {
+            container.replaceChildren(
+              h(
+                "div",
+                { class: "card empty-state", style: { gridColumn: "1 / -1" } },
+                h("h3", null, "ابتدا ارزیابی را کامل کن."),
+                h(
+                  "p",
+                  null,
+                  "بعد از تحلیل، مسیرها بر اساس پروفایل تو مرتب می‌شوند.",
+                ),
+                h("div", { class: "btn-row" }, startAssessmentButtons()),
+              ),
+            );
+            return;
+          }
+
+          container.replaceChildren(
+            ...getRanking()
+              .slice(0, PATH_COUNT)
+              .map((item, index) => buildPathCard(item, index)),
+          );
+        }
+
+        function buildPathCard(item, index) {
+          const domain = domainOf(item.key);
+          const total = domain.path.length;
+
+          const progressBarHost = h("div");
+          const progressText = h("small");
+          const updateProgress = () => {
+            const done = pathDoneCount(item.key);
+            progressBarHost.replaceChildren(barEl((done / total) * 100));
+            progressText.textContent = `${fa(done)} از ${fa(total)} گام انجام شده`;
+          };
+          updateProgress();
+
+          const steps = domain.path.map((step, i) => {
+            const checked = (state.pathSteps[item.key] || []).includes(i);
+            const dot = h(
+              "span",
+              { class: "step-dot", "aria-hidden": "true" },
+              checked ? "✓" : fa(i + 1),
+            );
+            const input = h("input", {
+              type: "checkbox",
+              checked: checked || null,
+              onchange: (event) =>
+                togglePathStep(item.key, i, event.target, dot, updateProgress),
+            });
+            return h(
+              "li",
+              { class: "step" },
+              h(
+                "label",
+                null,
+                input,
+                dot,
+                h("span", { class: "step-text" }, step),
+              ),
+            );
+          });
+
+          return h(
+            "article",
+            { class: "card path-card" },
+            h(
+              "div",
+              { class: "path-level" },
+              `مسیر ${fa(index + 1)} · امتیاز ${fa(item.score)}`,
+            ),
+            h("h3", null, `${domain.icon} ${domain.name}`),
+            h("p", null, domain.description),
+            h("div", { class: "path-progress" }, progressBarHost, progressText),
+            h(
+              "ol",
+              {
+                class: "steps",
+                role: "list",
+                "aria-label": `گام‌های مسیر ${domain.name}`,
+              },
+              steps,
+            ),
+            h(
+              "div",
+              { class: "path-actions" },
+              linkBtn("چالش‌ها", "#/app/challenges", "btn-secondary btn-small"),
+              actionBtn("ثبت پروژه در این حوزه", "btn-ghost btn-small", () =>
+                startProjectFor(item.key),
+              ),
+            ),
+          );
+        }
+
+        function togglePathStep(key, stepIndex, input, dot, updateProgress) {
+          const list = new Set(state.pathSteps[key] || []);
+          if (input.checked) list.add(stepIndex);
+          else list.delete(stepIndex);
+
+          const sorted = [...list].sort((a, b) => a - b);
+          if (sorted.length) state.pathSteps[key] = sorted;
+          else delete state.pathSteps[key];
+
+          dot.textContent = input.checked ? "✓" : fa(stepIndex + 1);
+          saveState();
+          updateProgress();
+
+          if (sorted.length === DOMAINS[key].path.length) {
+            showToast(`مسیر «${DOMAINS[key].name}» کامل شد 🎉`, "success");
+          }
+        }
+
+        /* =======================================================
+         CHALLENGES
+      ======================================================= */
+
+        function renderChallenges(focusId) {
+          const container = $("challengesContainer");
+          const done = new Set(state.completedChallenges);
+
+          const recommended = state.resultsReady
+            ? getRanking()
+                .slice(0, RECOMMENDED_CHALLENGES)
+                .map((item) => item.key)
+            : [];
+
+          const list = [
+            ...CHALLENGES.filter((c) => recommended.includes(c.domain)),
+            ...CHALLENGES.filter((c) => !recommended.includes(c.domain)),
+          ];
+
+          // Summary
+          const total = CHALLENGES.length;
+          const count = done.size;
+          const summary = [
+            h(
+              "div",
+              { class: "row" },
+              h("span", null, `${fa(count)} از ${fa(total)} چالش تکمیل شده`),
+              h("span", null, `${fa(Math.round((count / total) * 100))}٪`),
+            ),
+            barEl((count / total) * 100),
+          ];
+          if (count === total) {
+            summary.push(
+              h(
+                "div",
+                { class: "notice notice-success", role: "status" },
+                "همه چالش‌ها را تکمیل کرده‌ای. حالا می‌توانی یک پروژه ثبت کنی یا ارزیابی را دوباره انجام بدهی تا تغییرها را ببینی.",
+              ),
+            );
+          } else if (!state.resultsReady) {
+            summary.push(
+              h(
+                "p",
+                { class: "muted" },
+                "با کامل کردن ارزیابی، چالش‌های مناسب حوزه‌های برجسته‌ات در ابتدای فهرست می‌آیند.",
+              ),
+            );
+          }
+          $("challengeSummary").replaceChildren(...summary);
+
+          // Cards
+          container.replaceChildren(
+            ...list.map((challenge) => {
+              const domain = domainOf(challenge.domain);
+              const completed = done.has(challenge.id);
+              const isRecommended = recommended.includes(challenge.domain);
+
+              const toggle = actionBtn(
+                completed ? "✓ تکمیل شده" : "تکمیل کردم",
+                completed ? "btn-success" : "btn-primary",
+                () => toggleChallenge(challenge.id),
+                {
+                  "aria-pressed": String(completed),
+                  dataset: { toggle: challenge.id },
+                },
+              );
+
+              const actions = [toggle];
+              if (completed) {
+                actions.push(
+                  actionBtn(
+                    "ثبت پروژه از این چالش",
+                    "btn-ghost btn-small",
+                    () => startProjectFor(challenge.domain, challenge.title),
+                  ),
+                );
+              }
+
+              return h(
+                "article",
+                { class: `card challenge-card${completed ? " is-done" : ""}` },
+                h(
+                  "div",
+                  null,
+                  h("span", { class: "tag" }, `${domain.icon} ${domain.name}`),
+                  " ",
+                  isRecommended
+                    ? h("span", { class: "tag tag-accent" }, "پیشنهادی برای تو")
+                    : null,
+                ),
+                h("h3", { style: { marginTop: "12px" } }, challenge.title),
+                h(
+                  "div",
+                  { class: "challenge-meta" },
+                  h("span", { class: "tag" }, challenge.level),
+                  h("span", { class: "tag" }, `⏱ ${challenge.time}`),
+                ),
+                h("p", null, challenge.description),
+                h("div", { class: "challenge-actions" }, actions),
+              );
+            }),
+          );
+
+          if (focusId) {
+            const target = container.querySelector(
+              `[data-toggle="${CSS.escape(focusId)}"]`,
+            );
+            if (target) target.focus({ preventScroll: true });
+          }
+        }
+
+        function toggleChallenge(id) {
+          if (!CHALLENGE_IDS.includes(id)) return;
+          const index = state.completedChallenges.indexOf(id);
+
+          if (index >= 0) {
+            state.completedChallenges.splice(index, 1);
+            showToast("چالش دوباره فعال شد.");
+          } else {
+            state.completedChallenges.push(id);
+            showToast("چالش به پیشرفتت اضافه شد 🎯", "success");
+          }
+
+          saveState();
+          renderChallenges(id);
+        }
+
+        /* =======================================================
+         PROJECTS
+      ======================================================= */
+
+        let pendingPrefill = null;
+
+        function populateProjectDomains() {
+          const select = $("projectDomain");
+          select.replaceChildren(
+            ...DOMAIN_KEYS.map((key) =>
+              h(
+                "option",
+                { value: key },
+                `${DOMAINS[key].icon} ${DOMAINS[key].name}`,
+              ),
+            ),
+          );
+        }
+
+        function startProjectFor(domainKey, title) {
+          pendingPrefill = { domain: domainKey, title: title || "" };
+          go("#/app/projects");
+        }
+
+        function applyPrefill() {
+          if (!pendingPrefill) return;
+          const { domain, title } = pendingPrefill;
+          pendingPrefill = null;
+
+          if (DOMAINS[domain]) $("projectDomain").value = domain;
+          if (title && !$("projectTitle").value) {
+            $("projectTitle").value = title.slice(0, TITLE_MAX);
+          }
+          updateDescCount();
+          const target = title ? $("projectDescription") : $("projectTitle");
+          target.focus({ preventScroll: true });
+          $("projectForm").scrollIntoView({
+            block: "center",
+            behavior: reducedMotion() ? "auto" : "smooth",
+          });
+        }
+
+        function updateDescCount() {
+          const len = $("projectDescription").value.length;
+          $("projectDescCount").textContent = `${fa(len)} از ${fa(DESC_MAX)}`;
+        }
+
+        function setFieldError(input, errorEl, message) {
+          errorEl.textContent = message || "";
+          if (message) input.setAttribute("aria-invalid", "true");
+          else input.removeAttribute("aria-invalid");
+        }
+
+        function addProject(event) {
+          event.preventDefault();
+
+          const titleInput = $("projectTitle");
+          const descInput = $("projectDescription");
+          const title = cleanLine(titleInput.value, TITLE_MAX);
+          const description = cleanText(descInput.value, DESC_MAX);
+          const domainKey = $("projectDomain").value;
+
+          setFieldError(
+            titleInput,
+            $("projectTitleError"),
+            title ? "" : "نام پروژه را وارد کن.",
+          );
+          setFieldError(
+            descInput,
+            $("projectDescError"),
+            description ? "" : "توضیح پروژه را وارد کن.",
+          );
+
+          if (!title || !description) {
+            showToast("لطفاً نام و توضیح پروژه را کامل کن.", "error");
+            (!title ? titleInput : descInput).focus();
+            return;
+          }
+
+          if (state.projects.length >= MAX_PROJECTS) {
+            showToast(
+              "به سقف تعداد پروژه‌ها رسیده‌ای؛ ابتدا یکی را حذف کن.",
+              "error",
+            );
+            return;
+          }
+
+          state.projects.push({
+            id: makeId(),
+            title,
+            domain: DOMAINS[domainKey] ? domainKey : DOMAIN_KEYS[0],
+            description,
+            createdAt: new Date().toLocaleDateString("fa-IR"),
+          });
+
+          saveState();
+          $("projectForm").reset();
+          updateDescCount();
+          renderProjectList();
+          showToast("پروژه با موفقیت ثبت شد 📁", "success");
+        }
+
+        function renderProjects() {
+          renderProjectList();
+          updateDescCount();
+          applyPrefill();
+        }
+
+        function renderProjectList() {
+          const container = $("projectList");
+
+          if (!state.projects.length) {
+            container.replaceChildren(
+              h(
+                "div",
+                { class: "empty-state" },
+                h("h3", null, "هنوز پروژه‌ای ثبت نشده است."),
+                h(
+                  "p",
+                  { class: "muted" },
+                  "هر کاری که ساخته‌ای یا انجام داده‌ای می‌تواند اولین پروژه تو باشد؛ مثلاً نتیجه یکی از چالش‌ها.",
+                ),
+                h(
+                  "div",
+                  { class: "btn-row" },
+                  linkBtn(
+                    "رفتن به چالش‌ها",
+                    "#/app/challenges",
+                    "btn-secondary btn-small",
+                  ),
+                ),
+              ),
+            );
+            return;
+          }
+
+          container.replaceChildren(
+            h(
+              "div",
+              { class: "list-head" },
+              h("h3", null, `پروژه‌های ثبت‌شده (${fa(state.projects.length)})`),
+            ),
+            ...[...state.projects].reverse().map((project) => {
+              const domain = domainOf(project.domain);
+              return h(
+                "article",
+                { class: "project-item" },
+                h(
+                  "div",
+                  { class: "project-item-top" },
+                  h(
+                    "div",
+                    null,
+                    h(
+                      "span",
+                      { class: "tag" },
+                      `${domain.icon} ${domain.name}`,
+                    ),
+                    h("h3", null, project.title),
+                  ),
+                  actionBtn(
+                    "حذف",
+                    "btn-danger btn-small",
+                    () => deleteProject(project.id),
+                    {
+                      "aria-label": `حذف پروژه ${project.title}`,
+                    },
+                  ),
+                ),
+                h("p", null, project.description),
+                project.createdAt
+                  ? h("small", null, `ثبت شده در ${project.createdAt}`)
+                  : null,
+              );
+            }),
+          );
+        }
+
+        async function deleteProject(id) {
+          const ok = await confirmAction({
+            title: "حذف پروژه",
+            message: "این پروژه حذف شود؟",
+            confirmLabel: "حذف پروژه",
+            danger: true,
+          });
+          if (!ok) return;
+
+          state.projects = state.projects.filter(
+            (project) => project.id !== id,
+          );
+          saveState();
+          renderProjectList();
+          showToast("پروژه حذف شد.");
+        }
+
+        /* =======================================================
+         PROGRESS DASHBOARD
+      ======================================================= */
+
+        function computeNextAction() {
+          const link = (text, label, href) => ({ text, label, href });
+
+          if (!state.resultsReady) {
+            const n = state.draft ? Object.keys(state.draft.answers).length : 0;
+            return n > 0
+              ? link(
+                  `ارزیابی نیمه‌کاره‌ات را ادامه بده؛ ${fa(QUESTIONS.length - n)} پرسش باقی مانده است.`,
+                  "ادامه ارزیابی",
+                  "#/app/assessment",
+                )
+              : link(
+                  "ارزیابی را شروع کن تا پروفایل علایقت ساخته شود.",
+                  "شروع ارزیابی",
+                  "#/app/assessment",
+                );
+          }
+
+          const ranking = getRanking();
+          const done = new Set(state.completedChallenges);
+
+          for (const item of ranking.slice(0, RECOMMENDED_CHALLENGES)) {
+            const pending = CHALLENGES.find(
+              (c) => c.domain === item.key && !done.has(c.id),
+            );
+            if (pending) {
+              return link(
+                `چالش «${pending.title}» را در حوزه ${domainOf(pending.domain).name} انجام بده.`,
+                "رفتن به چالش‌ها",
+                "#/app/challenges",
+              );
+            }
+          }
+
+          if (!state.projects.length) {
+            return link(
+              "یکی از کارهایت را به‌عنوان پروژه ثبت کن تا مسیر رشدت قابل مشاهده شود.",
+              "ثبت پروژه",
+              "#/app/projects",
+            );
+          }
+
+          for (const item of ranking.slice(0, PATH_COUNT)) {
+            const total = DOMAINS[item.key].path.length;
+            const left = total - pathDoneCount(item.key);
+            if (left > 0) {
+              return link(
+                `مسیر «${DOMAINS[item.key].name}» را ادامه بده؛ ${fa(left)} گام باقی مانده است.`,
+                "رفتن به مسیرها",
+                "#/app/paths",
+              );
+            }
+          }
+
+          return link(
+            "همه گام‌های پیشنهادی را انجام داده‌ای. ارزیابی را دوباره انجام بده تا تغییرها را ببینی.",
+            "ارزیابی دوباره",
+            "#/app/assessment",
+          );
+        }
+
+        function renderProgress() {
+          const answeredCount = state.draft
+            ? Object.keys(state.draft.answers).length
+            : Object.keys(state.answers).length;
+
+          const ranking = getRanking();
+          const overall = calculateOverallScore(ranking);
+          const delta = historyDelta();
+
+          const next = computeNextAction();
+          $("nextAction").replaceChildren(
+            h(
+              "div",
+              { class: "card next-action" },
+              h("p", null, h("small", null, "گام بعدی پیشنهادی"), next.text),
+              linkBtn(next.label, next.href, "btn-primary"),
+            ),
+          );
+
+          $("statQuestions").textContent = fa(answeredCount);
+          $("statQuestionsOf").textContent = `از ${fa(QUESTIONS.length)} پرسش`;
+          $("statProjects").textContent = fa(state.projects.length);
+          $("statChallenges").textContent = fa(
+            state.completedChallenges.length,
+          );
+          $("statChallengesOf").textContent =
+            `از ${fa(CHALLENGES.length)} چالش`;
+          $("statScore").textContent = fa(overall);
+          $("statScoreDelta").textContent = delta
+            ? `${signed(delta.overall)} نسبت به ارزیابی قبلی`
+            : "";
+
+          const scoreMap = {};
+          ranking.forEach((item) => {
+            scoreMap[item.key] = item.score;
+          });
+
+          const doneChallenges = new Set(state.completedChallenges);
+
+          $("progressDomains").replaceChildren(
+            ...DOMAIN_KEYS.map((key) => {
+              const domain = DOMAINS[key];
+              const score = scoreMap[key] || 0;
+
+              const chips = [];
+              if (
+                CHALLENGES.some(
+                  (c) => c.domain === key && doneChallenges.has(c.id),
+                )
+              ) {
+                chips.push(
+                  h("span", { class: "tag tag-success" }, "چالش انجام شد"),
+                );
+              }
+              const steps = pathDoneCount(key);
+              if (steps > 0) {
+                chips.push(
+                  h(
+                    "span",
+                    { class: "tag" },
+                    `${fa(steps)} از ${fa(domain.path.length)} گام مسیر`,
+                  ),
+                );
+              }
+              const projectCount = state.projects.filter(
+                (p) => p.domain === key,
+              ).length;
+              if (projectCount > 0) {
+                chips.push(
+                  h("span", { class: "tag" }, `${fa(projectCount)} پروژه`),
+                );
+              }
+              if (delta && delta.perDomain[key] !== 0) {
+                chips.push(
+                  h(
+                    "span",
+                    {
+                      class: `tag ${delta.perDomain[key] > 0 ? "tag-success" : "tag-warning"}`,
+                    },
+                    `${signed(delta.perDomain[key])} نسبت به ارزیابی قبلی`,
+                  ),
+                );
+              }
+
+              return h(
+                "div",
+                { class: "domain-progress" },
+                h("span", null, `${domain.icon} ${domain.name}`),
+                barEl(score),
+                h("strong", null, fa(score)),
+                chips.length ? h("div", { class: "dp-meta" }, chips) : null,
+              );
+            }),
+          );
+        }
+
+        /* ---------- Backup / restore ---------- */
+
+        function exportData() {
+          try {
+            const payload = {
+              app: "talentino",
+              exportedAt: new Date().toISOString(),
+              data: state,
+            };
+            const blob = new Blob([JSON.stringify(payload, null, 2)], {
+              type: "application/json",
+            });
+            const url = URL.createObjectURL(blob);
+            const link = h("a", {
+              href: url,
+              download: `talentino-backup-${new Date().toISOString().slice(0, 10)}.json`,
+            });
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            showToast("فایل پشتیبان آماده شد.", "success");
+          } catch (error) {
+            console.warn("Export failed.", error);
+            showToast("ساخت فایل پشتیبان ممکن نشد.", "error");
+          }
+        }
+
+        function importData(file) {
+          if (!file) return;
+          if (file.size > IMPORT_MAX_BYTES) {
+            showToast("فایل انتخاب‌شده بیش از حد بزرگ است.", "error");
+            return;
+          }
+
+          const reader = new FileReader();
+          reader.onerror = () => showToast("خواندن فایل ممکن نشد.", "error");
+          reader.onload = async () => {
+            let next = null;
+            try {
+              const parsed = JSON.parse(String(reader.result));
+              next = normalizeState(
+                isPlainObject(parsed.data) ? parsed.data : parsed,
+              );
+            } catch (error) {
+              next = null;
+            }
+
+            if (!next) {
+              showToast("این فایل، پشتیبان معتبر Talentino نیست.", "error");
+              return;
+            }
+
+            const ok = await confirmAction({
+              title: "بازیابی اطلاعات",
+              message: "اطلاعات فعلی با محتوای این فایل جایگزین شود؟",
+              confirmLabel: "جایگزین کن",
+              danger: true,
+            });
+            if (!ok) return;
+
+            seedHistory(next);
+            state = next;
+            rankingCache = null;
+            assessmentView = "start";
+            saveState();
+            renderActivePanel();
+            showToast("اطلاعات بازیابی شد.", "success");
+          };
+          reader.readAsText(file);
+        }
+
+        /* =======================================================
+         METHODOLOGY
+      ======================================================= */
+
+        function renderMethod() {
+          const pathLength = DOMAINS[DOMAIN_KEYS[0]].path.length;
+
+          $("methodDetails").replaceChildren(
+            ...[
+              `ارزیابی شامل ${fa(QUESTIONS.length)} پرسش در ${fa(DOMAIN_KEYS.length)} حوزه است و هر پرسش ${fa(ANSWERS.length)} گزینه پاسخ از «کاملاً مخالفم» تا «کاملاً موافقم» دارد.`,
+              `مسیرهای یادگیری برای ${fa(PATH_COUNT)} حوزه برتر نمایش داده می‌شوند و هر مسیر ${fa(pathLength)} گام دارد؛ چالش‌های حوزه‌های ${fa(RECOMMENDED_CHALLENGES)} رتبه برتر با برچسب «پیشنهادی برای تو» مشخص می‌شوند.`,
+              "الگوریتم قطعی است و عنصر تصادفی ندارد: با همان پاسخ‌ها همیشه همان رتبه‌بندی به دست می‌آید.",
+              "پاسخ‌ها، چالش‌ها، گام‌های مسیر و پروژه‌ها فقط در حافظه همین مرورگر (localStorage) ذخیره می‌شوند و به هیچ سروری ارسال نمی‌شوند.",
+              "رتبه‌بندی، علاقه اعلام‌شده را نشان می‌دهد و معیاری از توانایی نیست.",
+            ].map((text) => h("li", null, text)),
+          );
+
+          const host = $("liveCalc");
+          if (!state.resultsReady) {
+            host.replaceChildren();
+            return;
+          }
+
+          const top = getRanking()[0];
+          const domain = domainOf(top.key);
+          const values = [];
+          QUESTIONS.forEach((q, i) => {
+            if (q.domain === top.key) values.push(state.answers[i]);
+          });
+
+          const sum = values.reduce((a, b) => a + b, 0);
+          const mean = sum / values.length;
+          const score = ((mean - ANSWER_MIN) / (ANSWER_MAX - ANSWER_MIN)) * 100;
+
+          host.replaceChildren(
+            h(
+              "div",
+              { class: "card live-calc" },
+              h(
+                "h3",
+                null,
+                `نمونه محاسبه روی پاسخ‌های خودت: ${domain.icon} ${domain.name}`,
+              ),
+              h(
+                "p",
+                null,
+                "این محاسبه با پاسخ‌های واقعی تو و همان فرمول بالا انجام شده است.",
+              ),
+              h(
+                "code",
+                { class: "calc-line" },
+                `${values.map(fa).join(" + ")} = ${fa(sum)}`,
+              ),
+              h(
+                "code",
+                { class: "calc-line" },
+                `${fa(sum)} ÷ ${fa(values.length)} = ${faDec(mean)}`,
+              ),
+              h(
+                "code",
+                { class: "calc-line" },
+                `((${faDec(mean)} − ${fa(ANSWER_MIN)}) ÷ ${fa(ANSWER_MAX - ANSWER_MIN)}) × ${fa(100)} = ${fa(Math.round(score))}`,
+              ),
+            ),
+          );
+        }
+
+        /* =======================================================
+         PRINT REPORT
+      ======================================================= */
+
+        function buildPrintReport() {
+          const root = $("printReport");
+          const date = new Date().toLocaleDateString("fa-IR");
+          const ranking = getRanking();
+          const overall = calculateOverallScore(ranking);
+          const done = new Set(state.completedChallenges);
+          const out = [];
+
+          out.push(
+            h(
+              "div",
+              { class: "pr-head" },
+              h(
+                "div",
+                null,
+                h("h1", null, "گزارش پروفایل علایق"),
+                h(
+                  "div",
+                  { class: "pr-sub" },
+                  "سامانه تعاملی کشف و پرورش استعداد",
+                ),
+              ),
+              h(
+                "div",
+                { style: { textAlign: "left" } },
+                h("div", { class: "pr-brand" }, "Talentino"),
+                h("div", { class: "pr-sub" }, date),
+              ),
+            ),
+          );
+
+          if (state.resultsReady) {
+            const topNames = ranking
+              .slice(0, TOP_COUNT)
+              .map((i) => domainOf(i.key).name);
+
+            out.push(
+              h("h2", null, "پروفایل علایق"),
+              h(
+                "div",
+                { class: "pr-overall" },
+                h("strong", null, fa(overall)),
+                h("span", null, "میانگین کلی پاسخ‌ها (از ۱۰۰)"),
+              ),
+              h("p", null, resultSummaryText(overall, topNames)),
+            );
+
+            ranking.slice(0, TOP_COUNT).forEach((item, i) => {
+              const d = domainOf(item.key);
+              out.push(
+                h(
+                  "div",
+                  { class: "pr-card" },
+                  h(
+                    "h3",
+                    null,
+                    `${fa(i + 1)}. ${d.icon} ${d.name} — امتیاز ${fa(item.score)}`,
+                  ),
+                  h("p", null, d.description),
+                  h(
+                    "p",
+                    null,
+                    `میانگین پاسخ‌ها ${faDec(item.mean)} از ${fa(ANSWER_MAX)}؛ ${fa(item.strong)} از ${fa(item.count)} پاسخ ۴ یا ۵.`,
+                  ),
+                ),
+              );
+            });
+
+            out.push(
+              h("h2", null, "رتبه‌بندی همه حوزه‌ها"),
+              h(
+                "div",
+                { class: "pr-rank" },
+                ranking.map((item, i) =>
+                  h(
+                    "div",
+                    { class: "pr-row" },
+                    h("span", null, fa(i + 1)),
+                    h(
+                      "span",
+                      null,
+                      `${domainOf(item.key).icon} ${domainOf(item.key).name}`,
+                    ),
+                    h(
+                      "div",
+                      { class: "pr-bar" },
+                      h("span", { style: { width: `${item.score}%` } }),
+                    ),
+                    h("strong", null, fa(item.score)),
+                  ),
+                ),
+              ),
+              h("h2", null, "مسیرهای رشد حوزه‌های برجسته"),
+            );
+
+            ranking.slice(0, TOP_COUNT).forEach((item) => {
+              const d = domainOf(item.key);
+              const finished = new Set(state.pathSteps[item.key] || []);
+              out.push(
+                h(
+                  "div",
+                  { class: "pr-card" },
+                  h(
+                    "h3",
+                    null,
+                    `${d.icon} ${d.name} (${fa(finished.size)} از ${fa(d.path.length)} گام)`,
+                  ),
+                  h(
+                    "div",
+                    { class: "pr-steps" },
+                    d.path.map((step, i) =>
+                      h(
+                        "div",
+                        null,
+                        `${finished.has(i) ? "☑" : "☐"} ${fa(i + 1)}. ${step}`,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            });
+
+            const insights = insightTexts(ranking, overall);
+            if (insights.length) {
+              out.push(
+                h("h2", null, "نکته‌های تفسیر"),
+                h(
+                  "div",
+                  { class: "pr-list" },
+                  insights.map((t) => h("div", null, `• ${t}`)),
+                ),
+              );
+            }
+          } else {
+            out.push(
+              h("h2", null, "پروفایل علایق"),
+              h(
+                "p",
+                null,
+                "هنوز پروفایلی ساخته نشده است. ابتدا ارزیابی را کامل کن تا تحلیل نمایش داده شود.",
+              ),
+            );
+          }
+
+          out.push(
+            h(
+              "h2",
+              null,
+              `چالش‌ها (${fa(done.size)} از ${fa(CHALLENGES.length)} تکمیل شده)`,
+            ),
+            done.size
+              ? h(
+                  "div",
+                  { class: "pr-list" },
+                  CHALLENGES.filter((c) => done.has(c.id)).map((c) =>
+                    h("div", null, `☑ ${c.title} — ${domainOf(c.domain).name}`),
+                  ),
+                )
+              : h("p", null, "هنوز چالشی تکمیل نشده است."),
+            h("h2", null, `پروژه‌ها (${fa(state.projects.length)})`),
+            state.projects.length
+              ? state.projects.map((p) =>
+                  h(
+                    "div",
+                    { class: "pr-card" },
+                    h("h3", null, p.title),
+                    h(
+                      "p",
+                      null,
+                      `${domainOf(p.domain).icon} ${domainOf(p.domain).name}${p.createdAt ? " — " + p.createdAt : ""}`,
+                    ),
+                    h(
+                      "p",
+                      { style: { whiteSpace: "pre-line" } },
+                      p.description,
+                    ),
+                  ),
+                )
+              : h("p", null, "هنوز پروژه‌ای ثبت نشده است."),
+            h(
+              "div",
+              { class: "pr-note" },
+              h("strong", null, "نکته علمی: "),
+              SCIENCE_NOTE,
+            ),
+            h(
+              "div",
+              { class: "pr-foot" },
+              "این گزارش از داده‌های ذخیره‌شده در مرورگر کاربر ساخته شده است.",
+            ),
+          );
+
+          root.replaceChildren(...out);
+        }
+
+        function printReport() {
+          buildPrintReport();
+          window.print();
+        }
+
+        /* =======================================================
+         RESET
+      ======================================================= */
+
+        async function resetAll() {
+          const confirmed = await confirmAction({
+            title: "پاک‌سازی اطلاعات",
+            message:
+              "همه پاسخ‌ها، پروفایل، پروژه‌ها و پیشرفت ذخیره‌شده حذف شود؟",
+            confirmLabel: "پاک‌سازی همه‌چیز",
+            danger: true,
+          });
+          if (!confirmed) return;
+
+          store.remove(STORAGE_KEY);
+          store.remove(STORAGE_KEY + "_corrupt");
+
+          state = defaultState();
+          rankingCache = null;
+          assessmentView = "start";
+          resultsAnimated = false;
+          pendingPrefill = null;
+          $("projectForm").reset();
+          setFieldError($("projectTitle"), $("projectTitleError"), "");
+          setFieldError($("projectDescription"), $("projectDescError"), "");
+          updateStorageWarning();
+
+          if (parseRoute().panel === "assessment") renderActivePanel();
+          else go("#/app/assessment");
+
+          showToast("اطلاعات پاک شد.", "success");
+        }
+
+        /* =======================================================
+         EVENTS
+      ======================================================= */
+
+        const ACTIONS = {
+          "toggle-menu": toggleMenu,
+          print: printReport,
+          reset: resetAll,
+          "prev-question": previousQuestion,
+          "next-question": nextQuestion,
+          "exit-quiz": exitQuiz,
+          export: exportData,
+          import: () => $("importFile").click(),
+        };
+
+        function digitFromKey(key) {
+          if (typeof key !== "string" || key.length !== 1) return null;
+          if (key >= "1" && key <= "5") return Number(key);
+          let i = "۱۲۳۴۵".indexOf(key);
+          if (i < 0) i = "١٢٣٤٥".indexOf(key);
+          return i >= 0 ? i + 1 : null;
+        }
+
+        function bindEvents() {
+          document.addEventListener("click", (event) => {
+            const tab = event.target.closest(".tab");
+            if (tab) {
+              keepFocus = true;
+              go("#/app/" + tab.dataset.panel);
+              return;
+            }
+
+            const trigger = event.target.closest("[data-action]");
+            if (trigger && ACTIONS[trigger.dataset.action]) {
+              ACTIONS[trigger.dataset.action](trigger);
+              return;
+            }
+
+            if (!event.target.closest(".nav-links, .menu-toggle")) closeMenu();
+          });
+
+          window.addEventListener("hashchange", route);
+
+          document
+            .querySelector(".app-tabs")
+            .addEventListener("keydown", (event) => {
+              const tabs = [...document.querySelectorAll(".app-tabs .tab")];
+              const i = tabs.indexOf(document.activeElement);
+              if (i < 0) return;
+
+              let n = null;
+              // RTL: the left arrow moves to the next tab
+              if (event.key === "ArrowLeft") n = (i + 1) % tabs.length;
+              else if (event.key === "ArrowRight")
+                n = (i - 1 + tabs.length) % tabs.length;
+              else if (event.key === "Home") n = 0;
+              else if (event.key === "End") n = tabs.length - 1;
+
+              if (n !== null) {
+                event.preventDefault();
+                tabs[n].focus();
+              }
+            });
+
+          $("projectForm").addEventListener("submit", addProject);
+          $("projectTitle").addEventListener("input", () =>
+            setFieldError($("projectTitle"), $("projectTitleError"), ""),
+          );
+          $("projectDescription").addEventListener("input", () => {
+            setFieldError($("projectDescription"), $("projectDescError"), "");
+            updateDescCount();
+          });
+
+          $("importFile").addEventListener("change", (event) => {
+            importData(event.target.files && event.target.files[0]);
+            event.target.value = "";
+          });
+
+          $("confirmDialog").addEventListener("click", (event) => {
+            if (event.target === event.currentTarget)
+              event.currentTarget.close("cancel");
+          });
+
+          window.addEventListener("beforeprint", buildPrintReport);
+          window.addEventListener("afterprint", () =>
+            $("printReport").replaceChildren(),
+          );
+
+          window
+            .matchMedia("(min-width: 901px)")
+            .addEventListener("change", () => closeMenu());
+
+          // Another tab changed the data: stay in sync instead of overwriting it.
+          window.addEventListener("storage", (event) => {
+            if (event.key !== STORAGE_KEY) return;
+            if (event.newValue === null) {
+              state = defaultState();
+              rankingCache = null;
+            } else {
+              loadState();
+            }
+            renderActivePanel();
+          });
+
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") closeMenu(true);
+
+            if (event.defaultPrevented) return;
+            const tag = (event.target.tagName || "").toLowerCase();
+            if (["input", "textarea", "select"].includes(tag)) return;
+            if (event.ctrlKey || event.metaKey || event.altKey) return;
+            if (
+              event.target.closest &&
+              event.target.closest('[role="tablist"]')
+            )
+              return;
+            if (document.querySelector("dialog[open]")) return;
+
+            const quizActive =
+              currentView === "app" &&
+              currentPanel === "assessment" &&
+              assessmentView === "quiz";
+            if (!quizActive) return;
+
+            const digit = digitFromKey(event.key);
+            if (digit !== null) {
+              event.preventDefault();
+              selectAnswer(digit);
+            } else if (event.key === "ArrowLeft") {
+              event.preventDefault();
+              nextQuestion();
+            } else if (event.key === "ArrowRight") {
+              event.preventDefault();
+              previousQuestion();
+            }
+          });
+        }
+
+        /* =======================================================
+         BOOT
+      ======================================================= */
+
+        function renderHeroFacts() {
+          const facts = [
+            [DOMAIN_KEYS.length, "حوزه"],
+            [QUESTIONS.length, "پرسش"],
+            [CHALLENGES.length, "چالش عملی"],
+          ];
+          $("heroFacts").replaceChildren(
+            ...facts.map(([n, label]) =>
+              h("span", null, h("strong", null, fa(n)), ` ${label}`),
+            ),
+          );
+        }
+
+        function boot() {
+          const status = loadState();
+
+          renderHeroFacts();
+          populateProjectDomains();
+          bindEvents();
+          updateStorageWarning();
+          route();
+
+          if (status === "corrupt") {
+            showToast(
+              "داده‌های ذخیره‌شده خراب بود و نادیده گرفته شد؛ از نو شروع می‌کنیم.",
+              "error",
+            );
+          }
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", boot);
         } else {
-          state.completedChallenges.push(id);
-          showToast("چالش به پیشرفتت اضافه شد 🎯");
+          boot();
         }
-
-        saveState();
-        renderChallenges();
-        updateProgressDashboard();
-      }
-
-      /* =========================================================
-       15. PROJECTS
-    ========================================================== */
-
-      function populateProjectDomains() {
-        const select = el("projectDomain");
-        select.innerHTML = "";
-
-        DOMAIN_KEYS.forEach((key) => {
-          const domain = DOMAINS[key];
-          const option = document.createElement("option");
-          option.value = key;
-          option.textContent = `${domain.icon} ${domain.name}`;
-          select.appendChild(option);
-        });
-      }
-
-      function addProject(event) {
-        event.preventDefault();
-
-        const title = el("projectTitle").value.trim();
-        const domain = el("projectDomain").value;
-        const description = el("projectDescription").value.trim();
-
-        if (!title || !description) {
-          showToast("لطفاً نام و توضیح پروژه را کامل کن.");
-          return;
-        }
-
-        state.projects.push({
-          id: makeId(),
-          title,
-          domain: DOMAINS[domain] ? domain : DOMAIN_KEYS[0],
-          description,
-          createdAt: new Date().toLocaleDateString("fa-IR"),
-        });
-
-        saveState();
-        event.target.reset();
-        renderProjects();
-        updateProgressDashboard();
-        showToast("پروژه با موفقیت ثبت شد 📁");
-      }
-
-      function renderProjects() {
-        const container = el("projectList");
-        container.innerHTML = "";
-
-        if (!state.projects.length) {
-          container.innerHTML = `<div style="color:var(--muted)">هنوز پروژه‌ای ثبت نشده است.</div>`;
-          return;
-        }
-
-        [...state.projects].reverse().forEach((project) => {
-          const domain = domainOf(project.domain);
-
-          const item = document.createElement("div");
-          item.className = "project-item";
-
-          item.innerHTML = `
-            <div class="project-item-top">
-              <div>
-                <span class="tag">${domain.icon} ${domain.name}</span>
-                <h3 style="margin-top:7px">${escapeHTML(project.title)}</h3>
-              </div>
-            </div>
-
-            <p>${escapeHTML(project.description)}</p>
-
-            <small style="color:var(--muted)">ثبت شده در ${escapeHTML(project.createdAt)}</small>
-          `;
-
-          const deleteButton = makeButton("حذف", "btn-danger btn-small", () =>
-            deleteProject(project.id),
-          );
-          item.querySelector(".project-item-top").appendChild(deleteButton);
-
-          container.appendChild(item);
-        });
-      }
-
-      function deleteProject(id) {
-        if (!confirm("این پروژه حذف شود؟")) return;
-
-        state.projects = state.projects.filter((project) => project.id !== id);
-        saveState();
-        renderProjects();
-        updateProgressDashboard();
-        showToast("پروژه حذف شد.");
-      }
-
-      /* =========================================================
-       16. PROGRESS DASHBOARD
-    ========================================================== */
-
-      function updateProgressDashboard() {
-        const answeredCount = state.draft
-          ? Object.keys(state.draft.answers).length
-          : Object.keys(state.answers).length;
-
-        const sorted = sortedDomains();
-        const overall = calculateOverallScore(sorted);
-
-        el("statQuestions").textContent = fa(answeredCount);
-        el("statProjects").textContent = fa(state.projects.length);
-        el("statChallenges").textContent = fa(state.completedChallenges.length);
-        el("statScore").textContent = fa(overall);
-
-        const container = el("progressDomains");
-        container.innerHTML = "";
-
-        const scoreMap = {};
-        sorted.forEach((item) => {
-          scoreMap[item.key] = item.score;
-        });
-
-        DOMAIN_KEYS.forEach((key) => {
-          const domain = DOMAINS[key];
-          const score = scoreMap[key] || 0;
-
-          const row = document.createElement("div");
-          row.className = "domain-progress";
-          row.innerHTML = `
-            <span>${domain.icon} ${domain.name}</span>
-            <div class="bar"><span style="width:${score}%"></span></div>
-            <strong>${fa(score)}</strong>
-          `;
-
-          container.appendChild(row);
-        });
-      }
-
-      /* =========================================================
-       17. RESET
-    ========================================================== */
-
-      function resetAll() {
-        const confirmed = confirm(
-          "همه پاسخ‌ها، پروفایل، پروژه‌ها و پیشرفت ذخیره‌شده حذف شود؟",
-        );
-        if (!confirmed) return;
-
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-        } catch (error) {
-          console.warn("Could not clear storage.", error);
-        }
-
-        state = defaultState();
-        assessmentView = "start";
-
-        renderAssessmentStart();
-        renderProjects();
-        renderChallenges();
-        renderResults();
-        renderPaths();
-        updateProgressDashboard();
-
-        switchPanel("assessment");
-        showToast("اطلاعات پاک شد.");
-      }
-
-      /* =========================================================
-       18. KEYBOARD SUPPORT
-    ========================================================== */
-
-      document.addEventListener("keydown", (event) => {
-        const tag = (event.target.tagName || "").toLowerCase();
-        if (["input", "textarea", "select"].includes(tag)) return;
-        if (event.ctrlKey || event.metaKey || event.altKey) return;
-
-        const quizActive =
-          assessmentView === "quiz" &&
-          el("app").classList.contains("open") &&
-          el("panel-assessment").classList.contains("active");
-
-        if (!quizActive) return;
-
-        if (event.key >= "1" && event.key <= "5") {
-          selectAnswer(Number(event.key));
-        } else if (event.key === "ArrowLeft") {
-          nextQuestion();
-        } else if (event.key === "ArrowRight") {
-          previousQuestion();
-        }
-      });
+      })();
     </script>
   </body>
 </html>
